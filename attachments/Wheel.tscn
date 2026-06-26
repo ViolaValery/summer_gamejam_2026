@@ -14,3 +14,5 @@ script = ExtResource("1_ijd1w")
 material = SubResource("CanvasItemMaterial_ijd1w")
 scale = Vector2(0.3, 0.3)
 texture = SubResource("CompressedTexture2D_2k2la")
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=1655586877]

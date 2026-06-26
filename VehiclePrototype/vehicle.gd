@@ -8,14 +8,14 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("activate"):
-		for child in get_children():
+		for child in $Attachments.get_children():
 			if child.has_method("activate"):
 				child.activate()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	for child in $Attachments.get_children():
-			if child.has_method("get_force"):
-				var force: Vector2 = child.get_force()
-				print(force)
-				apply_force(force, child.global_position - global_position)
+		if child.has_method("get_force"):
+			var child_velocity: Vector2 = linear_velocity + angular_velocity * (child.position).orthogonal()
+			var force: Vector2 = child.get_force(child_velocity)
+			apply_force(force, child.global_position - global_position)

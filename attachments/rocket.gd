@@ -9,7 +9,7 @@ func activate() -> void:
 	await get_tree().create_timer(3.0).timeout
 	active = false
 
-func get_force() -> Vector2:
+func get_force(local_velocity: Vector2) -> Vector2:
 	if not active:
 		return Vector2.ZERO
 	print("firing")
