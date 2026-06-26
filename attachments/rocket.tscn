@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cwx7cfuv0lmkw"]
+
+[ext_resource type="Script" uid="uid://1xfoywpfyqpi" path="res://attachments/rocket.gd" id="1_ba1jc"]
+[ext_resource type="Texture2D" uid="uid://bgkofnffqfwp3" path="res://attachments/rocket.svg" id="1_r4osm"]
+
+[node name="Rocket" type="Node2D" unique_id=1253114302]
+script = ExtResource("1_ba1jc")
+output_force = 10000
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2129926522]
+position = Vector2(23, 0)
+texture = ExtResource("1_r4osm")
+
+[node name="Timer" type="Timer" parent="." unique_id=1301769000]
+one_shot = true

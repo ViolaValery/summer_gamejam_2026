@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://bosdfwj5ln6it"]
+
+[ext_resource type="PackedScene" uid="uid://bcqg1755xkgeo" path="res://VehiclePrototype/vehicle.tscn" id="1_go42g"]
+[ext_resource type="PackedScene" uid="uid://dmnrmw7jrx6ns" path="res://attachments/Wheel.tscn" id="2_sreuk"]
+[ext_resource type="PackedScene" uid="uid://cwx7cfuv0lmkw" path="res://attachments/rocket.tscn" id="3_tq6uv"]
+[ext_resource type="Texture2D" uid="uid://iud5lfp5pv3n" path="res://icon.svg" id="4_12c36"]
+
+[node name="Test" type="Node2D" unique_id=618857702]
+
+[node name="Vehicle" parent="." unique_id=2007217848 instance=ExtResource("1_go42g")]
+
+[node name="Camera2D" type="Camera2D" parent="Vehicle" unique_id=1522962599]
+
+[node name="Attachments" type="Node2D" parent="Vehicle" unique_id=1558693693]
+
+[node name="Wheel" parent="Vehicle/Attachments" unique_id=1267993403 instance=ExtResource("2_sreuk")]
+position = Vector2(-183, 60)
+
+[node name="Wheel2" parent="Vehicle/Attachments" unique_id=1823739624 instance=ExtResource("2_sreuk")]
+position = Vector2(191, 62)
+
+[node name="Rocket" parent="Vehicle/Attachments" unique_id=1253114302 instance=ExtResource("3_tq6uv")]
+position = Vector2(-40.999996, -66.99999)
+scale = Vector2(0.8, 0.8)
+
+[node name="Floor" type="StaticBody2D" parent="." unique_id=259191552]
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor" unique_id=452007154]
+position = Vector2(7, 183)
+scale = Vector2(20, 1)
+texture = ExtResource("4_12c36")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Floor" unique_id=1804618323]
+position = Vector2(7, 183)
+scale = Vector2(20, 1)
+polygon = PackedVector2Array(59.1, -64, -59, -64, -63.8, -59, -64, 61, -60.3, 64, 59.6, 64, 63.9, 59, 64, -61.1)

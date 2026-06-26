@@ -4,7 +4,7 @@
 ## Dialogic https://github.com/dialogic-godot/dialogic
 1. Zip download
 2. In Godot: AssetLib - Import - Zip auswählen - tick ignore root
-3. In Godot: Proect settings - Plugins Reiter - Dialogic 'On' - Godot startet neu?
+3. In Godot: Project settings - Plugins Reiter - Dialogic 'On' - Godot startet neu?
 ### Credits
 Made by [Jowan-Spooner](https://github.com/Jowan-Spooner) and [Emilio Coppola](https://github.com/coppolaemilio).
 

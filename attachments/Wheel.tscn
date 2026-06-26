@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dmnrmw7jrx6ns"]
+
+[ext_resource type="Script" uid="uid://dswibkgb1kmo7" path="res://attachments/wheel.gd" id="1_ijd1w"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ijd1w"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2k2la"]
+load_path = "res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex"
+
+[node name="Wheel" type="Node2D" unique_id=1797906858]
+script = ExtResource("1_ijd1w")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=881665377]
+material = SubResource("CanvasItemMaterial_ijd1w")
+scale = Vector2(0.3, 0.3)
+texture = SubResource("CompressedTexture2D_2k2la")
