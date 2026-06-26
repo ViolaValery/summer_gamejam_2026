@@ -1,0 +1,7 @@
+I'm professor Graf from the institute of Streuselbrötchen, and we are working on a project to get to Moss the fastest way possible!
+I heard you possess engineering abilities we could use here! Do you want to help us?
+- That's why I'm here! Let's cook some awesome physics shit up yo
+	[signal arg="scene_mainmenu"]
+- Not really..
+	Rude \:(
+	[signal arg="quit"]

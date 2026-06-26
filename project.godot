@@ -25,7 +25,7 @@ directories/dch_directory={
 "unit_test_character": "res://Tests/Resources/unit_test_character.dch"
 }
 directories/dtl_directory={
-"basic_timeline": "res://timelines/basic_timeline.dtl"
+"basic_timeline": "res://timelines/intro_timeline.dtl"
 }
 layout/style_directory={}
 glossary/default_case_sensitive=true
