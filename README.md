@@ -1,4 +1,7 @@
 # Assets:
+## Font: Hidachi https://www.1001fonts.com/hidachi-font.html
+### License
+This font is licensed under the terms of the [FFP](https://www.1001fonts.com/licenses/ffp.html), 1001Fonts.
 
 # Plugins:
 ## Dialogic https://github.com/dialogic-godot/dialogic
