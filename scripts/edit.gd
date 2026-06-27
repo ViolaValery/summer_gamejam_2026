@@ -12,16 +12,35 @@ extends Node2D
 
 ## Alle baubaren Teile (Name -> Szene).
 const PARTS := {
-	"Reifen": preload("res://scenes/attachments/wheel.tscn"),
-	"Booster": preload("res://scenes/attachments/booster.tscn"),
-	"Ballon": preload("res://scenes/attachments/balloon.tscn"),
-	"Platform": preload("res://scenes/platforms/platform.tscn"),
+	"Reifen": {
+		"scene": preload("res://scenes/attachments/wheel.tscn"),
+		"available_from_level": 0,
+		"price": 500
+		},
+	"Booster": {
+		"scene": preload("res://scenes/attachments/booster.tscn"),
+		"available_from_level": 5,
+		"price": 1000
+		},
+	"Ballon": {
+		"scene": preload("res://scenes/attachments/balloon.tscn"),
+		"available_from_level": 3,
+		"price": 750
+		},
+	"Platform": {
+		"scene": preload("res://scenes/platforms/platform.tscn"),
+		"available_from_level": 6,
+		"price": 1000
+		},
 }
+
+const PRICE_LABEL := preload("res://scenes/attachments/price_tag.tscn")
 
 @onready var vehicle: Node2D = $Vehicle
 @onready var chassis: RigidBody2D = $Vehicle/Chassis
 @onready var palette: Node2D = $Palette
-@onready var budget_label: Label = $UI/HUD/Label
+@onready var budget_label: Label = $UI/HUD/Budget/Value
+@onready var level_label: Label = $UI/HUD/Level/Value
 
 ## Drehschritt pro Mausrad-Tick (~15°).
 const ROT_STEP := 0.2618
@@ -43,13 +62,18 @@ var drag_return_rot := 0.0
 # Zeichen-Ebene, die ÜBER allem liegt (sonst verdecken Teile/Boden die Zonen).
 var overlay: Node2D
 
+func _update_budget_label() -> void:
+	budget_label.text = str(GameState.budget) + "$"
 
 func _ready() -> void:
 	GameState.set_budget()
 	GameState.build_into(vehicle)  # gespeicherten Bau wiederherstellen
-	budget_label.text = "Budget: " + str(GameState.budget) + "$"
+	_update_budget_label()
+	level_label.text = str(GameState.last_checkpoint + 1) # +1 because initial "last" checkpoint is 0 
+
 	_freeze_all()       # in der Werkstatt bewegt sich nichts
 	_build_palette()
+	_update_palette()
 	# Overlay zuletzt hinzufügen + hoher z_index -> zeichnet über allem.
 	overlay = Node2D.new()
 	overlay.z_index = 1000
@@ -63,21 +87,54 @@ func _ready() -> void:
 # --- Palette --------------------------------------------------------------
 
 func _build_palette() -> void:
-	var pos := Vector2(880, 110)
+	var pos := Vector2(750, 110)
 	for kind in PARTS:
 		_spawn_palette_item(kind, pos)
 		pos.y += 130.0
 
 
 func _spawn_palette_item(kind: String, pos: Vector2) -> void:
-	var item := (PARTS[kind] as PackedScene).instantiate() as RigidBody2D
+	var item := (PARTS[kind]["scene"] as PackedScene).instantiate() as RigidBody2D
 	palette.add_child(item)
 	item.global_position = pos
 	item.freeze = true
 	item.set_meta("kind", kind)
 	item.set_meta("home", pos)
+	item.set_meta("available", true)
 	item.add_to_group("palette_item")
+	
+	_spawn_item_price_label(kind, Vector2(pos.x + 100, pos.y - 20))
 
+func _spawn_item_price_label(kind: String, pos: Vector2) -> void:
+	var price := PARTS[kind]["price"] as int
+	var label := (PRICE_LABEL as PackedScene).instantiate() as Label
+	palette.add_child(label)
+	label.text = str(price) + "$"
+	label.global_position = pos
+	label.set_meta("kind", kind)
+	label.add_to_group("palette_item_label")
+
+# check each item's availability, etc.
+func _update_palette() -> void:
+	for label in get_tree().get_nodes_in_group("palette_item_label"):
+		var kind := label.get_meta("kind") as String
+		var item := _get_item_by_meta("palette_item", "kind", kind)
+		var price := PARTS[kind]["price"] as int
+		var level_needed := PARTS[kind]["available_from_level"] as int
+		if level_needed > GameState.last_checkpoint:
+			item.set_meta("available", false)
+			label.text = "Level " + str(level_needed)
+			continue
+		else:
+			label.text = str(price) + "$"
+		var color = label.modulate
+		if price > GameState.budget:
+			color.a = 0.3
+			item.set_meta("available", false)
+		else:
+			color.a = 1
+			item.set_meta("available", true)
+		label.modulate = color
 
 # --- Bauen (Drag & Drop) ---------------------------------------------------
 
@@ -121,7 +178,7 @@ func _input(event: InputEvent) -> void:
 # ein schon platziertes Teil (zum Verschieben/Drehen).
 func _try_grab(point: Vector2) -> void:
 	var item := _palette_item_at(point)
-	if item != null:
+	if item != null && item.get_meta("available"):
 		dragging = item
 		drag_is_move = false
 		drag_kind = item.get_meta("kind", "")
@@ -145,9 +202,13 @@ func _drop() -> void:
 	dragging = null
 	can_attach = false
 	overlay.queue_redraw()
+	var price := PARTS[drag_kind]["price"] as int
 	if _can_place(part):
 		part.reparent(vehicle)  # ans Gefährt anbauen (Position bleibt)
 		part.freeze = true      # bleibt liegen bis "Spielen"
+		GameState.budget -= price
+		_update_budget_label()
+		_update_palette()
 	elif drag_is_move:
 		# Verschobenes Teil ungültig abgelegt -> zurück an die alte Stelle.
 		part.reparent(vehicle)
@@ -265,6 +326,12 @@ func _palette_item_at(point: Vector2) -> RigidBody2D:
 			return it as RigidBody2D
 	return null
 
+func _get_item_by_meta(group_name: String, meta_key: String, value) -> Node:
+	for item in get_tree().get_nodes_in_group(group_name):
+		if item.has_meta(meta_key) and item.get_meta(meta_key) == value:
+			return item
+	return null
+
 
 # Schon platziertes Teil (Attachment oder Plattform) unter dem Punkt.
 func _attachment_at(point: Vector2) -> RigidBody2D:
@@ -346,3 +413,6 @@ func _to_reset() -> void:
 	for child in vehicle.get_children():
 		if child is RigidBody2D and child != chassis:
 			child.queue_free()
+	GameState.set_budget()
+	_update_budget_label()
+	_update_palette()
