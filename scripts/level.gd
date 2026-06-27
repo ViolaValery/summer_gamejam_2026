@@ -124,11 +124,16 @@ func _use_special(parts: Array, button: Button) -> void:
 	for p in parts:
 		if is_instance_valid(p):
 			p.activate()
-	button.disabled = not _any_usable(parts)func _any_usable(parts: Array) -> bool:
+	button.disabled = not _any_usable(parts)
+
+
+func _any_usable(parts: Array) -> bool:
 	for p in parts:
 		if is_instance_valid(p) and p.has_method("can_activate") and p.can_activate():
 			return true
-	return false# For Pause UI
+	return false
+	
+# For Pause UI
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):  # Escape key by default
 		Global.game_controller.pause_game()
