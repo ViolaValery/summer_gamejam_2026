@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cr065w8b26ewn"]
 
-[ext_resource type="Script" path="res://scripts/terrain.gd" id="1"]
+[ext_resource type="Script" uid="uid://br40g0e1a7ydk" path="res://scripts/terrain.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://cdsdc3oaptvir" path="res://scenes/background.tscn" id="2_oqplg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b0j75"]
