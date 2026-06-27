@@ -80,8 +80,6 @@ func _process(delta: float) -> void:
 	# update score
 	var score := int(chassis.global_position.x / 5)
 	move_rocket(score)
-	if score > next_checkpoint:
-		update_progress()
 	if score > GameState.highscore:
 		GameState.highscore =  score
 	score_label.text = str(score)
@@ -97,10 +95,11 @@ func update_progress(increment: bool = true) -> void:
 	progress_label_max.text = str(next_checkpoint)
 
 func move_rocket(score: int) -> void:
-	var min_value := GameState.last_checkpoint_dist
-	var max_value := next_checkpoint
+	if score > next_checkpoint:
+		update_progress() # updates next_checkpoint
+	var min_value := int(progress_label_min.text)
+	var max_value := int(progress_label_max.text)
 	var value := float(score - min_value) / (max_value - min_value)
-	print_debug(value)
 	var total_frames = rocket.sprite_frames.get_frame_count("progress")
 	var frame_index = int(clamp(value, 0.0, 1.0) * (total_frames - 1))
 
