@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://dwerj1fjj4bx8"]
+[gd_scene format=3 uid="uid://cdsdc3oaptvir"]
 
 [ext_resource type="Script" uid="uid://d32jbqswby5xc" path="res://scripts/background.gd" id="1_cbsqf"]
-[ext_resource type="Texture2D" uid="uid://e2bx08mqgm1u" path="res://assets/background.png" id="2_wisxt"]
+[ext_resource type="Texture2D" uid="uid://c8prv2ujv8jwe" path="res://assets/background_blue.png" id="2_cbsqf"]
 [ext_resource type="Texture2D" uid="uid://ckmgje6absk5g" path="res://assets/background_1.png" id="3_wax1t"]
 [ext_resource type="Texture2D" uid="uid://cyqx80o56pd5o" path="res://assets/background_2.png" id="4_1tmhi"]
 
@@ -15,8 +15,9 @@ near_factor = 0.4
 texture_repeat = 2
 position = Vector2(0, -298)
 scale = Vector2(1.2, 1.2)
-texture = ExtResource("2_wisxt")
+texture = ExtResource("2_cbsqf")
 centered = false
+offset = Vector2(0, 100)
 region_enabled = true
 region_rect = Rect2(0, 0, 4096, 1024)
 

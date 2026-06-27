@@ -10,10 +10,10 @@ script = ExtResource("1_57c6u")
 layer = 10
 
 [node name="skip" type="Button" parent="CanvasLayer" unique_id=2065043499]
-offset_left = 949.0
-offset_top = 589.0
-offset_right = 1142.0
-offset_bottom = 639.0
+offset_left = 1081.0
+offset_top = 665.0
+offset_right = 1274.0
+offset_bottom = 715.0
 theme = ExtResource("2_chujl")
 text = "Skip Intro"
 
