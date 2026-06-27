@@ -13,8 +13,6 @@ extends RigidBody2D
 
 ## Gesamtgröße der Figur (1.0 = Originalgröße der Zeichnung, ~636 px hoch).
 @export var fig_scale := 0.25
-## Größe der Mini-Vorschau im Werkstatt-Palettenfeld (nur Anzeige).
-@export var palette_scale := 0.12
 ## Masse je Körperteil (klein halten, sonst kippt es das Fahrzeug).
 @export var part_mass := 0.1
 ## Dämpfung -> "lose mit etwas Dämpfung": zappelt, aber nicht völlig chaotisch.
@@ -30,7 +28,6 @@ const HAND := "hand_rechts"      # die Wurzel/Halte-Hand
 const GROUND_LAYER := 8          # Ebene 4
 
 # --- aus der Zeichnung extrahierte Skelett-Daten (Canvas-Pixel, 1024er Raum) --
-const PREVIEW_SIZE := Vector2(502, 636)       # Größe von figur_preview.png
 const HAND_IN_PREVIEW := Vector2(442, 168)   # Hand-Mittelpunkt im Vorschaubild
 const PARTS := {
 	"oberschenkel_links": {"center": Vector2(398.5, 590), "size": Vector2(79, 122)},
@@ -66,43 +63,47 @@ const BONES := [
 ]
 
 var _alive := false
-var _preview_mode := ""
 @onready var _hand_center: Vector2 = PARTS[HAND]["center"]
 
 
 func _ready() -> void:
-	_refresh_preview()
+	_build_preview()
 
 
-# In der Werkstatt: solange in der Palette ein kleines, zentriertes Icon,
-# sobald aufgenommen/platziert die volle Figur (Hand am Ursprung).
-func _process(_delta: float) -> void:
-	if _alive:
+# Werkstatt-Vorschau: ganze Figur, Hand sitzt im Knoten-Ursprung (= Andockpunkt).
+func _build_preview() -> void:
+	if has_node("Preview"):
 		return
-	_refresh_preview()
-
-
-func _refresh_preview() -> void:
-	# Palette-Teil (Icon) vs. aufgenommen/platziert (volle Figur).
-	var mode := "palette" if is_in_group("palette_item") else "placed"
-	if mode == _preview_mode and has_node("Preview"):
-		return
-	_preview_mode = mode
-	var old := get_node_or_null("Preview")
-	if old:
-		old.free()
 	var s := Sprite2D.new()
 	s.name = "Preview"
 	s.texture = load(ASSET + "figur_preview.png")
 	s.centered = false
-	s.z_index = 1                    # vor dem Paletten-Hintergrund
-	if mode == "placed":
-		s.scale = Vector2(fig_scale, fig_scale)
-		s.offset = -HAND_IN_PREVIEW  # Hand-Pixel landet im Knoten-Ursprung
-	else:
-		s.scale = Vector2(palette_scale, palette_scale)
-		s.offset = -PREVIEW_SIZE / 2.0   # Figur mittig im Palettenfeld
+	s.offset = -HAND_IN_PREVIEW       # Hand-Pixel landet im Knoten-Ursprung
+	s.scale = Vector2(fig_scale, fig_scale)
+	s.z_index = 1
 	add_child(s)
+
+
+# Lässt die Hand auffällig blinken/leuchten – Hinweis: "muss ans Fahrzeug!".
+func flash_hand(cycles: int = 5) -> void:
+	var hl := get_node_or_null("HandFlash") as Sprite2D
+	if hl == null:
+		hl = Sprite2D.new()
+		hl.name = "HandFlash"
+		hl.texture = load(ASSET + HAND + ".png")
+		hl.centered = true            # Hand-Bildmitte = Knoten-Ursprung
+		hl.scale = Vector2(fig_scale, fig_scale)
+		hl.z_index = 3
+		add_child(hl)
+	# kräftiges Gelb-Leuchten, das auf-/abblendet
+	var glow := Color(1.0, 0.95, 0.2, 1.0)
+	var off := Color(1.0, 0.95, 0.2, 0.0)
+	hl.modulate = off
+	var tw := create_tween()
+	tw.set_loops(cycles)
+	tw.tween_property(hl, "modulate", glow, 0.18)
+	tw.tween_property(hl, "modulate", off, 0.22)
+	tw.chain().tween_callback(hl.queue_free)
 
 
 # Wird aktiv, sobald das Fahrzeug die Hand entfriert (= Spiel startet).

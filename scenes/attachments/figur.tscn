@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/figur.gd" id="1"]
 
 [sub_resource type="CircleShape2D" id="shape"]
-radius = 16.0
+radius = 24.0
 
 [node name="Figur" type="RigidBody2D"]
 mass = 0.1
