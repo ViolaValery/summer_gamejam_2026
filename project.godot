@@ -24,7 +24,9 @@ Dialogic="*uid://ds2q0uclmolvu"
 
 [dialogic]
 
-directories/dch_directory={}
+directories/dch_directory={
+"armerTyp": "res://timelines/armerTyp.dch"
+}
 directories/dtl_directory={
 "basic_timeline": "res://timelines/intro_timeline.dtl"
 }
