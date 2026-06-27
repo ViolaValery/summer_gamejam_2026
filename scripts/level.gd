@@ -32,7 +32,7 @@ func _ready() -> void:
 	_spawn_vehicle()
 	camera.global_position = chassis.global_position
 
-	update_progress()
+	update_progress(false)
 	
 	# Knöpfe aus der Szene mit der Logik verbinden.
 	tilt_left.button_down.connect(func(): tilt = -1.0)
@@ -79,7 +79,6 @@ func _process(delta: float) -> void:
 	# update score
 	var score = int(chassis.global_position.x / 5)
 	progress_bar.value = score
-	print_debug(score, next_checkpoint)
 	if score > next_checkpoint:
 		update_progress()
 	if score > GameState.highscore:
@@ -88,10 +87,13 @@ func _process(delta: float) -> void:
 	highscore_label.text = str(GameState.highscore)
 
 
-func update_progress() -> void:
+func update_progress(increment: bool = true) -> void:
 	progress_bar.min_value = next_checkpoint
 	progress_label_min.text = str(next_checkpoint)
-	next_checkpoint = GameState.increment_checkpoint(next_checkpoint)
+	if increment:
+		next_checkpoint = GameState.increment_checkpoint(next_checkpoint)
+	else:
+		next_checkpoint = GameState.get_next_checkpoint()
 	progress_bar.max_value = next_checkpoint
 	progress_label_max.text = str(next_checkpoint)
 
