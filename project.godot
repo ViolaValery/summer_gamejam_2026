@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Dialogic="*uid://ds2q0uclmolvu"
 GameState="*res://scripts/game_state.gd"
+Dialogic="*uid://ds2q0uclmolvu"
 
 [dialogic]
 
@@ -75,6 +75,10 @@ window/size/viewport_height=720
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
+
+[gui]
+
+theme/custom_font="uid://xlol4oqojopi"
 
 [input]
 
