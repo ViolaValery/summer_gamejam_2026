@@ -86,12 +86,22 @@ func _add_special_buttons() -> void:
 	for kind in by_kind:
 		var button := Button.new()
 		button.text = kind
-		button.custom_minimum_size = Vector2(0, 56)
-		button.pressed.connect(_activate_all.bind(by_kind[kind]))
+		button.custom_minimum_size = Vector2(110, 56)
+		button.pressed.connect(_use_special.bind(by_kind[kind], button))
 		specials_box.add_child(button)
 
 
-func _activate_all(parts: Array) -> void:
+# Zündet alle Teile dieser Sorte und deaktiviert den Knopf, wenn keine
+# Nutzung mehr übrig ist (z.B. Rakete nach dem einmaligen Boost).
+func _use_special(parts: Array, button: Button) -> void:
 	for p in parts:
 		if is_instance_valid(p):
 			p.activate()
+	button.disabled = not _any_usable(parts)
+
+
+func _any_usable(parts: Array) -> bool:
+	for p in parts:
+		if is_instance_valid(p) and p.has_method("can_activate") and p.can_activate():
+			return true
+	return false

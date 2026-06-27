@@ -46,10 +46,6 @@ text = "Werkstatt"
 layout_mode = 2
 text = "Spielen"
 
-[node name="Shop" type="Button" parent="UI/HUD/Panel/VBox" unique_id=406510061]
-layout_mode = 2
-text = "Shop"
-
 [node name="Reset" type="Button" parent="UI/HUD/Panel/VBox" unique_id=939058104]
 layout_mode = 2
 text = "Zurücksetzen"

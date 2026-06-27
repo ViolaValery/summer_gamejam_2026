@@ -8,13 +8,27 @@ extends RigidBody2D
 
 @export var thrust: float = 6000.0    # Schubkraft während des Boosts
 @export var boost_time: float = 0.5   # Dauer eines Boosts in Sekunden
+@export var uses: int = 1             # wie oft pro Runde nutzbar (Rakete: 1x)
 
 var host: RigidBody2D = null          # das Fahrwerk (beim Verschmelzen gesetzt)
 var _remaining := 0.0                 # Restzeit des laufenden Boosts
+var _uses_left := 0                   # verbleibende Nutzungen
+
+
+func _ready() -> void:
+	_uses_left = uses
+
+
+# Ist noch ein Boost übrig? (der Spezial-Knopf deaktiviert sich sonst)
+func can_activate() -> bool:
+	return _uses_left > 0
 
 
 # Vom Spezial-Knopf in der Spielszene aufgerufen.
 func activate() -> void:
+	if _uses_left <= 0:
+		return
+	_uses_left -= 1
 	_remaining = boost_time
 
 

@@ -5,12 +5,12 @@ extends Node2D
 ##          Grüne Umrandung = es berührt das Fahrwerk und dockt an.
 ##          Ohne Berührung loslassen = verwerfen.
 ## Spielen: übergibt das gebaute Gefährt an die Spielszene (level.tscn).
-## Shop:    neue Teile kaufen.   Reset: Werkstatt neu aufbauen.
+## Reset:   Werkstatt neu aufbauen.
 ##
 ## Hier wird NUR gebaut (alles eingefroren). Zusammenbauen + Fahren passiert
 ## in der Spielszene.
 
-## Alle baubaren Teile (Name -> Szene). Gezeigt werden nur besessene (GameState).
+## Alle baubaren Teile (Name -> Szene).
 const PARTS := {
 	"Reifen": preload("res://scenes/attachments/wheel.tscn"),
 	"Booster": preload("res://scenes/attachments/booster.tscn"),
@@ -42,7 +42,6 @@ func _ready() -> void:
 	add_child(overlay)
 	# Die HUD-Knöpfe liegen in der Szene (UI/HUD) – hier nur mit Logik verbinden.
 	$UI/HUD/Panel/VBox/Spielen.pressed.connect(_play)
-	$UI/HUD/Panel/VBox/Shop.pressed.connect(_to_shop)
 	$UI/HUD/Panel/VBox/Reset.pressed.connect(_to_reset)
 
 
@@ -51,8 +50,6 @@ func _ready() -> void:
 func _build_palette() -> void:
 	var pos := Vector2(880, 110)
 	for kind in PARTS:
-		if not GameState.owned.has(kind):
-			continue  # nur Teile zeigen, die man besitzt (Rest gibt's im Shop)
 		_spawn_palette_item(kind, pos)
 		pos.y += 130.0
 
@@ -226,10 +223,6 @@ func _freeze_all() -> void:
 	for child in vehicle.get_children():
 		if child is RigidBody2D:
 			child.freeze = true
-
-
-func _to_shop() -> void:
-	get_tree().change_scene_to_file("res://scenes/shop.tscn")
 
 
 func _to_reset() -> void:

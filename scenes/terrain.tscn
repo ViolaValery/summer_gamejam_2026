@@ -27,7 +27,7 @@ debug_color = Color(0.627451, 0.4, 0.6666667, 0.21568628)
 
 [node name="Gravity-high" type="Area2D" parent="." unique_id=521068051]
 gravity_space_override = 3
-gravity = 1787.662
+gravity = 3083.335
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gravity-high" unique_id=362095245]
 position = Vector2(43, 555)
