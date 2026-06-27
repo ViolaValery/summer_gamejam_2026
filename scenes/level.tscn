@@ -13,23 +13,66 @@ position = Vector2(300, 200)
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1520099912]
 
-[node name="HUD" type="Control" parent="UI"]
+[node name="HUD" type="Control" parent="UI" unique_id=992485079]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
-[node name="Werkstatt" type="Button" parent="UI/HUD"]
+[node name="Highscore" type="Label" parent="UI/HUD" unique_id=1575200441]
+layout_mode = 0
+offset_left = 839.0
+offset_top = 8.0
+offset_right = 1027.0
+offset_bottom = 75.0
+theme_override_colors/font_color = Color(1, 0, 1, 1)
+theme_override_font_sizes/font_size = 36
+text = "Highscore:"
+horizontal_alignment = 2
+
+[node name="Value" type="Label" parent="UI/HUD/Highscore" unique_id=2104245589]
+layout_mode = 0
+offset_left = 195.0
+offset_top = 1.0
+offset_right = 254.0
+offset_bottom = 51.0
+theme_override_colors/font_color = Color(1, 0, 1, 1)
+theme_override_font_sizes/font_size = 36
+text = "0"
+
+[node name="Werkstatt" type="Button" parent="UI/HUD" unique_id=1344408848]
 layout_mode = 1
-anchors_preset = 0
 offset_left = 12.0
 offset_top = 12.0
 offset_right = 120.0
 offset_bottom = 44.0
 text = "Werkstatt"
 
-[node name="Controls" type="HBoxContainer" parent="UI/HUD"]
+[node name="Score" type="Label" parent="UI/HUD" unique_id=385570907]
+layout_mode = 0
+offset_left = 884.0
+offset_top = 43.0
+offset_right = 1029.0
+offset_bottom = 110.0
+theme_override_colors/font_color = Color(1, 0, 1, 1)
+theme_override_font_sizes/font_size = 36
+text = "Score:"
+horizontal_alignment = 2
+
+[node name="Value" type="Label" parent="UI/HUD/Score" unique_id=1320096795]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 5.0
+offset_right = 177.0
+offset_bottom = 55.0
+theme_override_colors/font_color = Color(1, 0, 1, 1)
+theme_override_font_sizes/font_size = 36
+text = "0"
+
+[node name="Controls" type="HBoxContainer" parent="UI/HUD" unique_id=26493767]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -41,20 +84,44 @@ offset_bottom = -16.0
 grow_vertical = 0
 theme_override_constants/separation = 16
 
-[node name="TiltLeft" type="Button" parent="UI/HUD/Controls"]
+[node name="TiltLeft" type="Button" parent="UI/HUD/Controls" unique_id=483101965]
 custom_minimum_size = Vector2(90, 56)
 layout_mode = 2
 text = "◀"
 
-[node name="TiltRight" type="Button" parent="UI/HUD/Controls"]
+[node name="TiltRight" type="Button" parent="UI/HUD/Controls" unique_id=2084737640]
 custom_minimum_size = Vector2(90, 56)
 layout_mode = 2
 text = "▶"
 
-[node name="Sep" type="Control" parent="UI/HUD/Controls"]
+[node name="Sep" type="Control" parent="UI/HUD/Controls" unique_id=1862761206]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 
-[node name="Specials" type="HBoxContainer" parent="UI/HUD/Controls"]
+[node name="Specials" type="HBoxContainer" parent="UI/HUD/Controls" unique_id=456327755]
 layout_mode = 2
 theme_override_constants/separation = 12
+
+[node name="ProgressBar" type="ProgressBar" parent="UI/HUD" unique_id=1292986704]
+layout_mode = 0
+offset_left = 161.0
+offset_top = 21.0
+offset_right = 809.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(0, 0.0023275556, 1.5318628e-05, 1)
+
+[node name="Min" type="Label" parent="UI/HUD/ProgressBar" unique_id=406285985]
+layout_mode = 0
+offset_left = -17.0
+offset_top = 32.0
+offset_right = 23.0
+offset_bottom = 55.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+
+[node name="Max" type="Label" parent="UI/HUD/ProgressBar" unique_id=132095312]
+layout_mode = 0
+offset_left = 625.0
+offset_top = 29.0
+offset_right = 665.0
+offset_bottom = 52.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)

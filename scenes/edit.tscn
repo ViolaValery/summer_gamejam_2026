@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://73w5vn3jnjep" path="res://scripts/edit.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://dvacrir653uo6" path="res://scenes/terrain.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://scenes/vehicle.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://2lbvi5h5mhbl" path="res://scenes/vehicle.tscn" id="3"]
 
 [node name="Edit" type="Node2D" unique_id=192187726]
 script = ExtResource("1")
@@ -49,3 +49,14 @@ text = "Spielen"
 [node name="Reset" type="Button" parent="UI/HUD/Panel/VBox" unique_id=939058104]
 layout_mode = 2
 text = "Zurücksetzen"
+
+[node name="Label" type="Label" parent="UI/HUD" unique_id=1652208054]
+layout_mode = 0
+offset_left = 613.0
+offset_top = 9.0
+offset_right = 999.0
+offset_bottom = 72.0
+theme_override_colors/font_color = Color(1, 0, 1, 1)
+theme_override_font_sizes/font_size = 45
+text = "Budget: 0$"
+horizontal_alignment = 2

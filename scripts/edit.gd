@@ -21,6 +21,7 @@ const PARTS := {
 @onready var vehicle: Node2D = $Vehicle
 @onready var chassis: RigidBody2D = $Vehicle/Chassis
 @onready var palette: Node2D = $Palette
+@onready var budget_label: Label = $UI/HUD/Label
 
 ## Drehschritt pro Mausrad-Tick (~15°).
 const ROT_STEP := 0.2618
@@ -44,7 +45,9 @@ var overlay: Node2D
 
 
 func _ready() -> void:
+	GameState.set_budget()
 	GameState.build_into(vehicle)  # gespeicherten Bau wiederherstellen
+	budget_label.text = "Budget: " + str(GameState.budget) + "$"
 	_freeze_all()       # in der Werkstatt bewegt sich nichts
 	_build_palette()
 	# Overlay zuletzt hinzufügen + hoher z_index -> zeichnet über allem.

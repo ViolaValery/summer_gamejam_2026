@@ -15,16 +15,25 @@ const TILT_TORQUE := 12000.0
 @onready var tilt_right: Button = $UI/HUD/Controls/TiltRight
 @onready var specials_box: HBoxContainer = $UI/HUD/Controls/Specials
 @onready var workshop_button: Button = $UI/HUD/Werkstatt
+@onready var score_label: Label = $UI/HUD/Score/Value
+@onready var highscore_label: Label = $UI/HUD/Highscore/Value
+@onready var progress_bar: ProgressBar = $UI/HUD/ProgressBar
+@onready var progress_label_min: Label = $UI/HUD/ProgressBar/Min
+@onready var progress_label_max: Label = $UI/HUD/ProgressBar/Max
 
 var vehicle: Node2D
 var chassis: RigidBody2D
 var tilt := 0.0  # -1 = links, +1 = rechts, 0 = nichts
+
+var next_checkpoint = 0
 
 
 func _ready() -> void:
 	_spawn_vehicle()
 	camera.global_position = chassis.global_position
 
+	update_progress()
+	
 	# Knöpfe aus der Szene mit der Logik verbinden.
 	tilt_left.button_down.connect(func(): tilt = -1.0)
 	tilt_left.button_up.connect(func(): tilt = 0.0)
@@ -63,12 +72,28 @@ func _physics_process(_delta: float) -> void:
 	if tilt != 0.0:
 		chassis.apply_torque(tilt * TILT_TORQUE)
 
-
 func _process(delta: float) -> void:
 	# Kamera folgt dem Fahrwerk mit etwas Vorausblick.
 	var target := chassis.global_position + Vector2(150, -40)
 	camera.global_position = camera.global_position.lerp(target, 5.0 * delta)
+	# update score
+	var score = int(chassis.global_position.x / 5)
+	progress_bar.value = score
+	print_debug(score, next_checkpoint)
+	if score > next_checkpoint:
+		update_progress()
+	if score > GameState.highscore:
+		GameState.highscore =  score
+	score_label.text = str(score)
+	highscore_label.text = str(GameState.highscore)
 
+
+func update_progress() -> void:
+	progress_bar.min_value = next_checkpoint
+	progress_label_min.text = str(next_checkpoint)
+	next_checkpoint = GameState.increment_checkpoint(next_checkpoint)
+	progress_bar.max_value = next_checkpoint
+	progress_label_max.text = str(next_checkpoint)
 
 # --- Spezial-Knöpfe (dynamisch: je nachdem, welche Teile dranhängen) -------
 

@@ -8,6 +8,18 @@ extends Node
 ## Jeder Bauplan-Eintrag beschreibt ein angebautes Teil:
 ##   { path = Szene des Teils, pos/rot = Lage relativ zum Gefährt, kind = Name }
 
+const INITIAL_BUDGET: int = 1000
+
+var highscore: int
+var last_checkpoint: int = 0 # i guess just index?
+var last_checkpoint_dist: int = 0
+
+var budget: int = INITIAL_BUDGET # recalculated with new highscore
+
+# checkpoints
+const FIRST_CHECKPOINT: int = 150
+const CHECKPOINT_COEFF: float = 1.3
+
 var blueprint: Array = []
 
 
@@ -36,3 +48,27 @@ func build_into(vehicle: Node2D) -> void:
 		part.rotation = entry.rot
 		part.freeze = true
 		part.set_meta("kind", entry.kind)
+
+
+# calcucate budget depending on score
+func set_budget() -> void:
+	var score = highscore
+	var increment: int = 100 # add N to budget 
+	var budget_coeff = 1.3
+	var res: int = 0
+	while score - FIRST_CHECKPOINT > 0:
+		res += increment
+		var next_checkpoint = int(FIRST_CHECKPOINT * CHECKPOINT_COEFF)
+		increment = int(increment * budget_coeff)
+		score -= next_checkpoint
+
+	budget = max(INITIAL_BUDGET, res) 
+
+
+func get_next_checkpoint() -> int:
+	return last_checkpoint_dist + FIRST_CHECKPOINT * int(CHECKPOINT_COEFF ** last_checkpoint) 
+
+func increment_checkpoint(checkpoint: int) -> int:
+	last_checkpoint += 1
+	last_checkpoint_dist = checkpoint 
+	return get_next_checkpoint()
