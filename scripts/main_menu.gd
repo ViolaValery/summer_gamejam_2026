@@ -1,9 +1,9 @@
 extends Control
 
 @onready
-var button_start = $start
+var start = $start
 @onready
-var button_quit = $quit
+var quit = $quit
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	visible = false
