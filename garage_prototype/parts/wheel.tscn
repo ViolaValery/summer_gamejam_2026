@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3]
+
+[sub_resource type="CircleShape2D" id="shape"]
+radius = 24.0
+
+[sub_resource type="PhysicsMaterial" id="mat"]
+friction = 1.0
+bounce = 0.0
+
+[node name="Wheel" type="RigidBody2D"]
+mass = 0.5
+physics_material_override = SubResource("mat")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("shape")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.18, 0.18, 0.2, 1)
+polygon = PackedVector2Array(24, 0, 20.78, 12, 12, 20.78, 0, 24, -12, 20.78, -20.78, 12, -24, 0, -20.78, -12, -12, -20.78, 0, -24, 12, -20.78, 20.78, -12)

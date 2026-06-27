@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://op4odlsx2rbg"]
+
+[sub_resource type="PhysicsMaterial" id="mat"]
+friction = 1.2
+bounce = 0.3
+
+[sub_resource type="CircleShape2D" id="shape"]
+radius = 26.0
+
+[node name="Wheel" type="RigidBody2D" unique_id=131332590]
+mass = 0.6
+physics_material_override = SubResource("mat")
+metadata/attach = "pin"
+metadata/sticky_percent = 40.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=743244930]
+shape = SubResource("shape")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=430095157]
+color = Color(0.18, 0.18, 0.2, 1)
+polygon = PackedVector2Array(26, 0, 22.5, 13, 13, 22.5, 0, 26, -13, 22.5, -22.5, 13, -26, 0, -22.5, -13, -13, -22.5, 0, -26, 13, -22.5, 22.5, -13)

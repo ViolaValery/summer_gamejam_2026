@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://dwerj1fjj4bx8"]
+
+[ext_resource type="Script" uid="uid://d32jbqswby5xc" path="res://scripts/background.gd" id="1_cbsqf"]
+[ext_resource type="Texture2D" uid="uid://e2bx08mqgm1u" path="res://assets/background.png" id="2_wisxt"]
+[ext_resource type="Texture2D" uid="uid://ckmgje6absk5g" path="res://assets/background_1.png" id="3_wax1t"]
+[ext_resource type="Texture2D" uid="uid://cyqx80o56pd5o" path="res://assets/background_2.png" id="4_1tmhi"]
+
+[node name="Background" type="CanvasLayer" unique_id=127488795]
+layer = -10
+script = ExtResource("1_cbsqf")
+sky_factor = 0.1
+near_factor = 0.4
+
+[node name="Sky" type="Sprite2D" parent="." unique_id=1370931645]
+texture_repeat = 2
+position = Vector2(0, -298)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("2_wisxt")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 4096, 1024)
+
+[node name="Far" type="Sprite2D" parent="." unique_id=64564881]
+modulate = Color(1, 1, 1, 0.85)
+texture_repeat = 2
+position = Vector2(0, -200)
+scale = Vector2(1.0105468, 1.0105468)
+texture = ExtResource("3_wax1t")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 4096, 1024)
+
+[node name="Near" type="Sprite2D" parent="." unique_id=1878967270]
+texture_repeat = 2
+position = Vector2(0, -227.00005)
+scale = Vector2(1.025, 1.025)
+texture = ExtResource("4_1tmhi")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 4096, 1024)

@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3]
+
+[sub_resource type="RectangleShape2D" id="shape"]
+size = Vector2(110, 24)
+
+[sub_resource type="PhysicsMaterial" id="mat"]
+friction = 0.5
+
+[node name="Platform" type="RigidBody2D"]
+mass = 1.0
+physics_material_override = SubResource("mat")
+metadata/attach = "weld"
+metadata/platform = true
+metadata/sticky_percent = 30.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("shape")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.55, 0.42, 0.3, 1)
+polygon = PackedVector2Array(-55, -12, 55, -12, 55, 12, -55, 12)

@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://2lbvi5h5mhbl"]
+
+[ext_resource type="Script" uid="uid://dfv8a4p1aj5jm" path="res://scripts/vehicle.gd" id="1"]
+
+[sub_resource type="PhysicsMaterial" id="cmat"]
+friction = 0.4
+
+[sub_resource type="RectangleShape2D" id="cshape"]
+size = Vector2(120, 21)
+
+[node name="Vehicle" type="Node2D" unique_id=2014306444]
+position = Vector2(1, -8)
+script = ExtResource("1")
+
+[node name="Chassis" type="RigidBody2D" parent="." unique_id=694526576]
+mass = 2.0
+physics_material_override = SubResource("cmat")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chassis" unique_id=956782870]
+position = Vector2(0, 9.5)
+shape = SubResource("cshape")
+
+[node name="Polygon2D" type="Polygon2D" parent="Chassis" unique_id=1812787906]
+position = Vector2(0, 9.5)
+scale = Vector2(1, 0.525)
+color = Color(0.4, 0.6, 0.9, 1)
+polygon = PackedVector2Array(-60, -20, 60, -20, 60, 20, -60, 20)
