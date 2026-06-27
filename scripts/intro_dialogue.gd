@@ -1,5 +1,6 @@
 extends Node2D
 
+var _switching_scene = false 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Dialogic.timeline_ended.connect(_on_timeline_ended)
@@ -15,12 +16,15 @@ func DialogicSignal(argument:String):
 		get_tree().quit()
 
 func _on_timeline_ended() -> void:
-	Global.game_controller.change_gui_scene("res://scenes/gui/main_menu.tscn")
+	if _switching_scene:
+		return
+	_switching_scene = true
+	Global.game_controller.change_gui_scene("res://scenes/gui/main_menu.tscn", true)
 	
 func _on_skip_pressed() -> void:
 	print("SKIP PRESSED")
-	Dialogic.timeline_ended.disconnect(_on_timeline_ended)
+	_switching_scene = true
 	Dialogic.clear()
 	print("SWITCHING TO MAINMENU")
+	await get_tree().process_frame
 	Global.game_controller.change_gui_scene("res://scenes/gui/main_menu.tscn")
-	print("DONE")

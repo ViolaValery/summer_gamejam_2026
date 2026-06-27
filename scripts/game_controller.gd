@@ -14,14 +14,16 @@ var current_gui_scene
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Global.game_controller = self
-	change_gui_scene("res://scenes/gui/intro_dialogue.tscn")
+	change_gui_scene("res://scenes/gui/intro_dialogue.tscn", true)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta) -> void:
 	pass
 
 func change_gui_scene(new_scene: String, delete: bool = true, keep_running: bool = false) -> void:
+	print("CHANGE GUI SCENE: ", new_scene, " current: ", current_gui_scene)
 	if current_gui_scene != null:
+		print("REMOVING: ", current_gui_scene)
 		if delete:
 			current_gui_scene.queue_free() # remove node entirely
 		elif keep_running:
