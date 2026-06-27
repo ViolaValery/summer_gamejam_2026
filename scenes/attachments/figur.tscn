@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/figur.gd" id="1"]
+
+[sub_resource type="CircleShape2D" id="shape"]
+radius = 16.0
+
+[node name="Figur" type="RigidBody2D"]
+mass = 0.1
+gravity_scale = 1.0
+script = ExtResource("1")
+metadata/attach = "pin"
+metadata/sticky_percent = 100.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("shape")

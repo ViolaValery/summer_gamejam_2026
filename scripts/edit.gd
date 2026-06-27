@@ -32,6 +32,11 @@ const PARTS := {
 		"available_from_level": 6,
 		"price": 1000
 		},
+	"Figur": {
+		"scene": preload("res://scenes/attachments/figur.tscn"),
+		"available_from_level": 0,
+		"price": 0
+		},
 }
 
 const PRICE_LABEL := preload("res://scenes/attachments/price_tag.tscn")
@@ -87,10 +92,12 @@ func _ready() -> void:
 # --- Palette --------------------------------------------------------------
 
 func _build_palette() -> void:
-	var pos := Vector2(750, 110)
+	# Abstand so wählen, dass ALLE Teile in den sichtbaren Bereich passen.
+	var pos := Vector2(750, 95)
+	var step: float = 470.0 / maxf(1.0, float(PARTS.size()))
 	for kind in PARTS:
 		_spawn_palette_item(kind, pos)
-		pos.y += 130.0
+		pos.y += step
 
 
 func _spawn_palette_item(kind: String, pos: Vector2) -> void:
