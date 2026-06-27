@@ -2,6 +2,267 @@
 
 [ext_resource type="Script" uid="uid://c4al21keomyqs" path="res://scripts/level.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://dvacrir653uo6" path="res://scenes/terrain.tscn" id="2"]
+[ext_resource type="Texture2D" uid="uid://ce68mq70sd0a5" path="res://assets/progress_bar/frame0000.png" id="3_5ga6x"]
+[ext_resource type="Texture2D" uid="uid://club1yb1hmcpd" path="res://assets/progress_bar/frame0001.png" id="4_nj2gj"]
+[ext_resource type="Texture2D" uid="uid://w0mh68ubt74c" path="res://assets/progress_bar/frame0002.png" id="5_msn66"]
+[ext_resource type="Texture2D" uid="uid://ba8jefe7b5xg1" path="res://assets/progress_bar/frame0003.png" id="6_xmwm8"]
+[ext_resource type="Texture2D" uid="uid://tt55j3absrq7" path="res://assets/progress_bar/frame0004.png" id="7_jydfl"]
+[ext_resource type="Texture2D" uid="uid://v7cs4aek77hm" path="res://assets/progress_bar/frame0005.png" id="8_u0n8q"]
+[ext_resource type="Texture2D" uid="uid://cajmg2kajd0xd" path="res://assets/progress_bar/frame0006.png" id="9_d5irf"]
+[ext_resource type="Texture2D" uid="uid://c4r3kd4dn0xp" path="res://assets/progress_bar/frame0007.png" id="10_ltwek"]
+[ext_resource type="Texture2D" uid="uid://cc0qt3wt8uacw" path="res://assets/progress_bar/frame0008.png" id="11_vry8j"]
+[ext_resource type="Texture2D" uid="uid://grtutbvn1kkc" path="res://assets/progress_bar/frame0009.png" id="12_idnaj"]
+[ext_resource type="Texture2D" uid="uid://de0a02t1x7fsu" path="res://assets/progress_bar/frame0010.png" id="13_vwqyp"]
+[ext_resource type="Texture2D" uid="uid://b6be8xoq86xth" path="res://assets/progress_bar/frame0011.png" id="14_smfc2"]
+[ext_resource type="Texture2D" uid="uid://bg8cyl83ahwc5" path="res://assets/progress_bar/frame0012.png" id="15_s1acf"]
+[ext_resource type="Texture2D" uid="uid://bgbq8v1astg08" path="res://assets/progress_bar/frame0013.png" id="16_u5upv"]
+[ext_resource type="Texture2D" uid="uid://dreapy8lwqj0d" path="res://assets/progress_bar/frame0014.png" id="17_om2me"]
+[ext_resource type="Texture2D" uid="uid://6rg0gvtya65o" path="res://assets/progress_bar/frame0015.png" id="18_iij8i"]
+[ext_resource type="Texture2D" uid="uid://b1pkmauvu4ms7" path="res://assets/progress_bar/frame0016.png" id="19_4qdnu"]
+[ext_resource type="Texture2D" uid="uid://cpeewyfdfg0xq" path="res://assets/progress_bar/frame0017.png" id="20_7kuto"]
+[ext_resource type="Texture2D" uid="uid://bnfjyt4pjb3u1" path="res://assets/progress_bar/frame0018.png" id="21_k1glb"]
+[ext_resource type="Texture2D" uid="uid://deb30godhmlf7" path="res://assets/progress_bar/frame0019.png" id="22_clbla"]
+[ext_resource type="Texture2D" uid="uid://cvtuiagjnbvhv" path="res://assets/progress_bar/frame0020.png" id="23_ebg7i"]
+[ext_resource type="Texture2D" uid="uid://drnmo5hw8i613" path="res://assets/progress_bar/frame0021.png" id="24_iobf8"]
+[ext_resource type="Texture2D" uid="uid://cl2ovdkb55gxu" path="res://assets/progress_bar/frame0022.png" id="25_kbk4x"]
+[ext_resource type="Texture2D" uid="uid://u2ll7m6adfon" path="res://assets/progress_bar/frame0023.png" id="26_p1qlp"]
+[ext_resource type="Texture2D" uid="uid://dlcck1thu6ipx" path="res://assets/progress_bar/frame0024.png" id="27_1sbqr"]
+[ext_resource type="Texture2D" uid="uid://c0n57sotev3nh" path="res://assets/progress_bar/frame0025.png" id="28_bdomq"]
+[ext_resource type="Texture2D" uid="uid://di13o2x8ilm8w" path="res://assets/progress_bar/frame0026.png" id="29_tvrmj"]
+[ext_resource type="Texture2D" uid="uid://cjtymnud7prdy" path="res://assets/progress_bar/frame0027.png" id="30_7ujeh"]
+[ext_resource type="Texture2D" uid="uid://b0xh6u4jvcbkk" path="res://assets/progress_bar/frame0028.png" id="31_5bunc"]
+[ext_resource type="Texture2D" uid="uid://dw3o17de4rlwd" path="res://assets/progress_bar/frame0029.png" id="32_ty36l"]
+[ext_resource type="Texture2D" uid="uid://cslghtyggo35i" path="res://assets/progress_bar/frame0030.png" id="33_speit"]
+[ext_resource type="Texture2D" uid="uid://nga2v72rxq74" path="res://assets/progress_bar/frame0031.png" id="34_wb1uj"]
+[ext_resource type="Texture2D" uid="uid://t5sd6o4ja51b" path="res://assets/progress_bar/frame0032.png" id="35_sy37w"]
+[ext_resource type="Texture2D" uid="uid://djfw43e3ay74v" path="res://assets/progress_bar/frame0033.png" id="36_f55ft"]
+[ext_resource type="Texture2D" uid="uid://dxg3rxdyr2snl" path="res://assets/progress_bar/frame0034.png" id="37_ovgnb"]
+[ext_resource type="Texture2D" uid="uid://c3ap5re517bqw" path="res://assets/progress_bar/frame0035.png" id="38_kwu62"]
+[ext_resource type="Texture2D" uid="uid://dy48l7ntevwlp" path="res://assets/progress_bar/frame0036.png" id="39_y73rr"]
+[ext_resource type="Texture2D" uid="uid://7xjduedpbvmd" path="res://assets/progress_bar/frame0037.png" id="40_i7b3e"]
+[ext_resource type="Texture2D" uid="uid://cmdcw7vosjf4q" path="res://assets/progress_bar/frame0038.png" id="41_vfkgb"]
+[ext_resource type="Texture2D" uid="uid://dcb7e6sly7m3l" path="res://assets/progress_bar/frame0039.png" id="42_1ep04"]
+[ext_resource type="Texture2D" uid="uid://s3ex5skv02hp" path="res://assets/progress_bar/frame0040.png" id="43_236yy"]
+[ext_resource type="Texture2D" uid="uid://ds0pwvffrd77k" path="res://assets/progress_bar/frame0041.png" id="44_xrpag"]
+[ext_resource type="Texture2D" uid="uid://coy60dcyrhb5c" path="res://assets/progress_bar/frame0042.png" id="45_4a5sc"]
+[ext_resource type="Texture2D" uid="uid://drps3ssw15ru5" path="res://assets/progress_bar/frame0043.png" id="46_w33q4"]
+[ext_resource type="Texture2D" uid="uid://c0fhburep3t22" path="res://assets/progress_bar/frame0044.png" id="47_s2ybf"]
+[ext_resource type="Texture2D" uid="uid://ygcw6ib4w1cq" path="res://assets/progress_bar/frame0045.png" id="48_dk6qd"]
+[ext_resource type="Texture2D" uid="uid://5imr64qolo5l" path="res://assets/progress_bar/frame0046.png" id="49_nfwxq"]
+[ext_resource type="Texture2D" uid="uid://dawwv3n47m3mn" path="res://assets/progress_bar/frame0047.png" id="50_jptc6"]
+[ext_resource type="Texture2D" uid="uid://ckl2yo43olnp4" path="res://assets/progress_bar/frame0048.png" id="51_5fap2"]
+[ext_resource type="Texture2D" uid="uid://shwj6ljt1ksc" path="res://assets/progress_bar/frame0049.png" id="52_1d5u2"]
+[ext_resource type="Texture2D" uid="uid://dd7rcx07nqobk" path="res://assets/progress_bar/frame0050.png" id="53_fdwjd"]
+[ext_resource type="Texture2D" uid="uid://cpwbg33v7eckb" path="res://assets/progress_bar/frame0051.png" id="54_gxvwf"]
+[ext_resource type="Texture2D" uid="uid://bjvci2ko1gahe" path="res://assets/progress_bar/frame0052.png" id="55_hgjl6"]
+[ext_resource type="Texture2D" uid="uid://bnp1eopt1docx" path="res://assets/progress_bar/frame0053.png" id="56_fkalo"]
+[ext_resource type="Texture2D" uid="uid://bq4sq7qjmab0p" path="res://assets/progress_bar/frame0054.png" id="57_tmks3"]
+[ext_resource type="Texture2D" uid="uid://clqqsu82m6228" path="res://assets/progress_bar/frame0055.png" id="58_appgx"]
+[ext_resource type="Texture2D" uid="uid://ywomnjwmo7le" path="res://assets/progress_bar/frame0056.png" id="59_0g86u"]
+[ext_resource type="Texture2D" uid="uid://bc180a20n43u3" path="res://assets/progress_bar/frame0057.png" id="60_y2y7i"]
+[ext_resource type="Texture2D" uid="uid://bd5xminamewem" path="res://assets/progress_bar/frame0058.png" id="61_iri6o"]
+[ext_resource type="Texture2D" uid="uid://bdnp271o2307j" path="res://assets/progress_bar/frame0059.png" id="62_albe2"]
+[ext_resource type="Texture2D" uid="uid://cjbvf7jrpy5yr" path="res://assets/progress_bar/frame0060.png" id="63_pmw43"]
+[ext_resource type="Texture2D" uid="uid://3p1ye5k1ljm3" path="res://assets/progress_bar/frame0061.png" id="64_d3p7y"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_plen7"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_5ga6x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_nj2gj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_msn66")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_xmwm8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_jydfl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_u0n8q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_d5irf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ltwek")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_vry8j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_idnaj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_vwqyp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_smfc2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_s1acf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_u5upv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_om2me")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_iij8i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_4qdnu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_7kuto")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_k1glb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_clbla")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_ebg7i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_iobf8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_kbk4x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_p1qlp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_1sbqr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_bdomq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_tvrmj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_7ujeh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_5bunc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_ty36l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_speit")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_wb1uj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_sy37w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_f55ft")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_ovgnb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_kwu62")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_y73rr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_i7b3e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_vfkgb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_1ep04")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_236yy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_xrpag")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_4a5sc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_w33q4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_s2ybf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_dk6qd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_nfwxq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_jptc6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_5fap2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_1d5u2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_fdwjd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_gxvwf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_hgjl6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_fkalo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_tmks3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_appgx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_0g86u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_y2y7i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_iri6o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_albe2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_pmw43")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_d3p7y")
+}],
+"loop": true,
+"name": &"progress",
+"speed": 5.0
+}]
 
 [node name="Level" type="Node2D" unique_id=1614333757]
 script = ExtResource("1")
@@ -103,6 +364,7 @@ layout_mode = 2
 theme_override_constants/separation = 12
 
 [node name="ProgressBar" type="ProgressBar" parent="UI/HUD" unique_id=1292986704]
+visible = false
 layout_mode = 0
 offset_left = 161.0
 offset_top = 21.0
@@ -124,4 +386,24 @@ offset_left = 625.0
 offset_top = 29.0
 offset_right = 665.0
 offset_bottom = 52.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+
+[node name="ProgressRocket" type="AnimatedSprite2D" parent="UI/HUD" unique_id=1531693281]
+position = Vector2(527, 42)
+scale = Vector2(0.32055148, 0.2608173)
+sprite_frames = SubResource("SpriteFrames_plen7")
+animation = &"progress"
+
+[node name="Max" type="Label" parent="UI/HUD/ProgressRocket" unique_id=2049274896]
+offset_left = 1073.1505
+offset_top = 72.84793
+offset_right = 1113.1505
+offset_bottom = 95.84793
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+
+[node name="Min" type="Label" parent="UI/HUD/ProgressRocket" unique_id=54343720]
+offset_left = -1066.9111
+offset_top = 69.013824
+offset_right = -1026.9111
+offset_bottom = 92.013824
 theme_override_colors/font_color = Color(0, 1, 0, 1)

@@ -17,15 +17,16 @@ const TILT_TORQUE := 12000.0
 @onready var workshop_button: Button = $UI/HUD/Werkstatt
 @onready var score_label: Label = $UI/HUD/Score/Value
 @onready var highscore_label: Label = $UI/HUD/Highscore/Value
-@onready var progress_bar: ProgressBar = $UI/HUD/ProgressBar
-@onready var progress_label_min: Label = $UI/HUD/ProgressBar/Min
-@onready var progress_label_max: Label = $UI/HUD/ProgressBar/Max
+# @onready var progress_bar: ProgressBar = $UI/HUD/ProgressBar
+@onready var progress_label_min: Label = $UI/HUD/ProgressRocket/Min
+@onready var progress_label_max: Label = $UI/HUD/ProgressRocket/Max
+@onready var rocket: AnimatedSprite2D = $UI/HUD/ProgressRocket
 
 var vehicle: Node2D
 var chassis: RigidBody2D
 var tilt := 0.0  # -1 = links, +1 = rechts, 0 = nichts
 
-var next_checkpoint = 0
+var next_checkpoint := 0
 
 
 func _ready() -> void:
@@ -77,8 +78,8 @@ func _process(delta: float) -> void:
 	var target := chassis.global_position + Vector2(150, -40)
 	camera.global_position = camera.global_position.lerp(target, 5.0 * delta)
 	# update score
-	var score = int(chassis.global_position.x / 5)
-	progress_bar.value = score
+	var score := int(chassis.global_position.x / 5)
+	move_rocket(score)
 	if score > next_checkpoint:
 		update_progress()
 	if score > GameState.highscore:
@@ -88,14 +89,23 @@ func _process(delta: float) -> void:
 
 
 func update_progress(increment: bool = true) -> void:
-	progress_bar.min_value = next_checkpoint
 	progress_label_min.text = str(next_checkpoint)
 	if increment:
 		next_checkpoint = GameState.increment_checkpoint(next_checkpoint)
 	else:
 		next_checkpoint = GameState.get_next_checkpoint()
-	progress_bar.max_value = next_checkpoint
 	progress_label_max.text = str(next_checkpoint)
+
+func move_rocket(score: int) -> void:
+	var min_value := GameState.last_checkpoint_dist
+	var max_value := next_checkpoint
+	var value := float(score - min_value) / (max_value - min_value)
+	print_debug(value)
+	var total_frames = rocket.sprite_frames.get_frame_count("progress")
+	var frame_index = int(clamp(value, 0.0, 1.0) * (total_frames - 1))
+
+	rocket.animation = "progress"
+	rocket.frame = frame_index
 
 # --- Spezial-Knöpfe (dynamisch: je nachdem, welche Teile dranhängen) -------
 
