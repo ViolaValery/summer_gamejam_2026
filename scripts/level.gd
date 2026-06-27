@@ -35,17 +35,17 @@ func _ready() -> void:
 	_add_special_buttons()
 
 
-# Holt das Gefährt aus der Werkstatt – oder baut ein Standard-Gefährt.
+# Baut das Gefährt aus dem gespeicherten Bauplan – oder ein Standard-Gefährt.
 func _spawn_vehicle() -> void:
-	if GameState.built_vehicle != null:
-		vehicle = GameState.built_vehicle
-		GameState.built_vehicle = null
-	else:
+	vehicle = preload("res://scenes/vehicle.tscn").instantiate()
+	GameState.build_into(vehicle)  # Teile aus dem Bauplan der Werkstatt
+
+	if GameState.blueprint.is_empty():
 		# Fallback, wenn die Szene direkt (ohne Werkstatt) gestartet wird.
-		vehicle = preload("res://scenes/vehicle.tscn").instantiate()
 		for x in [-45.0, 45.0]:
 			var w := preload("res://scenes/attachments/wheel.tscn").instantiate()
 			w.position = Vector2(x, 32)
+			w.set_meta("kind", "Reifen")
 			vehicle.add_child(w)
 
 	add_child(vehicle)

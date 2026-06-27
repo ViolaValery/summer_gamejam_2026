@@ -15,6 +15,7 @@ script = ExtResource("1")
 [node name="Chassis" type="RigidBody2D" parent="." unique_id=694526576]
 mass = 2.0
 physics_material_override = SubResource("cmat")
+metadata/sticky_percent = 30.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Chassis" unique_id=956782870]
 position = Vector2(0, 9.5)
