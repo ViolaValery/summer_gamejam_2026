@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://xlol4oqojopi"
-path="res://.godot/imported/Hidachi.ttf-2c1763eba8735894d37b243b2b2de45a.fontdata"
+uid="uid://o0oxu3y4fyff"
+path="res://.godot/imported/ADELIA.otf-5167ca83eec1a792ed38e0280da25f59.fontdata"
 
 [deps]
 
-source_file="res://assets/font/Hidachi.ttf"
-dest_files=["res://.godot/imported/Hidachi.ttf-2c1763eba8735894d37b243b2b2de45a.fontdata"]
+source_file="res://assets/font/ADELIA.otf"
+dest_files=["res://.godot/imported/ADELIA.otf-5167ca83eec1a792ed38e0280da25f59.fontdata"]
 
 [params]
 
@@ -30,7 +30,12 @@ Fallbacks=null
 fallbacks=[]
 Compress=null
 compress=true
-preload=[]
+preload=[{
+"chars": [],
+"glyphs": [],
+"name": "New Configuration",
+"size": Vector2i(16, 0)
+}]
 language_support={}
 script_support={}
 opentype_features={}

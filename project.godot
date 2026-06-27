@@ -79,7 +79,8 @@ enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
 
 [gui]
 
-theme/custom_font="uid://xlol4oqojopi"
+theme/custom="uid://dr0erp7ye37r6"
+theme/custom_font="uid://o0oxu3y4fyff"
 
 [input]
 
