@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://d2sm5l1ig1ts7"]
+
+[ext_resource type="Script" uid="uid://6x7lu6i6jgxq" path="res://scripts/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="Texture2D" uid="uid://ckmgje6absk5g" path="res://assets/background_1.png" id="2_8ln24"]
+[ext_resource type="Texture2D" uid="uid://cyqx80o56pd5o" path="res://assets/background_2.png" id="3_rtw2f"]
+[ext_resource type="Texture2D" uid="uid://c7f63p3mfbfo" path="res://assets/button.png" id="4_oa1go"]
+[ext_resource type="Theme" uid="uid://dr0erp7ye37r6" path="res://assets/button_default_theme.tres" id="5_rtw2f"]
+[ext_resource type="Texture2D" uid="uid://c8prv2ujv8jwe" path="res://assets/background_blue.png" id="5_tbmy8"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jk1qb"]
+texture = ExtResource("4_oa1go")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5dd4i"]
+texture = ExtResource("4_oa1go")
+
+[node name="Main Menu" type="Control" unique_id=1440624423]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = -3.0
+offset_right = 3.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l6cm7")
+
+[node name="BackgroundBlue" type="Sprite2D" parent="." unique_id=971059226]
+position = Vector2(444, 512)
+texture = ExtResource("5_tbmy8")
+
+[node name="BackgroundBlue2" type="Sprite2D" parent="BackgroundBlue" unique_id=1284586535]
+position = Vector2(1020, 0)
+texture = ExtResource("5_tbmy8")
+
+[node name="Background1" type="Sprite2D" parent="BackgroundBlue" unique_id=952143140]
+position = Vector2(1, -85)
+texture = ExtResource("2_8ln24")
+
+[node name="Background4" type="Sprite2D" parent="BackgroundBlue" unique_id=454650727]
+position = Vector2(1023, -84)
+texture = ExtResource("2_8ln24")
+
+[node name="Background5" type="Sprite2D" parent="BackgroundBlue" unique_id=1483204019]
+position = Vector2(-1, -68)
+texture = ExtResource("3_rtw2f")
+
+[node name="Background6" type="Sprite2D" parent="BackgroundBlue" unique_id=1585012984]
+position = Vector2(1023, -66)
+texture = ExtResource("3_rtw2f")
+
+[node name="start" type="Button" parent="." unique_id=842111488]
+layout_mode = 0
+offset_left = 99.0
+offset_top = 100.0
+offset_right = 340.0
+offset_bottom = 171.0
+theme = ExtResource("5_rtw2f")
+theme_override_styles/normal = SubResource("StyleBoxTexture_jk1qb")
+text = "Start"
+
+[node name="quit" type="Button" parent="." unique_id=1311819865]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 204.0
+offset_right = 339.0
+offset_bottom = 282.0
+theme = ExtResource("5_rtw2f")
+theme_override_styles/normal = SubResource("StyleBoxTexture_5dd4i")
+text = "Quit
+"

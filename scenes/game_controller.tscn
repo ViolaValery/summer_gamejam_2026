@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://c01qyr2778cl2"]
+
+[ext_resource type="Script" uid="uid://cyb8o47ca1b7w" path="res://scripts/game_controller.gd" id="1_ts4rt"]
+[ext_resource type="PackedScene" uid="uid://d2sm5l1ig1ts7" path="res://scenes/gui/main_menu.tscn" id="2_rc0pn"]
+[ext_resource type="Script" uid="uid://cbcju6mdct31j" path="res://scripts/pause_menu.gd" id="3_h843c"]
+
+[node name="GameController" type="Node" unique_id=78574970 node_paths=PackedStringArray("game_2d", "gui", "pause_menu")]
+script = ExtResource("1_ts4rt")
+game_2d = NodePath("Game2D")
+gui = NodePath("GUI")
+pause_menu = NodePath("GUI/PauseMenu")
+
+[node name="Game2D" type="Node2D" parent="." unique_id=665215627]
+
+[node name="GUI" type="Control" parent="." unique_id=319871666]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MainMenu" parent="GUI" unique_id=1440624423 instance=ExtResource("2_rc0pn")]
+layout_mode = 1
+
+[node name="PauseMenu" type="Control" parent="GUI" unique_id=1189052801]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("3_h843c")
