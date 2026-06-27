@@ -34,6 +34,12 @@ const PARTS := {
 		},
 }
 
+## Pflicht-Passagier (kein normales Palette-Teil): steht links, muss per Hand
+## ans Fahrzeug gestickt werden, bevor man "Spielen" kann.
+const FIGUR_SCENE := preload("res://scenes/attachments/figur.tscn")
+## Heimat-Position der Figur links im Bild (Welt-Koordinaten = Hand/Andockpunkt).
+const FIGUR_HOME := Vector2(-30, 230)
+
 const PRICE_LABEL := preload("res://scenes/attachments/price_tag.tscn")
 
 @onready var vehicle: Node2D = $Vehicle
@@ -59,6 +65,11 @@ var drag_is_move := false
 var drag_return_pos := Vector2.ZERO
 var drag_return_rot := 0.0
 
+# Wird gerade der Pflicht-Passagier gezogen? (wird nie verworfen -> zurück nach links)
+var drag_is_passenger := false
+# Der eine Passagier (Figur). Liegt entweder links (Palette) oder am Fahrzeug.
+var passenger: RigidBody2D = null
+
 # Zeichen-Ebene, die ÜBER allem liegt (sonst verdecken Teile/Boden die Zonen).
 var overlay: Node2D
 
@@ -74,6 +85,7 @@ func _ready() -> void:
 	_freeze_all()       # in der Werkstatt bewegt sich nichts
 	_build_palette()
 	_update_palette()
+	_setup_passenger()  # Pflicht-Figur links (oder die schon angebaute übernehmen)
 	# Overlay zuletzt hinzufügen + hoher z_index -> zeichnet über allem.
 	overlay = Node2D.new()
 	overlay.z_index = 1000
@@ -87,10 +99,53 @@ func _ready() -> void:
 # --- Palette --------------------------------------------------------------
 
 func _build_palette() -> void:
-	var pos := Vector2(750, 110)
+	# Abstand so wählen, dass ALLE Teile in den sichtbaren Bereich passen.
+	var pos := Vector2(750, 95)
+	var step: float = 470.0 / maxf(1.0, float(PARTS.size()))
 	for kind in PARTS:
 		_spawn_palette_item(kind, pos)
-		pos.y += 130.0
+		pos.y += step
+
+
+# --- Pflicht-Passagier (Figur) --------------------------------------------
+
+# Übernimmt eine bereits angebaute Figur (aus dem Bauplan) – sonst neue links.
+func _setup_passenger() -> void:
+	passenger = _figur_on_vehicle()
+	if passenger == null:
+		passenger = _spawn_passenger_home()
+
+
+# Frische Figur an ihrer Heimat-Position links erzeugen.
+func _spawn_passenger_home() -> RigidBody2D:
+	var fig := FIGUR_SCENE.instantiate() as RigidBody2D
+	palette.add_child(fig)
+	fig.global_position = FIGUR_HOME
+	fig.freeze = true
+	fig.set_meta("kind", "Figur")
+	return fig
+
+
+# Schickt die Figur zurück an ihren Platz links.
+func _send_passenger_home() -> void:
+	if passenger.get_parent() != palette:
+		passenger.reparent(palette)
+	passenger.global_position = FIGUR_HOME
+	passenger.rotation = 0.0
+	passenger.freeze = true
+
+
+# Die am Fahrzeug angebaute Figur (oder null).
+func _figur_on_vehicle() -> RigidBody2D:
+	for child in vehicle.get_children():
+		if child is RigidBody2D and child.get_meta("kind", "") == "Figur":
+			return child as RigidBody2D
+	return null
+
+
+func _passenger_attached() -> bool:
+	return passenger != null and is_instance_valid(passenger) \
+			and passenger.get_parent() == vehicle
 
 
 func _spawn_palette_item(kind: String, pos: Vector2) -> void:
@@ -169,14 +224,30 @@ func _input(event: InputEvent) -> void:
 			and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 		var placed := _attachment_at(get_global_mouse_position())
 		if placed != null:
-			vehicle.remove_child(placed)   # sofort raus (queue_free wäre verzögert)
-			placed.queue_free()
+			if placed == passenger:
+				_send_passenger_home()     # Figur nie löschen -> zurück nach links
+			else:
+				vehicle.remove_child(placed)   # sofort raus (queue_free wäre verzögert)
+				placed.queue_free()
 			GameState.save_from(vehicle)   # Bauplan ohne das Teil neu schreiben
 
 
 # Greift, was unter dem Mauszeiger liegt: ein Palette-Teil (neu anbauen) ODER
 # ein schon platziertes Teil (zum Verschieben/Drehen).
 func _try_grab(point: Vector2) -> void:
+	drag_is_passenger = false
+
+	# Pflicht-Passagier links (hängt noch nicht am Fahrzeug)?
+	if passenger != null and is_instance_valid(passenger) \
+			and passenger.get_parent() != vehicle and _point_in_body(passenger, point):
+		dragging = passenger
+		drag_is_move = false
+		drag_is_passenger = true
+		drag_kind = "Figur"
+		passenger.reparent(palette)         # während des Ziehens "in der Hand"
+		passenger.freeze = true
+		return
+
 	var item := _palette_item_at(point)
 	if item != null && item.get_meta("available"):
 		dragging = item
@@ -191,6 +262,7 @@ func _try_grab(point: Vector2) -> void:
 	if placed != null:
 		dragging = placed
 		drag_is_move = true
+		drag_is_passenger = placed == passenger   # angebaute Figur verschieben
 		drag_kind = placed.get_meta("kind", "")
 		drag_return_pos = placed.position   # zum Zurücklegen, falls ungültig
 		drag_return_rot = placed.rotation
@@ -202,21 +274,24 @@ func _drop() -> void:
 	dragging = null
 	can_attach = false
 	overlay.queue_redraw()
-	var price := PARTS[drag_kind]["price"] as int
 	if _can_place(part):
 		part.reparent(vehicle)  # ans Gefährt anbauen (Position bleibt)
 		part.freeze = true      # bleibt liegen bis "Spielen"
-		GameState.budget -= price
-		_update_budget_label()
-		_update_palette()
+		if not drag_is_passenger and PARTS.has(drag_kind):
+			GameState.budget -= PARTS[drag_kind]["price"] as int
+			_update_budget_label()
+			_update_palette()
 	elif drag_is_move:
 		# Verschobenes Teil ungültig abgelegt -> zurück an die alte Stelle.
 		part.reparent(vehicle)
 		part.position = drag_return_pos
 		part.rotation = drag_return_rot
 		part.freeze = true
+	elif drag_is_passenger:
+		_send_passenger_home()  # Figur nie verwerfen -> zurück nach links
 	else:
 		part.queue_free()       # neues Teil daneben -> verwerfen
+	drag_is_passenger = false
 	GameState.save_from(vehicle)  # Bauplan aktualisieren (auch nach Verschieben)
 
 
@@ -395,7 +470,13 @@ func _shape_outline(shape: Shape2D, xform: Transform2D) -> PackedVector2Array:
 # --- Übergabe / Reset ------------------------------------------------------
 
 # Speichert den Bauplan und wechselt in die Spielszene.
+# ABER: erst wenn der Passagier mit der Hand am Fahrzeug klebt. Sonst blinkt
+# seine Hand auffällig -> Hinweis "muss erst angesteckt werden".
 func _play() -> void:
+	if not _passenger_attached():
+		if passenger != null and is_instance_valid(passenger):
+			passenger.flash_hand()
+		return
 	GameState.save_from(vehicle)
 	get_tree().change_scene_to_file("res://scenes/level.tscn")
 
@@ -410,9 +491,12 @@ func _freeze_all() -> void:
 # Setzt die Werkstatt auf Anfang: alle Attachments/Plattformen weg, Bauplan leer.
 func _to_reset() -> void:
 	GameState.blueprint.clear()          # sonst würde der Bau gleich neu geladen
+	if passenger != null and is_instance_valid(passenger):
+		passenger.queue_free()           # alte Figur (egal ob links oder am Fahrzeug)
 	for child in vehicle.get_children():
 		if child is RigidBody2D and child != chassis:
 			child.queue_free()
+	passenger = _spawn_passenger_home()  # frische Figur links bereitstellen
 	GameState.set_budget()
 	_update_budget_label()
 	_update_palette()

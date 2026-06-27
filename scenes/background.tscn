@@ -13,8 +13,39 @@ near_factor = 0.4
 
 [node name="Sky" type="Sprite2D" parent="." unique_id=1370931645]
 texture_repeat = 2
-position = Vector2(0, -298)
-scale = Vector2(1.2, 1.2)
+position = Vector2(7, 429.49603)
+scale = Vector2(0.8650391, 0.8650391)
+texture = ExtResource("2_cbsqf")
+centered = false
+offset = Vector2(0, 100)
+region_enabled = true
+region_rect = Rect2(0, 0, 4096, 1024)
+
+[node name="Sky" type="Sprite2D" parent="Sky" unique_id=957581033]
+texture_repeat = 2
+position = Vector2(1064.6918, -1036.3647)
+scale = Vector2(1.0161221, 1.0161221)
+texture = ExtResource("2_cbsqf")
+centered = false
+offset = Vector2(0, 100)
+region_enabled = true
+region_rect = Rect2(0, 0, 4096, 1024)
+
+[node name="Sky2" type="Sprite2D" parent="Sky" unique_id=800630644]
+texture_repeat = 2
+position = Vector2(-3218.351, -1037.5208)
+scale = Vector2(1.0491502, 1.0491502)
+texture = ExtResource("2_cbsqf")
+centered = false
+offset = Vector2(0, 100)
+region_enabled = true
+region_rect = Rect2(0, 0, 4096, 1024)
+
+[node name="Sky3" type="Sprite2D" parent="Sky" unique_id=1937594549]
+z_index = -1
+texture_repeat = 2
+position = Vector2(-4.6239624, 468.76953)
+scale = Vector2(0.95206827, 0.8463359)
 texture = ExtResource("2_cbsqf")
 centered = false
 offset = Vector2(0, 100)
@@ -24,8 +55,8 @@ region_rect = Rect2(0, 0, 4096, 1024)
 [node name="Far" type="Sprite2D" parent="." unique_id=64564881]
 modulate = Color(1, 1, 1, 0.85)
 texture_repeat = 2
-position = Vector2(0, -200)
-scale = Vector2(1.0105468, 1.0105468)
+position = Vector2(10, 685)
+scale = Vector2(1.3015627, 1.3015627)
 texture = ExtResource("3_wax1t")
 centered = false
 region_enabled = true
@@ -33,8 +64,8 @@ region_rect = Rect2(0, 0, 4096, 1024)
 
 [node name="Near" type="Sprite2D" parent="." unique_id=1878967270]
 texture_repeat = 2
-position = Vector2(0, -227.00005)
-scale = Vector2(1.025, 1.025)
+position = Vector2(-49.000004, 653)
+scale = Vector2(1.408789, 1.408789)
 texture = ExtResource("4_1tmhi")
 centered = false
 region_enabled = true

@@ -11,6 +11,12 @@ extends CanvasLayer
 @export var far_factor := 0.25
 @export var near_factor := 0.45
 
+## Kamera-Höhe beim ersten Frame – dient als Bezugspunkt fürs vertikale
+## Verankern am Terrain (siehe _process). So bleibt die im Editor eingestellte
+## Höhe der Sprites erhalten; ausgeglichen wird nur die ABWEICHUNG davon.
+var _base_camera_y: float
+var _has_base := false
+
 
 func _ready() -> void:
 	_widen($Sky)
@@ -31,7 +37,22 @@ func _process(_delta: float) -> void:
 	var camera := get_viewport().get_camera_2d()
 	if camera == null:
 		return
+
+	# WAAGERECHT: echter Parallax – jede Ebene scrollt mit eigenem Faktor mit,
+	# je kleiner desto weiter hinten.
 	var x := camera.global_position.x
 	$Sky.region_rect.position.x = x * sky_factor
 	$Far.region_rect.position.x = x * far_factor
 	$Near.region_rect.position.x = x * near_factor
+
+	# SENKRECHT: NICHT an der Kamera, sondern an der Welt (Terrain) verankern.
+	# Wir verschieben die ganze Ebene vertikal gegengleich zur Kamera-Höhe,
+	# damit die Skyline auf konstanter Welt-Höhe sitzt (statt am Bildschirm zu
+	# kleben). Alle drei Ebenen bewegen sich dabei gleich -> keine vertikale
+	# Parallax-Variation, der Hintergrund "wackelt" beim Steigen/Fallen nicht.
+	# Bezug ist die Start-Höhe der Kamera, damit die im Editor eingestellten
+	# Sprite-Höhen unverändert bleiben.
+	if not _has_base:
+		_base_camera_y = camera.global_position.y
+		_has_base = true
+	offset.y = _base_camera_y - camera.global_position.y

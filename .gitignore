@@ -18,3 +18,10 @@ export_credentials.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+
+addons/dialogic/Editor/Common/sidebar_resource_tree.gd
+addons/dialogic/Editor/Common/sidebar_resource_tree.gd.uid
+addons/dialogic/Editor/TimelineEditor/VisualEditor/add_event_button.gd.uid
+addons/dialogic/Editor/TimelineEditor/VisualEditor/add_event_button.tscn
+assets/button_default_theme.tres
