@@ -1,7 +1,10 @@
 # Assets:
-## Font: Hidachi https://www.1001fonts.com/hidachi-font.html
-### License
-This font is licensed under the terms of the [FFP](https://www.1001fonts.com/licenses/ffp.html), 1001Fonts.
+## Fonts: 
+### Softizen https://www.1001fonts.com/softizen-font.html
+This font is licensed under the terms of the [CC BY-ND](htthttps://creativecommons.org/licenses/by-nd/3.0/).
+
+### Adelia https://fontmeme.com/fonts/adelia-font/#fontinfo
+This font is free for [personal](https://fontmeme.com/read/) (non-commercial) use.
 
 # Plugins:
 ## Dialogic https://github.com/dialogic-godot/dialogic
