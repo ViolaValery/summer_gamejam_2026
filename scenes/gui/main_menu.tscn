@@ -6,10 +6,6 @@
 [ext_resource type="Theme" uid="uid://dr0erp7ye37r6" path="res://assets/button_default_theme.tres" id="5_rtw2f"]
 [ext_resource type="Texture2D" uid="uid://c8prv2ujv8jwe" path="res://assets/background_blue.png" id="5_tbmy8"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jk1qb"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5dd4i"]
-
 [node name="Main Menu" type="Control" unique_id=1440624423]
 layout_mode = 3
 anchors_preset = 15
@@ -54,7 +50,6 @@ offset_top = 100.0
 offset_right = 340.0
 offset_bottom = 171.0
 theme = ExtResource("5_rtw2f")
-theme_override_styles/normal = SubResource("StyleBoxTexture_jk1qb")
 text = "Start"
 
 [node name="quit" type="Button" parent="." unique_id=1311819865]
@@ -64,6 +59,5 @@ offset_top = 204.0
 offset_right = 339.0
 offset_bottom = 282.0
 theme = ExtResource("5_rtw2f")
-theme_override_styles/normal = SubResource("StyleBoxTexture_5dd4i")
 text = "Quit
 "
