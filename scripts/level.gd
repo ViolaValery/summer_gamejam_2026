@@ -8,6 +8,10 @@ extends Node2D
 ## Startpunkt des Gefährts auf der Strecke (im Inspector am Level einstellbar).
 ## x = wie weit rechts entlang der Strecke, y = Höhe (kleiner = weiter oben).
 @export var start_position := Vector2(150, -30)
+## Sicherheits-Abstand: das Gefährt wird so hoch über dem echten Terrain
+## abgesetzt und fällt dann herunter – verhindert das "Unter-die-Map-Glitchen"
+## beim Start (kein Teil startet je im Boden).
+@export var spawn_drop_height := 180.0
 ## Wie stark das Kippen wirkt.
 const TILT_TORQUE := 12000.0
 
@@ -52,6 +56,7 @@ var _won := false                # Ziel erreicht -> Sieg-Ablauf läuft
 const FLAG_SCENE := preload("res://scenes/flagge.tscn")
 const WIN_SCREEN := preload("res://scenes/geschafft.tscn")
 const SPECIAL_BUTTON := preload("res://scenes/special_button.tscn")
+const REWARD_POPUP := preload("res://scenes/reward_popup.tscn")
 
 
 func _ready() -> void:
@@ -95,10 +100,27 @@ func _spawn_vehicle() -> void:
 	chassis = vehicle.get_node("Chassis")
 
 	vehicle.assemble()  # alle Teile fest mit dem Fahrwerk verbinden
+
+	# SICHERHEIT: Gefährt sauber über dem Terrain absetzen, damit beim Start
+	# nie ein Teil im Boden steckt (Unter-die-Map-Glitch). Wir messen den echten
+	# Bodenpunkt unter dem Startpunkt und lassen das Gefährt von oben herabfallen.
+	_drop_above_ground()
+
 	# Auftauen (in der Werkstatt war alles eingefroren).
 	for child in vehicle.get_children():
 		if child is RigidBody2D:
 			child.freeze = false
+
+
+# Setzt das Gefährt knapp über den tatsächlichen Boden, sodass es nach dem
+# Auftauen kurz herunterfällt und sich sauber ablegt – statt evtl. im Terrain
+# zu spawnen.
+func _drop_above_ground() -> void:
+	var ground := _ground_point_below(chassis.global_position)
+	if ground == chassis.global_position:
+		return  # kein Terrain getroffen -> Standardposition behalten
+	var lift := ground.y - spawn_drop_height - chassis.global_position.y
+	vehicle.global_position.y += lift
 
 
 func _physics_process(delta: float) -> void:
@@ -212,10 +234,28 @@ func _process(delta: float) -> void:
 func update_progress(increment: bool = true) -> void:
 	progress_label_min.text = str(next_checkpoint)
 	if increment:
+		var old_level := GameState.last_checkpoint
 		next_checkpoint = GameState.increment_checkpoint(next_checkpoint)
+		_show_checkpoint_reward(old_level, GameState.last_checkpoint)
 	else:
 		next_checkpoint = GameState.get_next_checkpoint()
 	progress_label_max.text = str(next_checkpoint)
+
+
+# Zeigt oben rechts kurz an, was es beim erreichten Checkpoint gibt:
+# Budget-Zuwachs (+X $) und neu freigeschaltete Items.
+func _show_checkpoint_reward(old_level: int, new_level: int) -> void:
+	var delta := GameState.budget_for_level(new_level) - GameState.budget_for_level(old_level)
+	var names := []
+	for id in GameState.new_items_at_level(new_level):
+		names.append(ItemCatalog.get_def(id).display_name if ItemCatalog.has(id) else id)
+	# Vorheriges Popup entfernen, dann das neue zeigen.
+	for c in $UI.get_children():
+		if c is PanelContainer and c.has_method("show_reward"):
+			c.queue_free()
+	var popup := REWARD_POPUP.instantiate()
+	$UI.add_child(popup)
+	popup.show_reward(new_level, delta, names)
 
 func move_rocket(score: int) -> void:
 	if score > next_checkpoint:

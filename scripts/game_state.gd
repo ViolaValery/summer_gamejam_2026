@@ -60,6 +60,41 @@ func unlock_level_of(id: String) -> int:
 	return 0
 
 
+# Budget, das auf Level idx zur Verfügung steht (Config oder Formel).
+func budget_for_level(idx: int) -> int:
+	if has_progression():
+		return maxi(INITIAL_BUDGET, progression.budget_at(idx))
+	var res := 0
+	var inc := 100
+	for k in idx:
+		res += inc
+		inc = int(inc * 1.3)
+	return maxi(INITIAL_BUDGET, res)
+
+
+# Alle auf Level idx verfügbaren Item-IDs.
+func items_for_level(idx: int) -> Array:
+	if idx < 0:
+		return []
+	if has_progression():
+		return progression.items_at(idx)
+	var arr := []
+	for id in ItemCatalog.ids():
+		if ItemCatalog.get_def(id).unlock_checkpoint <= idx:
+			arr.append(id)
+	return arr
+
+
+# Items, die NEU auf Level idx freigeschaltet werden (gegenüber idx-1).
+func new_items_at_level(idx: int) -> Array:
+	var before := items_for_level(idx - 1)
+	var fresh := []
+	for id in items_for_level(idx):
+		if not (id in before):
+			fresh.append(id)
+	return fresh
+
+
 # Liest den Bauplan aus den aktuell angebauten Teilen eines Gefährts.
 func save_from(vehicle: Node2D) -> void:
 	blueprint.clear()

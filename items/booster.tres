@@ -14,4 +14,4 @@ unlock_checkpoint = 5
 sort_order = 20
 params = {}
 radius = 0.0
-rect_size = Vector2(0, 0)
+rect_size = Vector2(68, 41)

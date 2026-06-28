@@ -35,7 +35,11 @@ func _pin(part: RigidBody2D) -> void:
 # Chassis (Weltposition bleibt). Damit ist es ein einziger starrer Körper.
 func _weld(part: RigidBody2D) -> void:
 	for child in part.get_children():
-		if child is CollisionShape2D or child is Polygon2D:
+		# Form UND Optik (Polygon/Sprite/Animation) ans Fahrwerk hängen, damit
+		# beides mitfährt – der Teil-Knoten bleibt nur als Logik-/Schub-Knoten
+		# (eingefroren) zurück.
+		if child is CollisionShape2D or child is Polygon2D \
+				or child is Sprite2D or child is AnimatedSprite2D:
 			child.reparent(chassis)
 
 	chassis.mass += part.mass  # Masse dazu (Schwerpunkt rechnet Godot selbst neu)

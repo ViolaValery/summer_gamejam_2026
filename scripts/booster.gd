@@ -14,9 +14,13 @@ var host: RigidBody2D = null          # das Fahrwerk (beim Verschmelzen gesetzt)
 var _remaining := 0.0                 # Restzeit des laufenden Boosts
 var _uses_left := 0                   # verbleibende Nutzungen
 
+@onready var _anim: AnimatedSprite2D = get_node_or_null("Anim")
+
 
 func _ready() -> void:
 	_uses_left = uses
+	if _anim != null:
+		_anim.play("idle")
 
 
 # Ist noch ein Boost übrig? (der Spezial-Knopf deaktiviert sich sonst)
@@ -50,7 +54,9 @@ func active_fraction() -> float:
 
 
 func _physics_process(delta: float) -> void:
-	if _remaining <= 0.0:
+	var active := _remaining > 0.0
+	_update_visual(active)
+	if not active:
 		return  # gerade kein Boost aktiv
 	_remaining -= delta
 
@@ -59,3 +65,12 @@ func _physics_process(delta: float) -> void:
 		host.apply_force(dir * thrust, global_position - host.global_position)
 	else:
 		apply_central_force(dir * thrust)
+
+
+# Boost-Animation (Flamme) beim Schub, sonst Ruhebild.
+func _update_visual(active: bool) -> void:
+	if _anim == null:
+		return
+	var want := "boost" if active else "idle"
+	if _anim.animation != want:
+		_anim.play(want)

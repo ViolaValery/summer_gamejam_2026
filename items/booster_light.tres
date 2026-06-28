@@ -20,4 +20,4 @@ params = {
 "color": Color(1, 0.7, 0.3, 1)
 }
 radius = 0.0
-rect_size = Vector2(0, 0)
+rect_size = Vector2(52, 31)

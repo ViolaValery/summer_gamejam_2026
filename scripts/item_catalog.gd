@@ -80,6 +80,12 @@ func _apply_params(part: Node, params: Dictionary) -> void:
 				var poly := part.get_node_or_null("Polygon2D")
 				if poly != null:
 					poly.color = v
+				else:
+					# Kein Polygon (z.B. Sprite-Booster): über modulate tönen.
+					for c in part.get_children():
+						if c is Sprite2D or c is AnimatedSprite2D:
+							c.modulate = v
+							break
 			_:
 				if key in part:
 					part.set(key, v)
@@ -89,20 +95,32 @@ func _apply_params(part: Node, params: Dictionary) -> void:
 # Die Form-Ressource wird vorher dupliziert, damit nicht alle Instanzen mutieren.
 func _resize(part: Node, def: ItemDef) -> void:
 	var col := part.get_node_or_null("CollisionShape2D") as CollisionShape2D
-	var poly := part.get_node_or_null("Polygon2D") as Polygon2D
 	if col == null:
 		return
+	var visual := _visual_of(part)   # Polygon ODER Sprite/Animation
 	if def.radius > 0.0 and col.shape is CircleShape2D:
 		var sh := col.shape.duplicate() as CircleShape2D
 		var factor := def.radius / maxf(0.001, sh.radius)
 		sh.radius = def.radius
 		col.shape = sh
-		if poly != null:
-			poly.scale = Vector2.ONE * factor
+		if visual != null:
+			visual.scale *= factor       # Grundskalierung (z.B. 0.08) beibehalten
 	elif def.rect_size != Vector2.ZERO and col.shape is RectangleShape2D:
 		var sh := col.shape.duplicate() as RectangleShape2D
 		var f := def.rect_size / Vector2(maxf(0.001, sh.size.x), maxf(0.001, sh.size.y))
 		sh.size = def.rect_size
 		col.shape = sh
-		if poly != null:
-			poly.scale = f
+		if visual != null:
+			visual.scale *= f
+
+
+# Der sichtbare Knoten eines Teils (Polygon, Sprite oder Animation).
+func _visual_of(part: Node) -> Node2D:
+	for n in ["Polygon2D", "Anim", "Sprite2D"]:
+		var node := part.get_node_or_null(n)
+		if node != null:
+			return node
+	for c in part.get_children():
+		if c is Polygon2D or c is Sprite2D or c is AnimatedSprite2D:
+			return c
+	return null
