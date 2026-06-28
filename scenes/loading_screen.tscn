@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cdiq2ogxvyfus"]
 
 [ext_resource type="Texture2D" uid="uid://tcucug4care2" path="res://assets/loading/frame0005.png" id="1_t4ggr"]
-[ext_resource type="Script" uid="uid://f11d7jy0f6dk" path="res://scenes/loading_screen.gd" id="1_vcesy"]
+[ext_resource type="Script" path="res://scenes/loading_screen.gd" id="1_vcesy"]
 [ext_resource type="Texture2D" uid="uid://chc2h8cw04655" path="res://assets/loading/frame0006.png" id="2_f6sl2"]
 [ext_resource type="Texture2D" uid="uid://biyqymbvb1t4f" path="res://assets/loading/frame0007.png" id="3_0ti3l"]
 [ext_resource type="Texture2D" uid="uid://dn2o5qbx0k76x" path="res://assets/loading/frame0008.png" id="4_0n2jk"]
@@ -566,6 +566,7 @@ offset_top = -12.0
 offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/font_size = 24
 text = "Loading.."
 horizontal_alignment = 1
 vertical_alignment = 1
