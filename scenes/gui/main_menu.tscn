@@ -50,6 +50,7 @@ offset_top = 100.0
 offset_right = 340.0
 offset_bottom = 171.0
 theme = ExtResource("5_rtw2f")
+theme_override_font_sizes/font_size = 26
 text = "Start"
 
 [node name="quit" type="Button" parent="." unique_id=1311819865]
@@ -59,5 +60,6 @@ offset_top = 204.0
 offset_right = 339.0
 offset_bottom = 282.0
 theme = ExtResource("5_rtw2f")
+theme_override_font_sizes/font_size = 26
 text = "Quit
 "
