@@ -475,10 +475,16 @@ func _shape_outline(shape: Shape2D, xform: Transform2D) -> PackedVector2Array:
 func _play() -> void:
 	if not _passenger_attached():
 		if passenger != null and is_instance_valid(passenger):
-			passenger.flash_hand()
+			passenger.flash_hand(chassis.global_position)  # Pfeil zeigt zum Fahrwerk
 		return
 	GameState.save_from(vehicle)
-	get_tree().change_scene_to_file("res://scenes/level.tscn")
+	# Über den GameController wechseln, damit der Loop im GUI-System bleibt
+	# (Werkstatt <-> Spiel ohne den Controller zu zerstören); sonst direkt.
+	var gc = Global.game_controller
+	if gc != null and is_instance_valid(gc):
+		gc.change_gui_scene("res://scenes/level.tscn")
+	else:
+		get_tree().change_scene_to_file("res://scenes/level.tscn")
 
 
 # Friert Fahrwerk und alle angebauten Teile ein.

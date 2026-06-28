@@ -32,6 +32,23 @@ func activate() -> void:
 	_remaining = boost_time
 
 
+# --- Abfragen für die Spezial-Knöpfe (Anzahl + laufender Effekt) ----------
+
+# Wie viele Zündungen sind noch übrig?
+func remaining_uses() -> int:
+	return _uses_left
+
+# Läuft gerade ein Boost?
+func is_active() -> bool:
+	return _remaining > 0.0
+
+# Restanteil des laufenden Boosts (1.0 = gerade gezündet, 0.0 = vorbei).
+func active_fraction() -> float:
+	if boost_time <= 0.0:
+		return 0.0
+	return clampf(_remaining / boost_time, 0.0, 1.0)
+
+
 func _physics_process(delta: float) -> void:
 	if _remaining <= 0.0:
 		return  # gerade kein Boost aktiv

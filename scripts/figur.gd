@@ -84,26 +84,75 @@ func _build_preview() -> void:
 	add_child(s)
 
 
-# Lässt die Hand auffällig blinken/leuchten – Hinweis: "muss ans Fahrzeug!".
-func flash_hand(cycles: int = 5) -> void:
-	var hl := get_node_or_null("HandFlash") as Sprite2D
-	if hl == null:
-		hl = Sprite2D.new()
-		hl.name = "HandFlash"
-		hl.texture = load(ASSET + HAND + ".png")
-		hl.centered = true            # Hand-Bildmitte = Knoten-Ursprung
-		hl.scale = Vector2(fig_scale, fig_scale)
-		hl.z_index = 3
-		add_child(hl)
-	# kräftiges Gelb-Leuchten, das auf-/abblendet
-	var glow := Color(1.0, 0.95, 0.2, 1.0)
-	var off := Color(1.0, 0.95, 0.2, 0.0)
-	hl.modulate = off
-	var tw := create_tween()
-	tw.set_loops(cycles)
-	tw.tween_property(hl, "modulate", glow, 0.18)
-	tw.tween_property(hl, "modulate", off, 0.22)
-	tw.chain().tween_callback(hl.queue_free)
+# Lässt die Hand kräftig leuchten/pulsieren und zeigt einen blinkenden Pfeil
+# Richtung Fahrzeug – Hinweis: "muss erst ans Fahrzeug angesteckt werden!".
+# target_global = Weltposition des Fahrzeugs (für die Pfeilrichtung); optional.
+func flash_hand(target_global = null, cycles: int = 8) -> void:
+	var old := get_node_or_null("Attention")
+	if old:
+		old.free()
+	var att := Node2D.new()
+	att.name = "Attention"
+	att.z_index = 5
+	add_child(att)
+
+	var s := Vector2(fig_scale, fig_scale)
+
+	# 1) Weicher gelber Schein (Halo) hinter der Hand.
+	var halo := Polygon2D.new()
+	halo.polygon = _circle_points(46.0, 28)
+	halo.color = Color(1.0, 0.9, 0.2, 0.0)
+	att.add_child(halo)
+
+	# 2) Die Hand selbst leuchtet hell auf.
+	var hl := Sprite2D.new()
+	hl.texture = load(ASSET + HAND + ".png")
+	hl.centered = true
+	hl.scale = s
+	hl.modulate = Color(1, 1, 0.7, 0.0)
+	att.add_child(hl)
+
+	# 3) Pfeil, der vom Hand-Bereich Richtung Fahrzeug zeigt.
+	var ldir := Vector2.RIGHT
+	if target_global != null:
+		var lv: Vector2 = to_local(target_global)
+		if lv.length() > 1.0:
+			ldir = lv.normalized()
+	var arrow := Polygon2D.new()
+	arrow.polygon = PackedVector2Array([
+		Vector2(0, -8), Vector2(48, -8), Vector2(48, -20),
+		Vector2(82, 0), Vector2(48, 20), Vector2(48, 8), Vector2(0, 8)])
+	arrow.color = Color(1.0, 0.8, 0.05, 1.0)
+	arrow.rotation = ldir.angle()
+	arrow.position = ldir * 46.0
+	att.add_child(arrow)
+
+	# Animation: kräftiges Pulsieren; der Pfeil "wandert" Richtung Fahrzeug.
+	var near := ldir * 46.0
+	var far := ldir * 78.0
+	var tw := create_tween().set_loops(cycles)
+	# aufleuchten
+	tw.tween_property(halo, "modulate:a", 0.7, 0.16)
+	tw.parallel().tween_property(hl, "modulate", Color(1, 1, 0.8, 1.0), 0.16)
+	tw.parallel().tween_property(hl, "scale", s * 1.7, 0.16)
+	tw.parallel().tween_property(arrow, "position", far, 0.16)
+	tw.parallel().tween_property(arrow, "modulate:a", 1.0, 0.16)
+	# abklingen
+	tw.tween_property(halo, "modulate:a", 0.0, 0.22)
+	tw.parallel().tween_property(hl, "modulate", Color(1, 1, 0.8, 0.15), 0.22)
+	tw.parallel().tween_property(hl, "scale", s, 0.22)
+	tw.parallel().tween_property(arrow, "position", near, 0.22)
+	tw.parallel().tween_property(arrow, "modulate:a", 0.25, 0.22)
+	tw.chain().tween_callback(att.queue_free)
+
+
+# Punkte eines Kreises (für den Halo-Schein).
+func _circle_points(radius: float, segments: int) -> PackedVector2Array:
+	var pts := PackedVector2Array()
+	for i in segments:
+		var a := TAU * i / float(segments)
+		pts.append(Vector2(cos(a), sin(a)) * radius)
+	return pts
 
 
 # Wird aktiv, sobald das Fahrzeug die Hand entfriert (= Spiel startet).
