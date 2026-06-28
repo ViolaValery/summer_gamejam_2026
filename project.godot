@@ -32,10 +32,11 @@ directories/dtl_directory={
 "basic_timeline": "res://timelines/intro_timeline.dtl"
 }
 layout/style_directory={
+"copy_dialog_ough": "res://timelines/copy_dialog_ough.tres",
 "customstyle": "res://timelines/customstyle.tres"
 }
 glossary/default_case_sensitive=true
-layout/style_list=["res://timelines/customstyle.tres"]
+layout/style_list=["res://timelines/customstyle.tres", "res://timelines/copy_dialog_ough.tres"]
 layout/default_style=""
 variables={}
 extensions_folder="res://addons/dialogic_additions"
