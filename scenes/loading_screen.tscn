@@ -542,7 +542,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"loading",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [node name="LoadingScreen" type="CanvasLayer" unique_id=2018948704]
@@ -575,6 +575,7 @@ position = Vector2(593, 367)
 scale = Vector2(0.25483093, 0.24)
 sprite_frames = SubResource("SpriteFrames_3hpwu")
 animation = &"loading"
+speed_scale = 10.0
 
 [node name="Timer" type="Timer" parent="." unique_id=376302159]
 process_mode = 3
