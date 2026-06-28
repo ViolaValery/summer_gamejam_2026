@@ -27,6 +27,38 @@ const CHECKPOINT_COEFF: float = 1.3
 
 var blueprint: Array = []
 
+## Datengetriebene Progression (vom Level-Editor erstellt). Fehlt sie, greift
+## überall die alte Formel – das Spiel funktioniert also auch ohne Config.
+const PROGRESSION_PATH := "res://config/progression.tres"
+var progression = null   # ProgressionConfig (untypisiert wg. class_name-Auflösung)
+
+
+func _ready() -> void:
+	if ResourceLoader.exists(PROGRESSION_PATH):
+		progression = load(PROGRESSION_PATH)
+
+
+func has_progression() -> bool:
+	return progression != null and progression.count() > 0
+
+
+# Ist das Item auf dem aktuellen Level im Shop verfügbar?
+func is_item_available(id: String) -> bool:
+	if has_progression():
+		return id in progression.items_at(last_checkpoint)
+	if ItemCatalog.has(id):
+		return ItemCatalog.get_def(id).unlock_checkpoint <= last_checkpoint
+	return true
+
+
+# Erstes Level, auf dem das Item verfügbar ist (für "ab Level X").
+func unlock_level_of(id: String) -> int:
+	if has_progression():
+		return progression.unlock_level_of(id)
+	if ItemCatalog.has(id):
+		return ItemCatalog.get_def(id).unlock_checkpoint
+	return 0
+
 
 # Liest den Bauplan aus den aktuell angebauten Teilen eines Gefährts.
 func save_from(vehicle: Node2D) -> void:
@@ -43,11 +75,18 @@ func save_from(vehicle: Node2D) -> void:
 
 
 # Baut die Teile aus dem Bauplan als (eingefrorene) Kinder ins Gefährt.
+# Katalog-Items über ItemCatalog erzeugen (damit Varianten-Overrides wie
+# Größe/Schub erhalten bleiben – sie teilen sich ja dieselbe Szene). Nur was
+# nicht im Katalog ist (z.B. die Figur) wird direkt aus dem Pfad geladen.
 func build_into(vehicle: Node2D) -> void:
 	for entry in blueprint:
-		if entry.path == "":
+		var part: Node = null
+		if entry.kind != "" and ItemCatalog.has(entry.kind):
+			part = ItemCatalog.create(entry.kind)
+		elif entry.path != "":
+			part = (load(entry.path) as PackedScene).instantiate()
+		if part == null:
 			continue
-		var part := (load(entry.path) as PackedScene).instantiate()
 		vehicle.add_child(part)
 		part.position = entry.pos
 		part.rotation = entry.rot
@@ -57,6 +96,12 @@ func build_into(vehicle: Node2D) -> void:
 
 # calcucate budget depending on score
 func set_budget() -> void:
+	# Aus der Progression-Config (vom Level-Editor), falls vorhanden.
+	if has_progression():
+		base_budget = maxi(INITIAL_BUDGET, progression.budget_at(last_checkpoint))
+		budget = base_budget
+		return
+	# Fallback: bisherige Highscore-Formel.
 	var score = highscore
 	var increment: int = 100 # add N to budget 
 	var budget_coeff = 1.3
@@ -72,7 +117,9 @@ func set_budget() -> void:
 
 
 func get_next_checkpoint() -> int:
-	return last_checkpoint_dist + FIRST_CHECKPOINT * int(CHECKPOINT_COEFF ** last_checkpoint) 
+	if has_progression():
+		return progression.distance_at(last_checkpoint + 1)
+	return last_checkpoint_dist + FIRST_CHECKPOINT * int(CHECKPOINT_COEFF ** last_checkpoint)
 
 func increment_checkpoint(checkpoint: int) -> int:
 	last_checkpoint += 1

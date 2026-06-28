@@ -10,29 +10,24 @@ extends Node2D
 ## Hier wird NUR gebaut (alles eingefroren). Zusammenbauen + Fahren passiert
 ## in der Spielszene.
 
-## Alle baubaren Teile (Name -> Szene).
-const PARTS := {
-	"Wheel": {
-		"scene": preload("res://scenes/attachments/wheel.tscn"),
-		"available_from_level": 0,
-		"price": 500
-		},
-	"Booster": {
-		"scene": preload("res://scenes/attachments/booster.tscn"),
-		"available_from_level": 5,
-		"price": 1000
-		},
-	"Balloon": {
-		"scene": preload("res://scenes/attachments/balloon.tscn"),
-		"available_from_level": 3,
-		"price": 750
-		},
-	"Platform": {
-		"scene": preload("res://scenes/platforms/platform.tscn"),
-		"available_from_level": 6,
-		"price": 1000
-		},
-}
+## Baubare Teile – wird beim Start DATENGETRIEBEN aus dem ItemCatalog gefüllt
+## (res://items/*.tres). Struktur je Eintrag:
+##   { scene, available_from_level, price, display_name }
+## Neue Items = neue .tres-Datei, kein Code hier.
+var PARTS := {}
+
+
+# Liest die Item-Definitionen aus dem Katalog in PARTS (id -> Anzeige-Infos).
+func _build_parts_from_catalog() -> void:
+	PARTS.clear()
+	for id in ItemCatalog.ids():
+		var def = ItemCatalog.get_def(id)
+		PARTS[id] = {
+			"scene": def.scene,
+			"available_from_level": def.unlock_checkpoint,
+			"price": def.price,
+			"display_name": def.display_name,
+		}
 
 ## Pflicht-Passagier (kein normales Palette-Teil): steht links, muss per Hand
 ## ans Fahrzeug gestickt werden, bevor man "Spielen" kann.
@@ -113,6 +108,7 @@ func _show_budget_delta(amount: int) -> void:
 	popup.show_delta(amount)
 
 func _ready() -> void:
+	_build_parts_from_catalog()    # Items aus res://items/*.tres laden
 	GameState.set_budget()
 	GameState.build_into(vehicle)  # gespeicherten Bau wiederherstellen
 	level_label.text = str(GameState.last_checkpoint + 1) # +1 because initial "last" checkpoint is 0
@@ -142,7 +138,7 @@ func _build_store() -> void:
 	for kind in PARTS:
 		var card: Button = STORE_ITEM.instantiate()
 		store_list.add_child(card)
-		(card.get_node("Row/Info/Name") as Label).text = kind
+		(card.get_node("Row/Info/Name") as Label).text = PARTS[kind].get("display_name", kind)
 		_fill_icon(card.get_node("Row/IconBox/Icon"), kind)
 		card.button_down.connect(_begin_buy.bind(kind))
 		_cards[kind] = card
@@ -151,7 +147,7 @@ func _build_store() -> void:
 
 # Rendert die Teil-Szene als Vorschau in den kleinen SubViewport der Karte.
 func _fill_icon(vp: SubViewport, kind: String) -> void:
-	var part := (PARTS[kind]["scene"] as PackedScene).instantiate()
+	var part: Node = ItemCatalog.create(kind)        # Variante (Größe/Farbe) korrekt
 	part.process_mode = Node.PROCESS_MODE_DISABLED   # Teil-Skripte im Icon ruhig
 	if part is RigidBody2D:
 		part.freeze = true
@@ -175,14 +171,15 @@ func _icon_extent(part: Node) -> float:
 
 
 # Aktualisiert Preis-Text und Verfügbarkeit (Level/Geld) aller Karten.
+# Verfügbarkeit kommt aus der Progression-Config (oder Formel-Fallback).
 func _update_store() -> void:
 	for kind in _cards:
 		var card: Button = _cards[kind]
 		var preis := card.get_node("Row/Info/Preis") as Label
 		var price := PARTS[kind]["price"] as int
-		var level_needed := PARTS[kind]["available_from_level"] as int
-		if level_needed > GameState.last_checkpoint:
-			preis.text = "from Level " + str(level_needed)
+		if not GameState.is_item_available(kind):
+			var lvl: int = GameState.unlock_level_of(kind)
+			preis.text = ("from Level " + str(lvl + 1)) if lvl >= 0 else "locked"
 			card.disabled = true
 		else:
 			preis.text = str(price) + "$"
@@ -191,7 +188,7 @@ func _update_store() -> void:
 
 
 func _can_buy(kind: String) -> bool:
-	if PARTS[kind]["available_from_level"] > GameState.last_checkpoint:
+	if not GameState.is_item_available(kind):
 		return false
 	return PARTS[kind]["price"] <= GameState.budget
 
@@ -201,9 +198,8 @@ func _can_buy(kind: String) -> bool:
 func _begin_buy(kind: String) -> void:
 	if dragging != null or not _can_buy(kind):
 		return
-	var item := (PARTS[kind]["scene"] as PackedScene).instantiate() as RigidBody2D
+	var item := ItemCatalog.create(kind) as RigidBody2D  # inkl. Varianten-Overrides
 	palette.add_child(item)
-	item.set_meta("kind", kind)
 	item.global_position = get_global_mouse_position()
 	item.freeze = true
 	dragging = item

@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="ProgressionConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/progression_config.gd" id="1_r5c3f"]
+
+[resource]
+script = ExtResource("1_r5c3f")
+levels = [{
+"budget": 1000,
+"distance": 0,
+"items": ["wheel", "wheel_small"]
+}, {
+"budget": 1000,
+"distance": 150,
+"items": ["wheel", "wheel_small"]
+}, {
+"budget": 1000,
+"distance": 300,
+"items": ["wheel", "wheel_small", "wheel_big"]
+}, {
+"budget": 1000,
+"distance": 450,
+"items": ["wheel", "wheel_small", "wheel_big", "booster_light", "balloon"]
+}, {
+"budget": 1000,
+"distance": 750,
+"items": ["wheel", "wheel_small", "wheel_big", "booster_light", "balloon"]
+}, {
+"budget": 1000,
+"distance": 1050,
+"items": ["wheel", "wheel_small", "wheel_big", "booster", "booster_light", "balloon"]
+}, {
+"budget": 1271,
+"distance": 1500,
+"items": ["wheel", "wheel_small", "wheel_big", "booster", "booster_light", "booster_heavy", "balloon", "platform", "platform_long"]
+}, {
+"budget": 1750,
+"distance": 2100,
+"items": ["wheel", "wheel_small", "wheel_big", "booster", "booster_light", "booster_heavy", "balloon", "platform", "platform_long"]
+}]

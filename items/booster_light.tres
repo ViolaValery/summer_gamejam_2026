@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ItemDef" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/item_def.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/attachments/booster.tscn" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "booster_light"
+display_name = "Light Booster"
+category = "booster"
+scene = ExtResource("2")
+price = 700
+unlock_checkpoint = 3
+sort_order = 21
+params = {
+"thrust": 4000.0,
+"boost_time": 0.4,
+"uses": 3,
+"mass": 0.3,
+"color": Color(1, 0.7, 0.3, 1)
+}
+radius = 0.0
+rect_size = Vector2(0, 0)

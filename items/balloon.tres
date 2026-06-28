@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemDef" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/item_def.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/attachments/balloon.tscn" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "balloon"
+display_name = "Balloon"
+category = "balloon"
+scene = ExtResource("2")
+price = 750
+unlock_checkpoint = 3
+sort_order = 30
+params = {}
+radius = 0.0
+rect_size = Vector2(0, 0)

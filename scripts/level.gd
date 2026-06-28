@@ -86,10 +86,9 @@ func _spawn_vehicle() -> void:
 	if GameState.blueprint.is_empty():
 		# Fallback, wenn die Szene direkt (ohne Werkstatt) gestartet wird.
 		for x in [-45.0, 45.0]:
-			var w := preload("res://scenes/attachments/wheel.tscn").instantiate()
-			w.position = Vector2(x, 32)
-			w.set_meta("kind", "Wheel")
+			var w: Node = ItemCatalog.create("wheel")
 			vehicle.add_child(w)
+			w.position = Vector2(x, 32)
 
 	add_child(vehicle)
 	vehicle.position = start_position
@@ -258,7 +257,11 @@ func _make_special_control(kind: String, parts: Array) -> void:
 	var bar: ProgressBar = ctrl.get_node("Bar")
 	button.pressed.connect(_fire_next.bind(kind))
 	button.focus_mode = Control.FOCUS_NONE   # Zahltasten zünden, Pfeile navigieren nicht
-	_specials[kind] = {"parts": parts, "button": button, "bar": bar}
+	# Anzeigename aus dem Katalog (z.B. "Heavy Booster" statt "booster_heavy").
+	var disp := kind
+	if ItemCatalog.has(kind):
+		disp = ItemCatalog.get_def(kind).display_name
+	_specials[kind] = {"parts": parts, "button": button, "bar": bar, "name": disp}
 
 
 # Zündet das nächste noch ungenutzte Teil dieser Sorte (in Platzier-Reihenfolge).
@@ -287,8 +290,8 @@ func _update_specials() -> void:
 
 		var button: Button = d["button"]
 		var bar: ProgressBar = d["bar"]
-		# Text: Sorte + Restanzahl. Glüht, solange ein Effekt läuft.
-		button.text = "%s (%d)" % [kind, remaining]
+		# Text: Anzeigename + Restanzahl. Glüht, solange ein Effekt läuft.
+		button.text = "%s (%d)" % [d.get("name", kind), remaining]
 		button.modulate = Color(1.0, 0.75, 0.4) if active_count > 0 else Color(1, 1, 1)
 		# Zünden nur möglich, solange noch etwas übrig ist.
 		button.disabled = remaining <= 0

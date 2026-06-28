@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ItemDef" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/item_def.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/attachments/wheel.tscn" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "wheel_small"
+display_name = "Small Wheel"
+category = "wheel"
+scene = ExtResource("2")
+price = 300
+unlock_checkpoint = 0
+sort_order = 11
+params = {
+"mass": 0.4,
+"friction": 1.4
+}
+radius = 18.0
+rect_size = Vector2(0, 0)
