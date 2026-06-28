@@ -5,6 +5,13 @@
 [ext_resource type="PackedScene" uid="uid://2lbvi5h5mhbl" path="res://scenes/vehicle.tscn" id="3"]
 [ext_resource type="Theme" uid="uid://dr0erp7ye37r6" path="res://assets/button_default_theme.tres" id="4_mgtug"]
 
+[sub_resource type="StyleBoxFlat" id="hint_bg"]
+bg_color = Color(0, 0, 0, 0.42)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [node name="Edit" type="Node2D" unique_id=192187726]
 script = ExtResource("1")
 
@@ -133,3 +140,33 @@ horizontal_scroll_mode = 0
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 6
+
+[node name="Hint" type="PanelContainer" parent="UI/HUD" unique_id=540012001]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = -78.0
+offset_right = 360.0
+offset_bottom = -12.0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("hint_bg")
+
+[node name="Margin" type="MarginContainer" parent="UI/HUD/Hint" unique_id=540012002]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 7
+
+[node name="Text" type="Label" parent="UI/HUD/Hint/Margin" unique_id=540012003]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.85)
+theme_override_font_sizes/font_size = 15
+text = "Drag an item onto the platform to attach it.
+Right-click an item to remove it.
+Rotate while dragging: mouse wheel or A / D."
