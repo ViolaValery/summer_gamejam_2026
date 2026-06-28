@@ -22,6 +22,9 @@ func _process(_delta) -> void:
 
 func change_gui_scene(new_scene: String, delete: bool = true, keep_running: bool = false) -> void:
 	print("CHANGE GUI SCENE: ", new_scene, " current: ", current_gui_scene)
+	LoadingScreen.visible = true
+	await get_tree().process_frame
+	await get_tree().create_timer(1).timeout
 	if current_gui_scene != null:
 		print("REMOVING: ", current_gui_scene)
 		if delete:
@@ -35,6 +38,7 @@ func change_gui_scene(new_scene: String, delete: bool = true, keep_running: bool
 	await get_tree().process_frame
 	new.visible = true
 	current_gui_scene = new
+	LoadingScreen.visible = false
 	
 func change_2d_scene(new_scene: String, delete: bool = true, keep_running: bool = false) -> void:
 	if current_2d_scene != null:
