@@ -1,14 +1,18 @@
 [gd_scene format=3 uid="uid://cr065w8b26ewn"]
 
-[ext_resource type="Script" path="res://scripts/terrain.gd" id="1"]
+[ext_resource type="Script" uid="uid://br40g0e1a7ydk" path="res://scripts/terrain.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://cdsdc3oaptvir" path="res://scenes/background.tscn" id="2_oqplg"]
 [ext_resource type="Texture2D" uid="uid://bu60yh7qfehk1" path="res://assets/terrain/erde.png" id="3_erde"]
 [ext_resource type="Texture2D" uid="uid://db8gykri8o4a4" path="res://assets/terrain/surface_stein.png" id="4_stein"]
 [ext_resource type="Texture2D" uid="uid://d3njcjxgahgjf" path="res://assets/terrain/surface_winter.png" id="5_winter"]
 [ext_resource type="Texture2D" uid="uid://i34l6n4bibot" path="res://assets/terrain/surface_weiss.png" id="6_weiss"]
+[ext_resource type="Script" uid="uid://cuxs185hc8lkp" path="res://scripts/acceleration.gd" id="7_l86fn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b0j75"]
 size = Vector2(5609, 2663)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0abrf"]
+size = Vector2(3351, 1137.5)
 
 [node name="Terrain" type="StaticBody2D" unique_id=210309286]
 collision_layer = 9
@@ -46,3 +50,11 @@ shape = SubResource("RectangleShape2D_b0j75")
 debug_color = Color(0.26268464, 0.5536085, 0.5605182, 0.21568628)
 
 [node name="Background" parent="." unique_id=127488795 instance=ExtResource("2_oqplg")]
+
+[node name="Acceleration" type="Area2D" parent="." unique_id=1623596707]
+script = ExtResource("7_l86fn")
+push_force = Vector2(1000, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Acceleration" unique_id=905890303]
+position = Vector2(2291, 786)
+shape = SubResource("RectangleShape2D_0abrf")

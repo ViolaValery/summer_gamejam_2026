@@ -16,8 +16,8 @@ extends RigidBody2D
 ## Masse je Körperteil (klein halten, sonst kippt es das Fahrzeug).
 @export var part_mass := 0.1
 ## Dämpfung -> "lose mit etwas Dämpfung": zappelt, aber nicht völlig chaotisch.
-@export var ang_damp := 3.0
-@export var lin_damp := 0.4
+@export var ang_damp := 12.0
+@export var lin_damp := 4
 
 const ASSET := "res://assets/figur/"
 const HAND := "hand_rechts"      # die Wurzel/Halte-Hand

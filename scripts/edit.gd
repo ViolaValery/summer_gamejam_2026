@@ -336,12 +336,21 @@ func _process(_delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	# Mausrad dreht das gerade gezogene Teil.
-	if dragging != null and event is InputEventMouseButton and event.pressed:
-		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+	if dragging != null:
+		if event is InputEventMouseButton and event.pressed:
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+				dragging.rotation += ROT_STEP
+				overlay.queue_redraw()
+				return
+			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+				dragging.rotation -= ROT_STEP
+				overlay.queue_redraw()
+				return
+		elif Input.is_action_pressed("ui_a"):
 			dragging.rotation += ROT_STEP
 			overlay.queue_redraw()
 			return
-		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+		elif Input.is_action_pressed("ui_d"):
 			dragging.rotation -= ROT_STEP
 			overlay.queue_redraw()
 			return

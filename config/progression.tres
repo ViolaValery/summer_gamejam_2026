@@ -9,27 +9,27 @@ levels = [{
 "distance": 0,
 "items": ["wheel", "wheel_small"]
 }, {
-"budget": 1000,
+"budget": 1250,
 "distance": 150,
-"items": ["wheel", "wheel_small"]
+"items": ["wheel", "wheel_small", "platform"]
 }, {
-"budget": 1000,
+"budget": 1250,
 "distance": 300,
-"items": ["wheel", "wheel_small", "wheel_big"]
+"items": ["wheel", "wheel_small", "wheel_big", "platform"]
 }, {
-"budget": 1000,
+"budget": 1450,
 "distance": 450,
-"items": ["wheel", "wheel_small", "wheel_big", "booster_light", "balloon"]
+"items": ["wheel", "wheel_small", "wheel_big", "booster_light", "balloon", "platform"]
 }, {
-"budget": 1000,
+"budget": 1450,
 "distance": 750,
-"items": ["wheel", "wheel_small", "wheel_big", "booster_light", "balloon"]
+"items": ["wheel", "wheel_small", "wheel_big", "booster_light", "balloon", "platform"]
 }, {
-"budget": 1000,
+"budget": 1450,
 "distance": 1050,
-"items": ["wheel", "wheel_small", "wheel_big", "booster", "booster_light", "balloon"]
+"items": ["wheel", "wheel_small", "wheel_big", "booster", "booster_light", "balloon", "platform"]
 }, {
-"budget": 1271,
+"budget": 1600,
 "distance": 1500,
 "items": ["wheel", "wheel_small", "wheel_big", "booster", "booster_light", "booster_heavy", "balloon", "platform", "platform_long"]
 }, {
