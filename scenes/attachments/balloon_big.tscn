@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3]
+
+; GROSSER BALLON (Bündel): gleiche Schnur-Mechanik, größer und mit mehr
+; Auftrieb. Andock-/Kollisionspunkt = Knoten im Ursprung.
+
+[ext_resource type="SpriteFrames" path="res://assets/balloon/balloon_big_frames.tres" id="1"]
+
+[sub_resource type="CircleShape2D" id="knot"]
+radius = 7.0
+
+[sub_resource type="PhysicsMaterial" id="mat"]
+friction = 0.3
+bounce = 0.3
+
+[node name="Balloon" type="RigidBody2D"]
+mass = 0.5
+gravity_scale = -2.0
+linear_damp = 1.0
+center_of_mass_mode = 1
+center_of_mass = Vector2(0, -96)
+physics_material_override = SubResource("mat")
+metadata/attach = "pin"
+metadata/sticky_percent = 100.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("knot")
+
+[node name="String" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, -24)
+width = 2.0
+default_color = Color(0.85, 0.85, 0.85, 1)
+
+[node name="Anim" type="AnimatedSprite2D" parent="."]
+position = Vector2(5.9, -97.3)
+scale = Vector2(0.1788, 0.1788)
+sprite_frames = ExtResource("1")
+animation = &"idle"
+autoplay = "idle"

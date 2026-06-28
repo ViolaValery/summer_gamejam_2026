@@ -153,21 +153,96 @@ func _fill_icon(vp: SubViewport, kind: String) -> void:
 		part.freeze = true
 		part.collision_layer = 0
 		part.collision_mask = 0
-	var s := 26.0 / maxf(8.0, _icon_extent(part))   # auf ~52 px einpassen
+	# Anhand der SICHTBAREN Ausdehnung einpassen (nicht der Kollision): manche
+	# Teile haben winzige Kollision aber große/versetzte Optik – z.B. der Ballon,
+	# der über einer Schnur am kleinen Andock-Knoten hängt.
+	var bounds := _visual_bounds(part)
+	var ext := maxf(bounds.size.x, bounds.size.y) * 0.5
+	var s := 24.0 / maxf(8.0, ext)                  # auf ~48 px einpassen
 	part.scale = Vector2(s, s)
-	part.position = Vector2(vp.size) * 0.5          # Mitte des Viewports
+	# Box-Mitte (nicht den Ursprung) ins Viewport-Zentrum legen, damit versetzte
+	# Optik nicht aus dem Icon rutscht.
+	part.position = Vector2(vp.size) * 0.5 - bounds.get_center() * s
 	vp.add_child(part)
 
 
-# Grobe halbe Ausdehnung eines Teils (aus seiner Kollisionsform) – zum Einpassen.
-func _icon_extent(part: Node) -> float:
-	var col := part.get_node_or_null("CollisionShape2D") as CollisionShape2D
-	if col != null:
-		if col.shape is CircleShape2D:
-			return (col.shape as CircleShape2D).radius
-		if col.shape is RectangleShape2D:
-			return (col.shape as RectangleShape2D).size.length() * 0.5
-	return 30.0
+# Lokale Bounding-Box aller sichtbaren/kollidierenden Knoten eines Teils
+# (in Teil-Koordinaten) – zum Einpassen ins Shop-Icon.
+func _visual_bounds(part: Node) -> Rect2:
+	var rect := Rect2()
+	var has := false
+	for n in part.get_children():
+		if not (n is Node2D):
+			continue
+		var r := _node_extent(n as Node2D)
+		if r.size == Vector2.ZERO:
+			continue
+		rect = r if not has else rect.merge(r)
+		has = true
+	return rect if has else Rect2(-30, -30, 60, 60)
+
+
+# Ausdehnung eines einzelnen Knotens in Teil-Koordinaten (Drehung ignoriert –
+# fürs Icon genügt eine grobe Box). Deckt Form, Polygon, Linie und Sprites ab.
+func _node_extent(n: Node2D) -> Rect2:
+	var local := Rect2()
+	if n is CollisionShape2D:
+		var sh := (n as CollisionShape2D).shape
+		if sh is CircleShape2D:
+			var r := (sh as CircleShape2D).radius
+			local = Rect2(-r, -r, 2.0 * r, 2.0 * r)
+		elif sh is RectangleShape2D:
+			var sz := (sh as RectangleShape2D).size
+			local = Rect2(-sz * 0.5, sz)
+		else:
+			return Rect2()
+	elif n is Polygon2D:
+		local = _points_rect((n as Polygon2D).polygon)
+	elif n is Line2D:
+		local = _points_rect((n as Line2D).points)
+	elif n is Sprite2D and (n as Sprite2D).texture != null:
+		var t := (n as Sprite2D).texture.get_size()
+		local = Rect2(-t * 0.5, t)
+	elif n is AnimatedSprite2D:
+		var t := _anim_frame_size(n as AnimatedSprite2D)
+		if t == Vector2.ZERO:
+			return Rect2()
+		local = Rect2(-t * 0.5, t)
+	else:
+		return Rect2()
+	# Eigene Position/Skalierung des Knotens auf die Box anwenden.
+	local.position = local.position * n.scale + n.position
+	local.size *= n.scale
+	return local
+
+
+# Achsen-Box einer Punktwolke (z.B. Polygon- oder Linien-Punkte).
+func _points_rect(pts: PackedVector2Array) -> Rect2:
+	if pts.is_empty():
+		return Rect2()
+	var mn := pts[0]
+	var mx := pts[0]
+	for p in pts:
+		mn = mn.min(p)
+		mx = mx.max(p)
+	return Rect2(mn, mx - mn)
+
+
+# Größe des ersten Frames einer AnimatedSprite2D (für die Icon-Box).
+func _anim_frame_size(a: AnimatedSprite2D) -> Vector2:
+	var frames := a.sprite_frames
+	if frames == null:
+		return Vector2.ZERO
+	var anim := a.animation
+	if not frames.has_animation(anim):
+		var names := frames.get_animation_names()
+		if names.is_empty():
+			return Vector2.ZERO
+		anim = names[0]
+	if frames.get_frame_count(anim) == 0:
+		return Vector2.ZERO
+	var tex := frames.get_frame_texture(anim, 0)
+	return tex.get_size() if tex != null else Vector2.ZERO
 
 
 # Aktualisiert Preis-Text und Verfügbarkeit (Level/Geld) aller Karten.

@@ -1,0 +1,270 @@
+[gd_resource type="SpriteFrames" load_steps=66 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0000.png" id="1"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0001.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0002.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0003.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0004.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0005.png" id="6"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0006.png" id="7"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0007.png" id="8"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0008.png" id="9"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0009.png" id="10"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0010.png" id="11"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0011.png" id="12"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0012.png" id="13"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0013.png" id="14"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0014.png" id="15"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0015.png" id="16"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0016.png" id="17"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0017.png" id="18"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0018.png" id="19"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0019.png" id="20"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0020.png" id="21"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0021.png" id="22"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0022.png" id="23"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0023.png" id="24"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0024.png" id="25"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0025.png" id="26"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0026.png" id="27"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0027.png" id="28"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0028.png" id="29"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0029.png" id="30"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0030.png" id="31"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0031.png" id="32"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0032.png" id="33"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0033.png" id="34"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0034.png" id="35"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0035.png" id="36"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0036.png" id="37"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0037.png" id="38"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0038.png" id="39"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0039.png" id="40"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0040.png" id="41"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0041.png" id="42"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0042.png" id="43"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0043.png" id="44"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0044.png" id="45"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0045.png" id="46"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0046.png" id="47"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0047.png" id="48"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0048.png" id="49"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0049.png" id="50"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0050.png" id="51"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0051.png" id="52"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0052.png" id="53"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0053.png" id="54"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0054.png" id="55"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0055.png" id="56"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0056.png" id="57"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0057.png" id="58"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0058.png" id="59"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0059.png" id="60"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0060.png" id="61"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0061.png" id="62"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0062.png" id="63"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0063.png" id="64"]
+[ext_resource type="Texture2D" path="res://assets/balloon/big/big0064.png" id="65"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 24.0
+}]
