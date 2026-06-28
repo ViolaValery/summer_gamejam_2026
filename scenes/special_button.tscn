@@ -12,7 +12,7 @@ theme_override_constants/separation = 2
 
 [node name="Button" type="Button" parent="."]
 custom_minimum_size = Vector2(120, 46)
-text = "Spezial"
+text = "Special"
 
 [node name="Bar" type="ProgressBar" parent="."]
 custom_minimum_size = Vector2(120, 9)

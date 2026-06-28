@@ -40,15 +40,15 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="UI/HUD/Panel/VBox" unique_id=898142672]
 layout_mode = 2
-text = "Werkstatt"
+text = "Workshop"
 
 [node name="Spielen" type="Button" parent="UI/HUD/Panel/VBox" unique_id=314872408]
 layout_mode = 2
-text = "Spielen"
+text = "Play"
 
 [node name="Reset" type="Button" parent="UI/HUD/Panel/VBox" unique_id=939058104]
 layout_mode = 2
-text = "Zurücksetzen"
+text = "Reset"
 
 [node name="Level" type="Label" parent="UI/HUD" unique_id=1854521384]
 layout_mode = 0

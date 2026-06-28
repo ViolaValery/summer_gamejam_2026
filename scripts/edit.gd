@@ -12,7 +12,7 @@ extends Node2D
 
 ## Alle baubaren Teile (Name -> Szene).
 const PARTS := {
-	"Reifen": {
+	"Wheel": {
 		"scene": preload("res://scenes/attachments/wheel.tscn"),
 		"available_from_level": 0,
 		"price": 500
@@ -22,7 +22,7 @@ const PARTS := {
 		"available_from_level": 5,
 		"price": 1000
 		},
-	"Ballon": {
+	"Balloon": {
 		"scene": preload("res://scenes/attachments/balloon.tscn"),
 		"available_from_level": 3,
 		"price": 750
@@ -182,7 +182,7 @@ func _update_store() -> void:
 		var price := PARTS[kind]["price"] as int
 		var level_needed := PARTS[kind]["available_from_level"] as int
 		if level_needed > GameState.last_checkpoint:
-			preis.text = "ab Level " + str(level_needed)
+			preis.text = "from Level " + str(level_needed)
 			card.disabled = true
 		else:
 			preis.text = str(price) + "$"

@@ -85,7 +85,7 @@ func _spawn_vehicle() -> void:
 		for x in [-45.0, 45.0]:
 			var w := preload("res://scenes/attachments/wheel.tscn").instantiate()
 			w.position = Vector2(x, 32)
-			w.set_meta("kind", "Reifen")
+			w.set_meta("kind", "Wheel")
 			vehicle.add_child(w)
 
 	add_child(vehicle)
@@ -230,7 +230,7 @@ func _add_special_buttons() -> void:
 	var by_kind := {}
 	for node in vehicle.find_children("*", "RigidBody2D", true, false):
 		if node.has_method("activate"):
-			var kind := String(node.get_meta("kind", "Spezial"))
+			var kind := String(node.get_meta("kind", "Special"))
 			if not by_kind.has(kind):
 				by_kind[kind] = []
 			by_kind[kind].append(node)  # Tree-Reihenfolge = Platzier-Reihenfolge
