@@ -1,0 +1,38 @@
+[gd_resource type="Theme" format=3 uid="uid://dqnwkwx2ygclp"]
+
+[ext_resource type="Texture2D" uid="uid://dr5su31yjxjl8" path="res://assets/button_animation/frame0005.png" id="1_4rurv"]
+[ext_resource type="Texture2D" uid="uid://bbib2f8ypo4py" path="res://assets/button_animation/frame0010.png" id="2_h03pu"]
+[ext_resource type="Texture2D" uid="uid://chicc2whcy8eg" path="res://assets/button_animation/frame0017.png" id="3_ljdfp"]
+[ext_resource type="FontFile" uid="uid://gx2yue2asuuo" path="res://assets/font/Softizen.ttf" id="4_h03pu"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l6386"]
+texture = ExtResource("1_4rurv")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x0sum"]
+texture = ExtResource("1_4rurv")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uk1ht"]
+texture = ExtResource("2_h03pu")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_grb6x"]
+texture = ExtResource("1_4rurv")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pdxjq"]
+texture = ExtResource("1_4rurv")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r25ai"]
+texture = ExtResource("3_ljdfp")
+
+[resource]
+default_font = ExtResource("4_h03pu")
+default_font_size = 20
+Button/colors/font_color = Color(0.21568628, 0, 0, 1)
+Button/colors/font_focus_color = Color(0.7294118, 0.0627451, 0.0627451, 1)
+Button/colors/font_hover_color = Color(0.5568628, 0.0627451, 0.0627451, 1)
+Button/colors/font_hover_pressed_color = Color(0.7294118, 0.0627451, 0.0627451, 1)
+Button/styles/disabled = SubResource("StyleBoxTexture_l6386")
+Button/styles/focus = SubResource("StyleBoxTexture_x0sum")
+Button/styles/hover = SubResource("StyleBoxTexture_uk1ht")
+Button/styles/normal = SubResource("StyleBoxTexture_grb6x")
+Button/styles/normal_mirrored = SubResource("StyleBoxTexture_pdxjq")
+Button/styles/pressed = SubResource("StyleBoxTexture_r25ai")

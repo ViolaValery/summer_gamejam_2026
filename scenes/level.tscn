@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://club1yb1hmcpd" path="res://assets/progress_bar/frame0001.png" id="4_nj2gj"]
 [ext_resource type="Texture2D" uid="uid://w0mh68ubt74c" path="res://assets/progress_bar/frame0002.png" id="5_msn66"]
 [ext_resource type="Theme" uid="uid://dr0erp7ye37r6" path="res://assets/button_default_theme.tres" id="5_xmwm8"]
+[ext_resource type="Theme" uid="uid://dqnwkwx2ygclp" path="res://assets/button_default_theme_just_booster.tres" id="6_jydfl"]
 [ext_resource type="Texture2D" uid="uid://ba8jefe7b5xg1" path="res://assets/progress_bar/frame0003.png" id="6_xmwm8"]
 [ext_resource type="Texture2D" uid="uid://tt55j3absrq7" path="res://assets/progress_bar/frame0004.png" id="7_jydfl"]
 [ext_resource type="Texture2D" uid="uid://v7cs4aek77hm" path="res://assets/progress_bar/frame0005.png" id="8_u0n8q"]
@@ -380,7 +381,7 @@ layout_mode = 2
 
 [node name="Specials" type="HBoxContainer" parent="UI/HUD/Controls" unique_id=456327755]
 layout_mode = 2
-theme = ExtResource("5_xmwm8")
+theme = ExtResource("6_jydfl")
 theme_override_constants/separation = 12
 
 [node name="ProgressBar" type="ProgressBar" parent="UI/HUD" unique_id=1292986704]
