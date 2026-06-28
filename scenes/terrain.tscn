@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://br40g0e1a7ydk" path="res://scripts/terrain.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://cdsdc3oaptvir" path="res://scenes/background.tscn" id="2_oqplg"]
-[ext_resource type="Texture2D" path="res://assets/terrain/erde.png" id="3_erde"]
-[ext_resource type="Texture2D" path="res://assets/terrain/surface_stein.png" id="4_stein"]
-[ext_resource type="Texture2D" path="res://assets/terrain/surface_winter.png" id="5_winter"]
-[ext_resource type="Texture2D" path="res://assets/terrain/surface_weiss.png" id="6_weiss"]
+[ext_resource type="Texture2D" uid="uid://bu60yh7qfehk1" path="res://assets/terrain/erde.png" id="3_erde"]
+[ext_resource type="Texture2D" uid="uid://db8gykri8o4a4" path="res://assets/terrain/surface_stein.png" id="4_stein"]
+[ext_resource type="Texture2D" uid="uid://d3njcjxgahgjf" path="res://assets/terrain/surface_winter.png" id="5_winter"]
+[ext_resource type="Texture2D" uid="uid://i34l6n4bibot" path="res://assets/terrain/surface_weiss.png" id="6_weiss"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b0j75"]
 size = Vector2(5609, 2663)
@@ -19,11 +19,14 @@ belag_winter = ExtResource("5_winter")
 belag_weiss = ExtResource("6_weiss")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1107739060]
-polygon = PackedVector2Array(-2071, 133, 160, 190, 250, 200, 383, 237, 496, 284, 671, 365, 867, 480, 1080, 619, 1320, 786, 1580, 1008, 1724, 1124, 1894, 1229, 2034, 1291, 2231, 1342, 2494, 1377, 2826, 1409, 3240, 1315, 3531, 1217, 3759, 1118, 3993, 1019, 4008, 1395, 40685, 1621, 40732, 1993, 3971, 1892, 3562, 1890, -2094, 1743)
+polygon = PackedVector2Array(-2081, 74, -403, 128, 212, 228, 375, 270, 529, 328, 680, 407, 880, 508, 1077, 641, 1294, 833, 1519, 1013, 1716, 1147, 1894, 1229, 2034, 1291, 2231, 1342, 2494, 1377, 2826, 1409, 3240, 1315, 3531, 1217, 3759, 1118, 3993, 1019, 4008, 1395, 40685, 1621, 40732, 1993, 3971, 1892, 3562, 1890, -2094, 1743)
 
 [node name="Ground" type="Polygon2D" parent="." unique_id=14885640]
-color = Color(0.52663004, 0.42050967, 0.36473218, 1)
-polygon = PackedVector2Array(-2071, 133, 160, 190, 250, 200, 383, 237, 496, 284, 671, 365, 867, 480, 1080, 619, 1320, 786, 1580, 1008, 1724, 1124, 1894, 1229, 2034, 1291, 2231, 1342, 2494, 1377, 2826, 1409, 3240, 1315, 3531, 1217, 3759, 1118, 3993, 1019, 4008, 1395, 40685, 1621, 40732, 1993, 3971, 1892, 3562, 1890, -2094, 1743)
+texture_repeat = 2
+texture = ExtResource("3_erde")
+polygon = PackedVector2Array(-2081, 74, -403, 128, 212, 228, 375, 270, 529, 328, 680, 407, 880, 508, 1077, 641, 1294, 833, 1519, 1013, 1716, 1147, 1894, 1229, 2034, 1291, 2231, 1342, 2494, 1377, 2826, 1409, 3240, 1315, 3531, 1217, 3759, 1118, 3993, 1019, 4008, 1395, 40685, 1621, 40732, 1993, 3971, 1892, 3562, 1890, -2094, 1743)
+uv = PackedVector2Array(-2081, 74, -403, 128, 212, 228, 375, 270, 529, 328, 680, 407, 880, 508, 1077, 641, 1294, 833, 1519, 1013, 1716, 1147, 1894, 1229, 2034, 1291, 2231, 1342, 2494, 1377, 2826, 1409, 3240, 1315, 3531, 1217, 3759, 1118, 3993, 1019, 4008, 1395, 40685, 1621, 40732, 1993, 3971, 1892, 3562, 1890, -2094, 1743)
+vertex_colors = PackedColorArray(0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1)
 
 [node name="Gravity-low" type="Area2D" parent="." unique_id=295490423]
 gravity_space_override = 3

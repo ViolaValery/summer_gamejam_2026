@@ -40,13 +40,18 @@ const FIGUR_SCENE := preload("res://scenes/attachments/figur.tscn")
 ## Heimat-Position der Figur links im Bild (Welt-Koordinaten = Hand/Andockpunkt).
 const FIGUR_HOME := Vector2(-30, 230)
 
-const PRICE_LABEL := preload("res://scenes/attachments/price_tag.tscn")
+## Eine Karte im Shop (Icon + Name + Preis). Aussehen in der Szene.
+const STORE_ITEM := preload("res://scenes/store_item.tscn")
 
 @onready var vehicle: Node2D = $Vehicle
 @onready var chassis: RigidBody2D = $Vehicle/Chassis
 @onready var palette: Node2D = $Palette
 @onready var budget_label: Label = $UI/HUD/Budget/Value
 @onready var level_label: Label = $UI/HUD/Level/Value
+@onready var store_list: VBoxContainer = $UI/HUD/Store/VBox/Scroll/List
+
+# Shop-Karten je Teil-Sorte (kind -> Button).
+var _cards := {}
 
 ## Schwebendes "-500"/"+500" am Budget.
 const BUDGET_POPUP := preload("res://scenes/budget_popup.tscn")
@@ -59,7 +64,6 @@ const DEFAULT_STICKY := 35.0
 
 var dragging: RigidBody2D = null
 var drag_kind := ""
-var drag_home := Vector2.ZERO
 var can_attach := false    # darf das gezogene Teil gerade platziert werden?
 var core_blocked := false  # überlappt der No-Overlap-Kern gerade einen anderen?
 
@@ -96,7 +100,7 @@ func _spent() -> int:
 func _recompute_budget() -> void:
 	GameState.budget = GameState.base_budget - _spent()
 	_update_budget_label()
-	_update_palette()
+	_update_store()
 
 
 # Kurzes schwebendes "-500" (Kauf) / "+500" (Rückgabe) am Budget.
@@ -114,7 +118,7 @@ func _ready() -> void:
 	level_label.text = str(GameState.last_checkpoint + 1) # +1 because initial "last" checkpoint is 0
 
 	_freeze_all()       # in der Werkstatt bewegt sich nichts
-	_build_palette()
+	_build_store()      # Shop-Karten aufbauen
 	_recompute_budget() # Budget aus den (geladenen) Teilen sauber ableiten
 	_setup_passenger()  # Pflicht-Figur links (oder die schon angebaute übernehmen)
 	# Overlay zuletzt hinzufügen + hoher z_index -> zeichnet über allem.
@@ -127,15 +131,85 @@ func _ready() -> void:
 	$UI/HUD/Panel/VBox/Reset.pressed.connect(_to_reset)
 
 
-# --- Palette --------------------------------------------------------------
+# --- Shop (scrollbare Liste, skaliert auf beliebig viele Teile) -----------
 
-func _build_palette() -> void:
-	# Abstand so wählen, dass ALLE Teile in den sichtbaren Bereich passen.
-	var pos := Vector2(750, 95)
-	var step: float = 470.0 / maxf(1.0, float(PARTS.size()))
+# Baut für jede Teil-Sorte eine Karte. Das Icon wird automatisch aus der
+# Teil-Szene gerendert (SubViewport) – keine eigene Textur nötig.
+func _build_store() -> void:
+	for child in store_list.get_children():
+		child.queue_free()
+	_cards.clear()
 	for kind in PARTS:
-		_spawn_palette_item(kind, pos)
-		pos.y += step
+		var card: Button = STORE_ITEM.instantiate()
+		store_list.add_child(card)
+		(card.get_node("Row/Info/Name") as Label).text = kind
+		_fill_icon(card.get_node("Row/IconBox/Icon"), kind)
+		card.button_down.connect(_begin_buy.bind(kind))
+		_cards[kind] = card
+	_update_store()
+
+
+# Rendert die Teil-Szene als Vorschau in den kleinen SubViewport der Karte.
+func _fill_icon(vp: SubViewport, kind: String) -> void:
+	var part := (PARTS[kind]["scene"] as PackedScene).instantiate()
+	part.process_mode = Node.PROCESS_MODE_DISABLED   # Teil-Skripte im Icon ruhig
+	if part is RigidBody2D:
+		part.freeze = true
+		part.collision_layer = 0
+		part.collision_mask = 0
+	var s := 26.0 / maxf(8.0, _icon_extent(part))   # auf ~52 px einpassen
+	part.scale = Vector2(s, s)
+	part.position = Vector2(vp.size) * 0.5          # Mitte des Viewports
+	vp.add_child(part)
+
+
+# Grobe halbe Ausdehnung eines Teils (aus seiner Kollisionsform) – zum Einpassen.
+func _icon_extent(part: Node) -> float:
+	var col := part.get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if col != null:
+		if col.shape is CircleShape2D:
+			return (col.shape as CircleShape2D).radius
+		if col.shape is RectangleShape2D:
+			return (col.shape as RectangleShape2D).size.length() * 0.5
+	return 30.0
+
+
+# Aktualisiert Preis-Text und Verfügbarkeit (Level/Geld) aller Karten.
+func _update_store() -> void:
+	for kind in _cards:
+		var card: Button = _cards[kind]
+		var preis := card.get_node("Row/Info/Preis") as Label
+		var price := PARTS[kind]["price"] as int
+		var level_needed := PARTS[kind]["available_from_level"] as int
+		if level_needed > GameState.last_checkpoint:
+			preis.text = "ab Level " + str(level_needed)
+			card.disabled = true
+		else:
+			preis.text = str(price) + "$"
+			card.disabled = price > GameState.budget
+		card.modulate.a = 0.4 if card.disabled else 1.0
+
+
+func _can_buy(kind: String) -> bool:
+	if PARTS[kind]["available_from_level"] > GameState.last_checkpoint:
+		return false
+	return PARTS[kind]["price"] <= GameState.budget
+
+
+# Aus dem Shop ein neues Teil "in die Hand nehmen": am Mauszeiger erzeugen und
+# ab da übernimmt die normale Drag&Drop-/Sticky-Logik.
+func _begin_buy(kind: String) -> void:
+	if dragging != null or not _can_buy(kind):
+		return
+	var item := (PARTS[kind]["scene"] as PackedScene).instantiate() as RigidBody2D
+	palette.add_child(item)
+	item.set_meta("kind", kind)
+	item.global_position = get_global_mouse_position()
+	item.freeze = true
+	dragging = item
+	drag_is_move = false
+	drag_is_passenger = false
+	drag_kind = kind
 
 
 # --- Pflicht-Passagier (Figur) --------------------------------------------
@@ -178,49 +252,6 @@ func _passenger_attached() -> bool:
 	return passenger != null and is_instance_valid(passenger) \
 			and passenger.get_parent() == vehicle
 
-
-func _spawn_palette_item(kind: String, pos: Vector2) -> void:
-	var item := (PARTS[kind]["scene"] as PackedScene).instantiate() as RigidBody2D
-	palette.add_child(item)
-	item.global_position = pos
-	item.freeze = true
-	item.set_meta("kind", kind)
-	item.set_meta("home", pos)
-	item.set_meta("available", true)
-	item.add_to_group("palette_item")
-	
-	_spawn_item_price_label(kind, Vector2(pos.x + 100, pos.y - 20))
-
-func _spawn_item_price_label(kind: String, pos: Vector2) -> void:
-	var price := PARTS[kind]["price"] as int
-	var label := (PRICE_LABEL as PackedScene).instantiate() as Label
-	palette.add_child(label)
-	label.text = str(price) + "$"
-	label.global_position = pos
-	label.set_meta("kind", kind)
-	label.add_to_group("palette_item_label")
-
-# check each item's availability, etc.
-func _update_palette() -> void:
-	for label in get_tree().get_nodes_in_group("palette_item_label"):
-		var kind := label.get_meta("kind") as String
-		var item := _get_item_by_meta("palette_item", "kind", kind)
-		var price := PARTS[kind]["price"] as int
-		var level_needed := PARTS[kind]["available_from_level"] as int
-		if level_needed > GameState.last_checkpoint:
-			item.set_meta("available", false)
-			label.text = "Level " + str(level_needed)
-			continue
-		else:
-			label.text = str(price) + "$"
-		var color = label.modulate
-		if price > GameState.budget:
-			color.a = 0.3
-			item.set_meta("available", false)
-		else:
-			color.a = 1
-			item.set_meta("available", true)
-		label.modulate = color
 
 # --- Bauen (Drag & Drop) ---------------------------------------------------
 
@@ -267,8 +298,8 @@ func _input(event: InputEvent) -> void:
 			_recompute_budget()            # Geld korrekt zurückbuchen
 
 
-# Greift, was unter dem Mauszeiger liegt: ein Palette-Teil (neu anbauen) ODER
-# ein schon platziertes Teil (zum Verschieben/Drehen).
+# Greift ein schon platziertes Teil (zum Verschieben/Drehen) oder den
+# Passagier. Neue Teile kommen über den Shop (_begin_buy), nicht hierüber.
 func _try_grab(point: Vector2) -> void:
 	drag_is_passenger = false
 
@@ -281,16 +312,6 @@ func _try_grab(point: Vector2) -> void:
 		drag_kind = "Figur"
 		passenger.reparent(palette)         # während des Ziehens "in der Hand"
 		passenger.freeze = true
-		return
-
-	var item := _palette_item_at(point)
-	if item != null && item.get_meta("available"):
-		dragging = item
-		drag_is_move = false
-		drag_kind = item.get_meta("kind", "")
-		drag_home = item.get_meta("home", item.global_position)
-		item.remove_from_group("palette_item")
-		_spawn_palette_item(drag_kind, drag_home)  # Palettenplatz nachfüllen
 		return
 
 	var placed := _attachment_at(point)
@@ -430,19 +451,6 @@ func _has_core(shape: Shape2D) -> bool:
 		var s := (shape as RectangleShape2D).size
 		return s.x > 0.5 and s.y > 0.5
 	return false
-
-
-func _palette_item_at(point: Vector2) -> RigidBody2D:
-	for it in get_tree().get_nodes_in_group("palette_item"):
-		if _point_in_body(it, point):
-			return it as RigidBody2D
-	return null
-
-func _get_item_by_meta(group_name: String, meta_key: String, value) -> Node:
-	for item in get_tree().get_nodes_in_group(group_name):
-		if item.has_meta(meta_key) and item.get_meta(meta_key) == value:
-			return item
-	return null
 
 
 # Schon platziertes Teil (Attachment oder Plattform) unter dem Punkt.

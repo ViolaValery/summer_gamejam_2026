@@ -28,6 +28,11 @@ var tilt := 0.0  # -1 = links, +1 = rechts, 0 = nichts
 
 var next_checkpoint := 0
 
+## Höchster in diesem Lauf erreichter Score. Steigt nur -> der angezeigte Score
+## rutscht beim Rückwärtsfahren nicht zurück und zählt beim Hin-und-Her auch
+## nicht erneut hoch (das Maximum wird nur bei echtem Weiterkommen überschritten).
+var _run_max := 0
+
 # Spezial-Knöpfe je Sorte: kind -> { parts (in Platzier-Reihenfolge), button, bar }
 var _specials := {}
 
@@ -182,12 +187,14 @@ func _process(delta: float) -> void:
 	# Kamera folgt dem Fahrwerk mit etwas Vorausblick.
 	var target := chassis.global_position + Vector2(150, -40)
 	camera.global_position = camera.global_position.lerp(target, 5.0 * delta)
-	# update score
-	var score := int(chassis.global_position.x / 5)
-	move_rocket(score)
-	if score > GameState.highscore:
-		GameState.highscore =  score
-	score_label.text = str(score)
+	# Score = erreichtes Maximum dieses Laufs (steigt nur, rutscht nie zurück).
+	var raw := int(chassis.global_position.x / 5)
+	if raw > _run_max:
+		_run_max = raw
+	move_rocket(_run_max)
+	if _run_max > GameState.highscore:
+		GameState.highscore = _run_max
+	score_label.text = str(_run_max)
 	highscore_label.text = str(GameState.highscore)
 	_update_specials()
 
