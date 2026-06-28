@@ -7,33 +7,33 @@ script = ExtResource("1_r5c3f")
 levels = [{
 "budget": 1000,
 "distance": 0,
-"items": ["wheel", "wheel_small"]
-}, {
-"budget": 1250,
-"distance": 150,
-"items": ["wheel", "wheel_small", "platform"]
-}, {
-"budget": 1250,
-"distance": 300,
-"items": ["wheel", "wheel_small", "wheel_big", "platform"]
-}, {
-"budget": 1450,
-"distance": 450,
-"items": ["wheel", "wheel_small", "wheel_big", "booster_light", "balloon", "platform"]
-}, {
-"budget": 1450,
-"distance": 750,
-"items": ["wheel", "wheel_small", "wheel_big", "booster_light", "balloon", "platform"]
-}, {
-"budget": 1450,
-"distance": 1050,
-"items": ["wheel", "wheel_small", "wheel_big", "booster", "booster_light", "balloon", "platform"]
-}, {
-"budget": 1600,
-"distance": 1500,
-"items": ["wheel", "wheel_small", "wheel_big", "booster", "booster_light", "booster_heavy", "balloon", "platform", "platform_long"]
+"items": ["wheel_small", "wheel"]
 }, {
 "budget": 1750,
+"distance": 600,
+"items": ["wheel_small", "wheel", "platform", "booster_light"]
+}, {
+"budget": 2250,
+"distance": 900,
+"items": ["wheel_small", "wheel", "wheel_big", "platform", "booster_light"]
+}, {
+"budget": 2500,
+"distance": 1100,
+"items": ["wheel_small", "wheel", "wheel_big", "platform", "booster_light", "balloon"]
+}, {
+"budget": 3500,
+"distance": 1250,
+"items": ["wheel_small", "wheel", "wheel_big", "platform", "booster_light", "balloon_small"]
+}, {
+"budget": 4500,
+"distance": 1350,
+"items": ["wheel_small", "wheel", "wheel_big", "platform", "booster_light", "balloon_small", "platform_long"]
+}, {
+"budget": 5500,
 "distance": 2100,
-"items": ["wheel", "wheel_small", "wheel_big", "booster", "booster_light", "booster_heavy", "balloon", "platform", "platform_long"]
+"items": ["wheel_small", "wheel", "wheel_big", "platform", "booster_light", "balloon_small", "platform_long", "booster", "balloon"]
+}, {
+"budget": 7000,
+"distance": 2500,
+"items": ["wheel_small", "wheel", "wheel_big", "platform", "booster_light", "balloon_small", "platform_long", "booster_heavy", "booster", "balloon", "balloon_big"]
 }]

@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var push_force := Vector2(500, 0)
+@export var push_force := Vector2(500, -200)  # Direction and strength
 
 func _physics_process(delta):
 	for body in get_overlapping_bodies():
