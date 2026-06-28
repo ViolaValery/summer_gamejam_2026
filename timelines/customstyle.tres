@@ -34,7 +34,7 @@ scene = ExtResource("6_ya33l")
 overrides = {
 "bold_font": "\"res://assets/font/Softizen.ttf\"",
 "normal_font": "\"res://assets/font/Softizen.ttf\"",
-"typing_sounds_sounds_folder": "\"res://assets/sound/blubl.ogg\""
+"typing_sounds_sounds_folder": "\"res://assets/sound/labern.mp3\""
 }
 
 [sub_resource type="Resource" id="Resource_hlv3x"]
