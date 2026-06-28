@@ -1,6 +1,23 @@
-I'm professor Graf from the institute of Streuselbrötchen, and we are working on a project to get to Moss the fastest way possible!
-I heard you possess engineering abilities we could use here! Do you want to help us?
-- That's why I'm here! Let's cook some awesome physics shit up yo
-- Not really..
-	Rude \:(
+[background arg="res://assets/background_blue.png" fade="0.0"]
+[style name="customstyle"]
+join armerTyp (was) center
+armerTyp (was): Oh shit, there are 30 minutes left to submit my super important project at the Fristenkasten!?
+join armerTyp (neutral) center
+armerTyp (neutral): How do I get there in time? Can you help me?
+- Nope
+	armerTyp (was): Okay bro.. \:(
 	[signal arg="quit"]
+	[end_timeline]
+- Propose a way to get there
+	join armerTyp (neutral) left
+[history]
+- Aseag
+	join armerTyp (schock) center
+	armerTyp (schock): Are you for real?
+- Bike
+	join armerTyp (schock) center
+	armerTyp (schock): I don't have my helmet, that is way too dangerous!
+- Car
+	join armerTyp (schock) center
+	armerTyp (neutral): Good thinking, but that would be still too slow..
+armerTyp (allesWirdGut): Okay, I need something VERY FAST. I will ask my friend Mary. She's studying mechanical engineering, she will cook something up!
