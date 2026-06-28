@@ -306,7 +306,7 @@ horizontal_alignment = 2
 layout_mode = 0
 offset_left = 283.0
 offset_top = 3.0
-offset_right = 342.0
+offset_right = 374.0
 offset_bottom = 55.0
 theme_override_colors/font_color = Color(0.21568628, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_msn66")
@@ -339,7 +339,7 @@ horizontal_alignment = 2
 layout_mode = 0
 offset_left = 165.0
 offset_top = 1.0
-offset_right = 192.0
+offset_right = 256.0
 offset_bottom = 53.0
 theme_override_colors/font_color = Color(0.21568628, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_msn66")
@@ -361,12 +361,18 @@ theme_override_constants/separation = 16
 [node name="TiltLeft" type="Button" parent="UI/HUD/Controls" unique_id=483101965]
 custom_minimum_size = Vector2(90, 56)
 layout_mode = 2
-text = "◀"
+theme = ExtResource("5_xmwm8")
+theme_override_fonts/font = ExtResource("4_msn66")
+theme_override_font_sizes/font_size = 40
+text = "<"
 
 [node name="TiltRight" type="Button" parent="UI/HUD/Controls" unique_id=2084737640]
 custom_minimum_size = Vector2(90, 56)
 layout_mode = 2
-text = "▶"
+theme = ExtResource("5_xmwm8")
+theme_override_fonts/font = ExtResource("4_msn66")
+theme_override_font_sizes/font_size = 40
+text = ">"
 
 [node name="Sep" type="Control" parent="UI/HUD/Controls" unique_id=1862761206]
 custom_minimum_size = Vector2(24, 0)
@@ -374,6 +380,7 @@ layout_mode = 2
 
 [node name="Specials" type="HBoxContainer" parent="UI/HUD/Controls" unique_id=456327755]
 layout_mode = 2
+theme = ExtResource("5_xmwm8")
 theme_override_constants/separation = 12
 
 [node name="ProgressBar" type="ProgressBar" parent="UI/HUD" unique_id=1292986704]
@@ -414,7 +421,7 @@ offset_right = 1201.0553
 offset_bottom = 151.00922
 theme_override_colors/font_color = Color(0.7294118, 0.0627451, 0.0627451, 1)
 theme_override_fonts/font = ExtResource("4_msn66")
-theme_override_font_sizes/font_size = 100
+theme_override_font_sizes/font_size = 120
 text = "1"
 horizontal_alignment = 1
 
@@ -425,6 +432,6 @@ offset_right = -942.34607
 offset_bottom = 192.98218
 theme_override_colors/font_color = Color(0.7294118, 0.0627451, 0.0627451, 1)
 theme_override_fonts/font = ExtResource("4_msn66")
-theme_override_font_sizes/font_size = 100
+theme_override_font_sizes/font_size = 120
 text = "0"
 horizontal_alignment = 1
