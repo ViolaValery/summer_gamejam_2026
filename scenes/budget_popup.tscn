@@ -1,9 +1,11 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://cxo66n8t5fdwe"]
 
-[ext_resource type="Script" path="res://scripts/budget_popup.gd" id="1"]
+[ext_resource type="Script" uid="uid://como08lppx6hn" path="res://scripts/budget_popup.gd" id="1"]
+[ext_resource type="FontFile" uid="uid://gx2yue2asuuo" path="res://assets/font/Softizen.ttf" id="1_j1cn3"]
 
-[node name="BudgetPopup" type="Label"]
+[node name="BudgetPopup" type="Label" unique_id=113300812]
 z_index = 10
+theme_override_fonts/font = ExtResource("1_j1cn3")
 theme_override_font_sizes/font_size = 44
 text = "-500"
 horizontal_alignment = 2

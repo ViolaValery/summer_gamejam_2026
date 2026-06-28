@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c4al21keomyqs" path="res://scripts/level.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://cr065w8b26ewn" path="res://scenes/terrain.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://ce68mq70sd0a5" path="res://assets/progress_bar/frame0000.png" id="3_5ga6x"]
+[ext_resource type="FontFile" uid="uid://gx2yue2asuuo" path="res://assets/font/Softizen.ttf" id="4_msn66"]
 [ext_resource type="Texture2D" uid="uid://club1yb1hmcpd" path="res://assets/progress_bar/frame0001.png" id="4_nj2gj"]
 [ext_resource type="Texture2D" uid="uid://w0mh68ubt74c" path="res://assets/progress_bar/frame0002.png" id="5_msn66"]
 [ext_resource type="Texture2D" uid="uid://ba8jefe7b5xg1" path="res://assets/progress_bar/frame0003.png" id="6_xmwm8"]
@@ -64,7 +65,7 @@
 [ext_resource type="Texture2D" uid="uid://bdnp271o2307j" path="res://assets/progress_bar/frame0059.png" id="62_albe2"]
 [ext_resource type="Texture2D" uid="uid://cjbvf7jrpy5yr" path="res://assets/progress_bar/frame0060.png" id="63_pmw43"]
 [ext_resource type="Texture2D" uid="uid://3p1ye5k1ljm3" path="res://assets/progress_bar/frame0061.png" id="64_d3p7y"]
-[ext_resource type="PackedScene" uid="uid://dir155hfjmin3" path="res://scenes/ziel.tscn" id="ziel_1"]
+[ext_resource type="PackedScene" path="res://scenes/ziel.tscn" id="ziel_1"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_plen7"]
 animations = [{
@@ -294,7 +295,8 @@ offset_left = 900.0
 offset_top = 6.0
 offset_right = 1174.0
 offset_bottom = 73.0
-theme_override_colors/font_color = Color(1, 0, 1, 1)
+theme_override_colors/font_color = Color(0.21568628, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_msn66")
 theme_override_font_sizes/font_size = 36
 text = "Highscore:"
 horizontal_alignment = 2
@@ -305,7 +307,8 @@ offset_left = 283.0
 offset_top = 3.0
 offset_right = 342.0
 offset_bottom = 55.0
-theme_override_colors/font_color = Color(1, 0, 1, 1)
+theme_override_colors/font_color = Color(0.21568628, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_msn66")
 theme_override_font_sizes/font_size = 36
 text = "0"
 
@@ -323,7 +326,8 @@ offset_left = 1019.0
 offset_top = 64.0
 offset_right = 1173.0
 offset_bottom = 131.0
-theme_override_colors/font_color = Color(1, 0, 1, 1)
+theme_override_colors/font_color = Color(0.21568628, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_msn66")
 theme_override_font_sizes/font_size = 36
 text = "Score:"
 horizontal_alignment = 2
@@ -334,7 +338,8 @@ offset_left = 165.0
 offset_top = 1.0
 offset_right = 192.0
 offset_bottom = 53.0
-theme_override_colors/font_color = Color(1, 0, 1, 1)
+theme_override_colors/font_color = Color(0.21568628, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_msn66")
 theme_override_font_sizes/font_size = 36
 text = "0"
 
@@ -404,7 +409,8 @@ offset_left = 988.92053
 offset_top = 46.00922
 offset_right = 1201.0553
 offset_bottom = 151.00922
-theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_color = Color(0.7294118, 0.0627451, 0.0627451, 1)
+theme_override_fonts/font = ExtResource("4_msn66")
 theme_override_font_sizes/font_size = 100
 text = "1"
 horizontal_alignment = 1
@@ -414,7 +420,8 @@ offset_left = -1238.4906
 offset_top = 69.013824
 offset_right = -967.0834
 offset_bottom = 174.01382
-theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_color = Color(0.7294118, 0.0627451, 0.0627451, 1)
+theme_override_fonts/font = ExtResource("4_msn66")
 theme_override_font_sizes/font_size = 100
 text = "0"
 horizontal_alignment = 1

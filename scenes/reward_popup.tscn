@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://b7rkc5gpj21d5"]
 
-[ext_resource type="Script" path="res://scripts/reward_popup.gd" id="1"]
+[ext_resource type="Script" uid="uid://dcreaffs5hah5" path="res://scripts/reward_popup.gd" id="1"]
 
 [sub_resource type="StyleBoxFlat" id="bg"]
 bg_color = Color(0, 0, 0, 0.55)
@@ -9,7 +9,8 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[node name="RewardPopup" type="PanelContainer"]
+[node name="RewardPopup" type="PanelContainer" unique_id=339650629]
+anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -340.0
@@ -20,13 +21,13 @@ grow_horizontal = 0
 theme_override_styles/panel = SubResource("bg")
 script = ExtResource("1")
 
-[node name="Margin" type="MarginContainer" parent="."]
+[node name="Margin" type="MarginContainer" parent="." unique_id=1266903481]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 12
 
-[node name="List" type="VBoxContainer" parent="Margin"]
+[node name="List" type="VBoxContainer" parent="Margin" unique_id=1969287899]
 layout_mode = 2
 theme_override_constants/separation = 4
