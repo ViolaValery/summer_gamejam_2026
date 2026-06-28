@@ -6,6 +6,7 @@
 [ext_resource type="FontFile" uid="uid://gx2yue2asuuo" path="res://assets/font/Softizen.ttf" id="4_msn66"]
 [ext_resource type="Texture2D" uid="uid://club1yb1hmcpd" path="res://assets/progress_bar/frame0001.png" id="4_nj2gj"]
 [ext_resource type="Texture2D" uid="uid://w0mh68ubt74c" path="res://assets/progress_bar/frame0002.png" id="5_msn66"]
+[ext_resource type="Theme" uid="uid://dr0erp7ye37r6" path="res://assets/button_default_theme.tres" id="5_xmwm8"]
 [ext_resource type="Texture2D" uid="uid://ba8jefe7b5xg1" path="res://assets/progress_bar/frame0003.png" id="6_xmwm8"]
 [ext_resource type="Texture2D" uid="uid://tt55j3absrq7" path="res://assets/progress_bar/frame0004.png" id="7_jydfl"]
 [ext_resource type="Texture2D" uid="uid://v7cs4aek77hm" path="res://assets/progress_bar/frame0005.png" id="8_u0n8q"]
@@ -316,8 +317,9 @@ text = "0"
 layout_mode = 1
 offset_left = 12.0
 offset_top = 12.0
-offset_right = 120.0
-offset_bottom = 44.0
+offset_right = 237.0
+offset_bottom = 61.0
+theme = ExtResource("5_xmwm8")
 theme_override_font_sizes/font_size = 20
 text = "Workshop"
 
@@ -400,8 +402,8 @@ offset_bottom = 52.0
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 
 [node name="ProgressRocket" type="AnimatedSprite2D" parent="UI/HUD" unique_id=1531693281]
-position = Vector2(527, 42)
-scale = Vector2(0.32055148, 0.2608173)
+position = Vector2(600.00006, 46)
+scale = Vector2(0.28364027, 0.24597354)
 sprite_frames = SubResource("SpriteFrames_plen7")
 animation = &"progress"
 
@@ -417,10 +419,10 @@ text = "1"
 horizontal_alignment = 1
 
 [node name="Min" type="Label" parent="UI/HUD/ProgressRocket" unique_id=54343720]
-offset_left = -1238.4906
-offset_top = 69.013824
-offset_right = -967.0834
-offset_bottom = 174.01382
+offset_left = -1205.7529
+offset_top = 60.98217
+offset_right = -942.34607
+offset_bottom = 192.98218
 theme_override_colors/font_color = Color(0.7294118, 0.0627451, 0.0627451, 1)
 theme_override_fonts/font = ExtResource("4_msn66")
 theme_override_font_sizes/font_size = 100
