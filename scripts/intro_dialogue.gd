@@ -13,14 +13,17 @@ func _process(_delta):
 
 func DialogicSignal(argument:String):
 	if argument == "quit":
-		get_tree().quit()
+		go_to_main_menu()
 
 func _on_timeline_ended() -> void:
 	if _switching_scene:
 		return
 	_switching_scene = true
 	Global.game_controller.change_gui_scene("res://scenes/gui/main_menu.tscn", true)
-	
+
+func go_to_main_menu() -> void:
+	get_tree().change_scene_to_file("res://scenes/game_controller.tscn")
+
 func _on_skip_pressed() -> void:
 	print("SKIP PRESSED")
 	_switching_scene = true

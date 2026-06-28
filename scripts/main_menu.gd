@@ -23,4 +23,10 @@ func _on_start_pressed() -> void:
 
 func _on_quit_pressed() -> void:
 	print("QUIT PRESSED")
+	quit_game()
+	
+func quit_game() -> void:
+	if OS.has_feature("web"):
+		get_tree().change_scene_to_file("res://scenes/game_controller.tscn")
+
 	get_tree().quit()
