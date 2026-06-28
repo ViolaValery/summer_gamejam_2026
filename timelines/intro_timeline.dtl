@@ -5,6 +5,7 @@ armerTyp (was): Oh shit, there are 30 minutes left to submit my super important 
 join armerTyp (neutral) center
 armerTyp (neutral): How do I get there in time? Can you help me?
 - Nope
+	[style name="copy_dialog_ough"]
 	armerTyp (was): Okay bro.. \:(
 	[signal arg="quit"]
 	[end_timeline]
