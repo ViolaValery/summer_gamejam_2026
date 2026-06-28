@@ -2,6 +2,10 @@
 
 [ext_resource type="Script" uid="uid://br40g0e1a7ydk" path="res://scripts/terrain.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://cdsdc3oaptvir" path="res://scenes/background.tscn" id="2_oqplg"]
+[ext_resource type="Texture2D" path="res://assets/terrain/erde.png" id="3_erde"]
+[ext_resource type="Texture2D" path="res://assets/terrain/surface_stein.png" id="4_stein"]
+[ext_resource type="Texture2D" path="res://assets/terrain/surface_winter.png" id="5_winter"]
+[ext_resource type="Texture2D" path="res://assets/terrain/surface_weiss.png" id="6_weiss"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b0j75"]
 size = Vector2(5609, 2663)
@@ -9,6 +13,10 @@ size = Vector2(5609, 2663)
 [node name="Terrain" type="StaticBody2D" unique_id=210309286]
 collision_layer = 9
 script = ExtResource("1")
+erde_textur = ExtResource("3_erde")
+belag_stein = ExtResource("4_stein")
+belag_winter = ExtResource("5_winter")
+belag_weiss = ExtResource("6_weiss")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1107739060]
 polygon = PackedVector2Array(-2071, 133, 160, 190, 250, 200, 383, 237, 496, 284, 671, 365, 867, 480, 1080, 619, 1320, 786, 1580, 1008, 1724, 1124, 1894, 1229, 2034, 1291, 2231, 1342, 2494, 1377, 2826, 1409, 3240, 1315, 3531, 1217, 3759, 1118, 3993, 1019, 4008, 1395, 40685, 1621, 40732, 1993, 3971, 1892, 3562, 1890, -2094, 1743)

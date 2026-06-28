@@ -64,6 +64,7 @@
 [ext_resource type="Texture2D" uid="uid://bdnp271o2307j" path="res://assets/progress_bar/frame0059.png" id="62_albe2"]
 [ext_resource type="Texture2D" uid="uid://cjbvf7jrpy5yr" path="res://assets/progress_bar/frame0060.png" id="63_pmw43"]
 [ext_resource type="Texture2D" uid="uid://3p1ye5k1ljm3" path="res://assets/progress_bar/frame0061.png" id="64_d3p7y"]
+[ext_resource type="PackedScene" path="res://scenes/ziel.tscn" id="ziel_1"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_plen7"]
 animations = [{
@@ -268,6 +269,9 @@ animations = [{
 script = ExtResource("1")
 
 [node name="Terrain" parent="." unique_id=811790461 instance=ExtResource("2")]
+
+[node name="Ziel" parent="." unique_id=1058045299 instance=ExtResource("ziel_1")]
+position = Vector2(40546, 1760)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1177657538]
 position = Vector2(300, 200)

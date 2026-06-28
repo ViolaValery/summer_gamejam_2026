@@ -1,0 +1,196 @@
+[gd_resource type="SpriteFrames" load_steps=38 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_00.png" id="1"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_01.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_02.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_03.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_04.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_05.png" id="6"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_06.png" id="7"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_07.png" id="8"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_08.png" id="9"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_09.png" id="10"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_10.png" id="11"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_11.png" id="12"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_12.png" id="13"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_13.png" id="14"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_14.png" id="15"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_15.png" id="16"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_16.png" id="17"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_17.png" id="18"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_18.png" id="19"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_19.png" id="20"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_20.png" id="21"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_21.png" id="22"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_22.png" id="23"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_23.png" id="24"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_24.png" id="25"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_25.png" id="26"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_26.png" id="27"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_27.png" id="28"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_28.png" id="29"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_29.png" id="30"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_30.png" id="31"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_31.png" id="32"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_32.png" id="33"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_33.png" id="34"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_34.png" id="35"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_35.png" id="36"]
+[ext_resource type="Texture2D" path="res://assets/flagge/frame_36.png" id="37"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37")
+}],
+"loop": false,
+"name": &"spring",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("27")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37")
+}],
+"loop": true,
+"name": &"wave",
+"speed": 18.0
+}]

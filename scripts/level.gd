@@ -36,11 +36,16 @@ var _specials := {}
 @export var stop_time := 1.5     # s – so lange muss es ruhig bleiben
 ## Wie lange das Flaggen-Finale (Sprießen + Wehen) läuft, bevor es zurückgeht.
 @export var flag_finale_time := 3.5
+## Wie lange der "Geschafft!"-Bildschirm gezeigt wird, bevor es zurückgeht.
+@export var win_screen_time := 5.0
 var _has_moved := false          # erst losgefahren, bevor wir aufs Stehen prüfen
 var _stopped_for := 0.0
 var _returning := false          # Szenenwechsel läuft schon -> nicht doppelt
+var _won := false                # Ziel erreicht -> Sieg-Ablauf läuft
 
 const FLAG_SCENE := preload("res://scenes/flagge.tscn")
+const WIN_SCREEN := preload("res://scenes/geschafft.tscn")
+const SPECIAL_BUTTON := preload("res://scenes/special_button.tscn")
 
 
 func _ready() -> void:
@@ -55,6 +60,11 @@ func _ready() -> void:
 	tilt_right.button_down.connect(func(): tilt = 1.0)
 	tilt_right.button_up.connect(func(): tilt = 0.0)
 	workshop_button.pressed.connect(_go_to_edit)
+
+	# Ziel (falls im Level platziert): Erreichen -> Sieg.
+	var ziel := get_node_or_null("Ziel")
+	if ziel != null:
+		ziel.reached.connect(_win)
 
 	_add_special_buttons()
 
@@ -93,7 +103,7 @@ func _physics_process(delta: float) -> void:
 # unter der Schwellengeschwindigkeit zur Ruhe kommt (am Boden liegen bleibt),
 # wird es angehalten und es geht zurück in die Werkstatt.
 func _check_came_to_rest(delta: float) -> void:
-	if _returning:
+	if _returning or _won:
 		return
 	var speed := chassis.linear_velocity.length()
 	if speed > 80.0:
@@ -106,6 +116,23 @@ func _check_came_to_rest(delta: float) -> void:
 			_return_to_workshop()
 	else:
 		_stopped_for = 0.0
+
+
+# ZIEL ERREICHT: Gefährt anhalten, "Geschafft!"-Bildschirm + Sieges-Sound,
+# dann zurück in die Werkstatt.
+func _win() -> void:
+	if _won or _returning:
+		return
+	_won = true
+	_returning = true            # blockiert Stop-Erkennung + doppelten Wechsel
+	for child in vehicle.get_children():
+		if child is RigidBody2D:
+			child.linear_velocity = Vector2.ZERO
+			child.angular_velocity = 0.0
+			child.freeze = true
+	add_child(WIN_SCREEN.instantiate())
+	await get_tree().create_timer(win_screen_time).timeout
+	_go_to_edit()
 
 
 # Hält das Gefährt an, lässt zum Abschluss die Flagge sprießen + wehen und
@@ -206,30 +233,12 @@ func _add_special_buttons() -> void:
 
 
 func _make_special_control(kind: String, parts: Array) -> void:
-	var box := VBoxContainer.new()
-	box.custom_minimum_size = Vector2(120, 0)
-	box.add_theme_constant_override("separation", 2)
-	specials_box.add_child(box)
-
-	var button := Button.new()
-	button.custom_minimum_size = Vector2(120, 46)
+	# Aussehen (Knopf + Balken + Farben) kommt aus special_button.tscn.
+	var ctrl := SPECIAL_BUTTON.instantiate()
+	specials_box.add_child(ctrl)
+	var button: Button = ctrl.get_node("Button")
+	var bar: ProgressBar = ctrl.get_node("Bar")
 	button.pressed.connect(_fire_next.bind(kind))
-	box.add_child(button)
-
-	# dünner Fortschrittsbalken für den laufenden Effekt
-	var bar := ProgressBar.new()
-	bar.custom_minimum_size = Vector2(120, 9)
-	bar.min_value = 0.0
-	bar.max_value = 1.0
-	bar.show_percentage = false
-	var fill := StyleBoxFlat.new()
-	fill.bg_color = Color(1.0, 0.55, 0.1)        # orange = aktiver Effekt
-	bar.add_theme_stylebox_override("fill", fill)
-	var bg := StyleBoxFlat.new()
-	bg.bg_color = Color(0.0, 0.0, 0.0, 0.45)
-	bar.add_theme_stylebox_override("background", bg)
-	box.add_child(bar)
-
 	_specials[kind] = {"parts": parts, "button": button, "bar": bar}
 
 

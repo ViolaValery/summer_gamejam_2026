@@ -21,6 +21,8 @@ extends RigidBody2D
 
 const ASSET := "res://assets/figur/"
 const HAND := "hand_rechts"      # die Wurzel/Halte-Hand
+## Blink-/Pfeil-Effekt für die Hand (Aussehen in der Szene, hier nur animiert).
+const HAND_ALARM := preload("res://scenes/hand_alarm.tscn")
 ## Das Terrain liegt (zusätzlich) auf dieser Kollisions-Ebene. Die Figur
 ## maskiert NUR diese -> sie ruht auf dem Boden, schiebt aber das Fahrzeug
 ## nicht und kollidiert nicht mit sich selbst. (Muss zu terrain.tscn passen:
@@ -66,93 +68,51 @@ var _alive := false
 @onready var _hand_center: Vector2 = PARTS[HAND]["center"]
 
 
-func _ready() -> void:
-	_build_preview()
-
-
-# Werkstatt-Vorschau: ganze Figur, Hand sitzt im Knoten-Ursprung (= Andockpunkt).
-func _build_preview() -> void:
-	if has_node("Preview"):
-		return
-	var s := Sprite2D.new()
-	s.name = "Preview"
-	s.texture = load(ASSET + "figur_preview.png")
-	s.centered = false
-	s.offset = -HAND_IN_PREVIEW       # Hand-Pixel landet im Knoten-Ursprung
-	s.scale = Vector2(fig_scale, fig_scale)
-	s.z_index = 1
-	add_child(s)
+# Die Werkstatt-Vorschau ("Preview"-Sprite) und die Hand-Form stecken in
+# figur.tscn (im Editor bearbeitbar). Hier bleibt nur die Logik: aufwachen,
+# Ragdoll bauen und den Blink-Effekt animieren.
 
 
 # Lässt die Hand kräftig leuchten/pulsieren und zeigt einen blinkenden Pfeil
 # Richtung Fahrzeug – Hinweis: "muss erst ans Fahrzeug angesteckt werden!".
+# Aussehen (Halo/Glühen/Pfeil) kommt aus hand_alarm.tscn; hier wird nur die
+# Pfeilrichtung gesetzt und alles animiert.
 # target_global = Weltposition des Fahrzeugs (für die Pfeilrichtung); optional.
 func flash_hand(target_global = null, cycles: int = 8) -> void:
-	var old := get_node_or_null("Attention")
+	var old := get_node_or_null("HandAlarm")
 	if old:
 		old.free()
-	var att := Node2D.new()
-	att.name = "Attention"
-	att.z_index = 5
+	var att := HAND_ALARM.instantiate()
 	add_child(att)
+	var halo: Polygon2D = att.get_node("Halo")
+	var hl: Sprite2D = att.get_node("Glow")
+	var arrow: Polygon2D = att.get_node("Arrow")
 
-	var s := Vector2(fig_scale, fig_scale)
-
-	# 1) Weicher gelber Schein (Halo) hinter der Hand.
-	var halo := Polygon2D.new()
-	halo.polygon = _circle_points(46.0, 28)
-	halo.color = Color(1.0, 0.9, 0.2, 0.0)
-	att.add_child(halo)
-
-	# 2) Die Hand selbst leuchtet hell auf.
-	var hl := Sprite2D.new()
-	hl.texture = load(ASSET + HAND + ".png")
-	hl.centered = true
-	hl.scale = s
-	hl.modulate = Color(1, 1, 0.7, 0.0)
-	att.add_child(hl)
-
-	# 3) Pfeil, der vom Hand-Bereich Richtung Fahrzeug zeigt.
+	# Pfeil Richtung Fahrzeug ausrichten.
 	var ldir := Vector2.RIGHT
 	if target_global != null:
 		var lv: Vector2 = to_local(target_global)
 		if lv.length() > 1.0:
 			ldir = lv.normalized()
-	var arrow := Polygon2D.new()
-	arrow.polygon = PackedVector2Array([
-		Vector2(0, -8), Vector2(48, -8), Vector2(48, -20),
-		Vector2(82, 0), Vector2(48, 20), Vector2(48, 8), Vector2(0, 8)])
-	arrow.color = Color(1.0, 0.8, 0.05, 1.0)
 	arrow.rotation = ldir.angle()
-	arrow.position = ldir * 46.0
-	att.add_child(arrow)
-
-	# Animation: kräftiges Pulsieren; der Pfeil "wandert" Richtung Fahrzeug.
 	var near := ldir * 46.0
 	var far := ldir * 78.0
+	arrow.position = near
+	var base := hl.scale
+
+	# Animation: kräftiges Pulsieren; der Pfeil "wandert" Richtung Fahrzeug.
 	var tw := create_tween().set_loops(cycles)
-	# aufleuchten
 	tw.tween_property(halo, "modulate:a", 0.7, 0.16)
 	tw.parallel().tween_property(hl, "modulate", Color(1, 1, 0.8, 1.0), 0.16)
-	tw.parallel().tween_property(hl, "scale", s * 1.7, 0.16)
+	tw.parallel().tween_property(hl, "scale", base * 1.7, 0.16)
 	tw.parallel().tween_property(arrow, "position", far, 0.16)
 	tw.parallel().tween_property(arrow, "modulate:a", 1.0, 0.16)
-	# abklingen
 	tw.tween_property(halo, "modulate:a", 0.0, 0.22)
 	tw.parallel().tween_property(hl, "modulate", Color(1, 1, 0.8, 0.15), 0.22)
-	tw.parallel().tween_property(hl, "scale", s, 0.22)
+	tw.parallel().tween_property(hl, "scale", base, 0.22)
 	tw.parallel().tween_property(arrow, "position", near, 0.22)
 	tw.parallel().tween_property(arrow, "modulate:a", 0.25, 0.22)
 	tw.chain().tween_callback(att.queue_free)
-
-
-# Punkte eines Kreises (für den Halo-Schein).
-func _circle_points(radius: float, segments: int) -> PackedVector2Array:
-	var pts := PackedVector2Array()
-	for i in segments:
-		var a := TAU * i / float(segments)
-		pts.append(Vector2(cos(a), sin(a)) * radius)
-	return pts
 
 
 # Wird aktiv, sobald das Fahrzeug die Hand entfriert (= Spiel startet).

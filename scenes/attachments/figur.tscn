@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/figur.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/figur/figur_preview.png" id="2"]
 
 [sub_resource type="CircleShape2D" id="shape"]
 radius = 24.0
@@ -14,3 +15,10 @@ metadata/sticky_percent = 100.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("shape")
+
+[node name="Preview" type="Sprite2D" parent="."]
+z_index = 1
+texture = ExtResource("2")
+centered = false
+offset = Vector2(-442, -168)
+scale = Vector2(0.25, 0.25)

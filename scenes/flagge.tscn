@@ -1,6 +1,13 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/flagge.gd" id="1"]
+[ext_resource type="SpriteFrames" path="res://assets/flagge/flagge_frames.tres" id="2"]
 
 [node name="Flagge" type="AnimatedSprite2D"]
+sprite_frames = ExtResource("2")
+animation = &"spring"
+autoplay = "spring"
+centered = false
+offset = Vector2(-112.5, -404)
+scale = Vector2(0.55, 0.55)
 script = ExtResource("1")
