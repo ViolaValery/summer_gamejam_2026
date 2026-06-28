@@ -546,6 +546,7 @@ animations = [{
 }]
 
 [node name="LoadingScreen" type="CanvasLayer" unique_id=2018948704]
+visible = false
 script = ExtResource("1_vcesy")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=145703454]
