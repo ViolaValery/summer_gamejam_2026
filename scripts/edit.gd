@@ -53,6 +53,8 @@ const BUDGET_POPUP := preload("res://scenes/budget_popup.tscn")
 
 ## Drehschritt pro Mausrad-Tick (~15°).
 const ROT_STEP := 0.2618
+## Dreh-Geschwindigkeit beim Halten von A/D (Bogenmaß pro Sekunde, ~143°/s).
+const ROT_SPEED := 2.5
 
 ## Standard-Sticky-Anteil in % (falls ein Teil kein metadata/sticky_percent hat).
 const DEFAULT_STICKY := 35.0
@@ -326,31 +328,30 @@ func _passenger_attached() -> bool:
 
 # --- Bauen (Drag & Drop) ---------------------------------------------------
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if dragging != null:
 		dragging.global_position = get_global_mouse_position()
+		# Drehen per A/D (gedrückt halten) – flüssig, zusätzlich zum Mausrad.
+		var turn := 0.0
+		if Input.is_physical_key_pressed(KEY_A):
+			turn += 1.0
+		if Input.is_physical_key_pressed(KEY_D):
+			turn -= 1.0
+		if turn != 0.0:
+			dragging.rotation += turn * ROT_SPEED * delta
 		core_blocked = _core_overlaps_any(dragging)
 		can_attach = _touches_vehicle(dragging) and not core_blocked
 		overlay.queue_redraw()
 
 
 func _input(event: InputEvent) -> void:
-	# Mausrad dreht das gerade gezogene Teil.
-	if dragging != null:
-		if event is InputEventMouseButton and event.pressed:
-			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-				dragging.rotation += ROT_STEP
-				overlay.queue_redraw()
-				return
-			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-				dragging.rotation -= ROT_STEP
-				overlay.queue_redraw()
-				return
-		elif Input.is_action_pressed("ui_a"):
+	# Mausrad dreht das gerade gezogene Teil (A/D-Drehen läuft in _process).
+	if dragging != null and event is InputEventMouseButton and event.pressed:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			dragging.rotation += ROT_STEP
 			overlay.queue_redraw()
 			return
-		elif Input.is_action_pressed("ui_d"):
+		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			dragging.rotation -= ROT_STEP
 			overlay.queue_redraw()
 			return
