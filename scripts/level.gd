@@ -5,8 +5,9 @@ extends Node2D
 ##   ◀ / ▶  : Gefährt nach links/rechts kippen (gedrückt halten)
 ##   Mitte  : Spezial-Knöpfe (z.B. Booster) – pro Spezial-Sorte einer.
 
-## Startpunkt auf der Strecke (oben am Start-Hügel).
-const START_POSITION := Vector2(150, 100)
+## Startpunkt des Gefährts auf der Strecke (im Inspector am Level einstellbar).
+## x = wie weit rechts entlang der Strecke, y = Höhe (kleiner = weiter oben).
+@export var start_position := Vector2(150, -30)
 ## Wie stark das Kippen wirkt.
 const TILT_TORQUE := 12000.0
 
@@ -88,7 +89,7 @@ func _spawn_vehicle() -> void:
 			vehicle.add_child(w)
 
 	add_child(vehicle)
-	vehicle.position = START_POSITION
+	vehicle.position = start_position
 	chassis = vehicle.get_node("Chassis")
 
 	vehicle.assemble()  # alle Teile fest mit dem Fahrwerk verbinden
