@@ -22,17 +22,28 @@ func _load() -> void:
 		push_warning("ItemCatalog: %s nicht gefunden" % DIR)
 		return
 	var list: Array = []
+	var seen := {}
 	for f in dir.get_files():
-		# .import-Dateien etc. ignorieren; nur Ressourcen laden.
-		if f.ends_with(".tres") or f.ends_with(".res"):
-			var def := load(DIR + f) as ItemDef
-			if def != null and def.id != "":
-				list.append(def)
+		# WICHTIG (Export/Web): exportierte Ressourcen liegen im PCK als
+		# "<name>.tres.remap" bzw. importierte Assets als "<name>.import".
+		# Im Editor heißen sie noch "<name>.tres". Daher die Suffixe abschneiden,
+		# bevor wir prüfen/laden – sonst ist der Shop im Web-Export leer.
+		f = f.trim_suffix(".remap").trim_suffix(".import")
+		if not (f.ends_with(".tres") or f.ends_with(".res")):
+			continue
+		if seen.has(f):
+			continue   # gleiche Datei evtl. doppelt gelistet -> nur einmal laden
+		seen[f] = true
+		var def := load(DIR + f) as ItemDef
+		if def != null and def.id != "":
+			list.append(def)
 	list.sort_custom(func(a: ItemDef, b: ItemDef) -> bool:
 		if a.sort_order != b.sort_order:
 			return a.sort_order < b.sort_order
 		return a.id < b.id)
 	for def in list:
+		if _defs.has(def.id):
+			continue
 		_defs[def.id] = def
 		_ordered.append(def.id)
 
