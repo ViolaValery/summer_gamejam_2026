@@ -65,6 +65,9 @@ func _ready() -> void:
 	tilt_left.button_up.connect(func(): tilt = 0.0)
 	tilt_right.button_down.connect(func(): tilt = 1.0)
 	tilt_right.button_up.connect(func(): tilt = 0.0)
+	# Kein UI-Fokus -> Pfeiltasten neigen nur, navigieren nicht zwischen Knöpfen.
+	tilt_left.focus_mode = Control.FOCUS_NONE
+	tilt_right.focus_mode = Control.FOCUS_NONE
 	workshop_button.pressed.connect(_go_to_edit)
 
 	# Ziel (falls im Level platziert): Erreichen -> Sieg.
@@ -100,8 +103,15 @@ func _spawn_vehicle() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if tilt != 0.0:
-		chassis.apply_torque(tilt * TILT_TORQUE)
+	# Neigen über HUD-Knöpfe (tilt) ODER Pfeiltasten links/rechts.
+	var t := tilt
+	if Input.is_action_pressed("ui_right"):
+		t += 1.0
+	if Input.is_action_pressed("ui_left"):
+		t -= 1.0
+	t = clampf(t, -1.0, 1.0)
+	if t != 0.0:
+		chassis.apply_torque(t * TILT_TORQUE)
 	_check_came_to_rest(delta)
 
 
@@ -247,6 +257,7 @@ func _make_special_control(kind: String, parts: Array) -> void:
 	var button: Button = ctrl.get_node("Button")
 	var bar: ProgressBar = ctrl.get_node("Bar")
 	button.pressed.connect(_fire_next.bind(kind))
+	button.focus_mode = Control.FOCUS_NONE   # Zahltasten zünden, Pfeile navigieren nicht
 	_specials[kind] = {"parts": parts, "button": button, "bar": bar}
 
 
@@ -298,7 +309,29 @@ func _part_active_fraction(p) -> float:
 		return p.active_fraction()
 	return 0.0
 
-# For Pause UI
+# Pause (Escape) + Zahltasten 1-9 für die Spezial-Slots.
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):  # Escape key by default
 		Global.game_controller.pause_game()
+		return
+	if event is InputEventKey and event.pressed and not event.echo:
+		var slot := _slot_from_key(event.keycode)
+		if slot >= 0:
+			_fire_slot(slot)
+
+
+# Taste 1..9 (auch Ziffernblock) -> 0-basierter Slot, sonst -1.
+func _slot_from_key(keycode: int) -> int:
+	if keycode >= KEY_1 and keycode <= KEY_9:
+		return keycode - KEY_1
+	if keycode >= KEY_KP_1 and keycode <= KEY_KP_9:
+		return keycode - KEY_KP_1
+	return -1
+
+
+# Zündet das nächste Item des Spezial-Slots (Reihenfolge der Spezial-Knöpfe).
+# Mehrfaches Drücken zündet nacheinander die weiteren Items dieses Slots.
+func _fire_slot(slot: int) -> void:
+	var kinds := _specials.keys()
+	if slot >= 0 and slot < kinds.size():
+		_fire_next(kinds[slot])
