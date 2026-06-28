@@ -19,7 +19,7 @@ levels = [{
 }, {
 "budget": 2500,
 "distance": 1100,
-"items": ["wheel_small", "wheel", "wheel_big", "platform", "booster_light", "balloon"]
+"items": ["wheel_small", "wheel", "wheel_big", "platform", "booster_light", "balloon_small"]
 }, {
 "budget": 3500,
 "distance": 1250,
