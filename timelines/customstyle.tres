@@ -33,7 +33,8 @@ script = ExtResource("2_16pru")
 scene = ExtResource("6_ya33l")
 overrides = {
 "bold_font": "\"res://assets/font/Softizen.ttf\"",
-"normal_font": "\"res://assets/font/Softizen.ttf\""
+"normal_font": "\"res://assets/font/Softizen.ttf\"",
+"typing_sounds_sounds_folder": "\"res://assets/sound/blubl.ogg\""
 }
 
 [sub_resource type="Resource" id="Resource_hlv3x"]

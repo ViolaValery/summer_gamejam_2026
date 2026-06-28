@@ -1,10 +1,9 @@
 [gd_scene load_steps=4 format=3]
 
-; PLATTFORM: weldbare Basis (man kann andere Teile draufbauen). Die Optik ist
-; jetzt die Plankengrafik, exakt auf die Kollisionsbox (110x24) gezogen –
-; so passt Bild = Hitbox, und die "Long Platform" streckt beides per _resize.
+; PLATTFORM: weldbare Basis zum Draufbauen. Nutzt die rötliche Plankentextur
+; (wie die Long Platform), auf die Kollisionsbox (110x24) gezogen.
 
-[ext_resource type="Texture2D" path="res://assets/platform/platform.png" id="1"]
+[ext_resource type="Texture2D" path="res://assets/platform/platform_long.png" id="1"]
 
 [sub_resource type="RectangleShape2D" id="shape"]
 size = Vector2(110, 24)
@@ -23,5 +22,5 @@ metadata/sticky_percent = 30.0
 shape = SubResource("shape")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.10902, 0.13187)
+scale = Vector2(0.11111, 0.21429)
 texture = ExtResource("1")
