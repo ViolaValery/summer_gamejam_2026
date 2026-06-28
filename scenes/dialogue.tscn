@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cme5u3t4q7rxh"]
+
+[ext_resource type="PackedScene" uid="uid://cr065w8b26ewn" path="res://scenes/terrain.tscn" id="1_jwyou"]
+
+[node name="Dialogue" type="Node2D" unique_id=137874392]
+
+[node name="Terrain" parent="." unique_id=210309286 instance=ExtResource("1_jwyou")]

@@ -8,6 +8,7 @@ var quit = $quit
 func _ready() -> void:
 	visible = false
 	start.connect("pressed", _on_start_pressed)
+	quit.connect("pressed", _on_quit_pressed)
 	print("MAINMENU READY, visible: ", visible)
 	print("MAINMENU parent: ", get_parent())
 	print("MAINMENU children of parent: ", get_parent().get_children())
@@ -18,7 +19,7 @@ func _process(_delta) -> void:
 func _on_start_pressed() -> void:
 	#Global.change_gui_scene("res://scenes/overlay?")
 	print("START PRESSED")
-	Global.game_controller.change_gui_scene("res://scenes/level.tscn")
+	Global.game_controller.change_gui_scene("res://scenes/edit.tscn")
 
 func _on_quit_pressed() -> void:
 	print("QUIT PRESSED")

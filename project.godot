@@ -19,19 +19,23 @@ config/icon="res://icon.svg"
 
 GameState="*res://scripts/game_state.gd"
 Global="*uid://rx80cl0fje3s"
-ItemCatalog="*res://scripts/item_catalog.gd"
 Dialogic="*uid://ds2q0uclmolvu"
+ItemCatalog="*res://scripts/item_catalog.gd"
 
 [dialogic]
 
-directories/dch_directory={}
+directories/dch_directory={
+"armerTyp": "res://timelines/armerTyp.dch"
+}
 directories/dtl_directory={
 "basic_timeline": "res://timelines/intro_timeline.dtl"
 }
-layout/style_directory={}
+layout/style_directory={
+"customstyle": "res://timelines/customstyle.tres"
+}
 glossary/default_case_sensitive=true
-layout/style_list=[]
-layout/default_style="Default"
+layout/style_list=["res://timelines/customstyle.tres"]
+layout/default_style=""
 variables={}
 extensions_folder="res://addons/dialogic_additions"
 text/letter_speed=0.01
