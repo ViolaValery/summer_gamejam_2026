@@ -6,13 +6,16 @@
 [ext_resource type="Texture2D" uid="uid://db8gykri8o4a4" path="res://assets/terrain/surface_stein.png" id="4_stein"]
 [ext_resource type="Texture2D" uid="uid://d3njcjxgahgjf" path="res://assets/terrain/surface_winter.png" id="5_winter"]
 [ext_resource type="Texture2D" uid="uid://i34l6n4bibot" path="res://assets/terrain/surface_weiss.png" id="6_weiss"]
-[ext_resource type="Script" uid="uid://cuxs185hc8lkp" path="res://scripts/acceleration.gd" id="7_l86fn"]
+[ext_resource type="Script" uid="uid://b4gtsfq78fcut" path="res://scripts/acceleration_up.gd" id="8_23udb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b0j75"]
-size = Vector2(5609, 2663)
+size = Vector2(6143.375, 2663)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0abrf"]
-size = Vector2(3351, 1137.5)
+size = Vector2(3211.4063, 1040.875)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_23udb"]
+size = Vector2(2370, 1243)
 
 [node name="Terrain" type="StaticBody2D" unique_id=210309286]
 collision_layer = 9
@@ -34,27 +37,34 @@ vertex_colors = PackedColorArray(0.95, 0.92, 0.88, 1, 0.95, 0.92, 0.88, 1, 0.95,
 
 [node name="Gravity-low" type="Area2D" parent="." unique_id=295490423]
 gravity_space_override = 3
+gravity = 930.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gravity-low" unique_id=805385552]
-position = Vector2(6630.5, 501)
+position = Vector2(5885.3125, 496)
 shape = SubResource("RectangleShape2D_b0j75")
 debug_color = Color(0.627451, 0.4, 0.6666667, 0.21568628)
 
 [node name="Gravity-high" type="Area2D" parent="." unique_id=521068051]
 gravity_space_override = 3
-gravity = 3083.335
+gravity = 5000.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gravity-high" unique_id=362095245]
-position = Vector2(43, 555)
+position = Vector2(-287, 558)
 shape = SubResource("RectangleShape2D_b0j75")
 debug_color = Color(0.26268464, 0.5536085, 0.5605182, 0.21568628)
 
 [node name="Background" parent="." unique_id=127488795 instance=ExtResource("2_oqplg")]
 
-[node name="Acceleration" type="Area2D" parent="." unique_id=1623596707]
-script = ExtResource("7_l86fn")
-push_force = Vector2(1000, 0)
+[node name="Acceleration2" type="Area2D" parent="." unique_id=572101188]
+script = ExtResource("8_23udb")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Acceleration" unique_id=905890303]
-position = Vector2(2291, 786)
+[node name="up45" type="CollisionShape2D" parent="Acceleration2" unique_id=1574948441]
+position = Vector2(3864.2969, 1006)
 shape = SubResource("RectangleShape2D_0abrf")
+
+[node name="AccelerationDown" type="Area2D" parent="." unique_id=1846435429]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AccelerationDown" unique_id=2144827371]
+position = Vector2(1409, 810.5)
+shape = SubResource("RectangleShape2D_23udb")

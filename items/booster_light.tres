@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="ItemDef" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="ItemDef" format=3 uid="uid://clmfkm76l8bg1"]
 
-[ext_resource type="Script" path="res://scripts/item_def.gd" id="1"]
+[ext_resource type="Script" uid="uid://dojf3u3xx4wcp" path="res://scripts/item_def.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/attachments/booster.tscn" id="2"]
 
 [resource]
@@ -11,13 +11,12 @@ category = "booster"
 scene = ExtResource("2")
 price = 700
 unlock_checkpoint = 3
-sort_order = 21
+sort_order = 15
 params = {
-"thrust": 4000.0,
 "boost_time": 0.4,
-"uses": 3,
+"color": Color(1, 0.7, 0.3, 1),
 "mass": 0.3,
-"color": Color(1, 0.7, 0.3, 1)
+"thrust": 4000.0,
+"uses": 3
 }
-radius = 0.0
 rect_size = Vector2(52, 31)
