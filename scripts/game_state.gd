@@ -14,7 +14,12 @@ var highscore: int
 var last_checkpoint: int = 0 # i guess just index?
 var last_checkpoint_dist: int = 0
 
-var budget: int = INITIAL_BUDGET # recalculated with new highscore
+## Gesamtbudget (aus Highscore) – die Obergrenze. Ändert sich nur über set_budget().
+var base_budget: int = INITIAL_BUDGET
+## Aktuell verfügbares Geld = base_budget minus Wert der verbauten Teile.
+## Wird in der Werkstatt aus den tatsächlich verbauten Teilen neu berechnet,
+## damit es IMMER stimmt (Kauf, Verschieben, Zurückgeben).
+var budget: int = INITIAL_BUDGET
 
 # checkpoints
 const FIRST_CHECKPOINT: int = 150
@@ -62,7 +67,8 @@ func set_budget() -> void:
 		increment = int(increment * budget_coeff)
 		score -= next_checkpoint
 
-	budget = max(INITIAL_BUDGET, res) 
+	base_budget = max(INITIAL_BUDGET, res)
+	budget = base_budget
 
 
 func get_next_checkpoint() -> int:

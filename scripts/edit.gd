@@ -48,6 +48,9 @@ const PRICE_LABEL := preload("res://scenes/attachments/price_tag.tscn")
 @onready var budget_label: Label = $UI/HUD/Budget/Value
 @onready var level_label: Label = $UI/HUD/Level/Value
 
+## Schwebendes "-500"/"+500" am Budget.
+const BUDGET_POPUP := preload("res://scenes/budget_popup.tscn")
+
 ## Drehschritt pro Mausrad-Tick (~15°).
 const ROT_STEP := 0.2618
 
@@ -76,15 +79,43 @@ var overlay: Node2D
 func _update_budget_label() -> void:
 	budget_label.text = str(GameState.budget) + "$"
 
+
+# Summe der Preise ALLER aktuell verbauten Teile (Figur ist gratis).
+func _spent() -> int:
+	var sum := 0
+	for child in vehicle.get_children():
+		if child is RigidBody2D and child != chassis:
+			var kind := String(child.get_meta("kind", ""))
+			if PARTS.has(kind):
+				sum += PARTS[kind]["price"] as int
+	return sum
+
+
+# Budget IMMER sauber aus den verbauten Teilen ableiten -> nie negativ, nie
+# "Geld weg ohne Teil". Wird nach jeder Bau-Änderung aufgerufen.
+func _recompute_budget() -> void:
+	GameState.budget = GameState.base_budget - _spent()
+	_update_budget_label()
+	_update_palette()
+
+
+# Kurzes schwebendes "-500" (Kauf) / "+500" (Rückgabe) am Budget.
+func _show_budget_delta(amount: int) -> void:
+	if amount == 0:
+		return
+	var popup := BUDGET_POPUP.instantiate()
+	budget_label.add_child(popup)
+	popup.position = Vector2(-30, -8)   # knapp über/neben der Zahl
+	popup.show_delta(amount)
+
 func _ready() -> void:
 	GameState.set_budget()
 	GameState.build_into(vehicle)  # gespeicherten Bau wiederherstellen
-	_update_budget_label()
-	level_label.text = str(GameState.last_checkpoint + 1) # +1 because initial "last" checkpoint is 0 
+	level_label.text = str(GameState.last_checkpoint + 1) # +1 because initial "last" checkpoint is 0
 
 	_freeze_all()       # in der Werkstatt bewegt sich nichts
 	_build_palette()
-	_update_palette()
+	_recompute_budget() # Budget aus den (geladenen) Teilen sauber ableiten
 	_setup_passenger()  # Pflicht-Figur links (oder die schon angebaute übernehmen)
 	# Overlay zuletzt hinzufügen + hoher z_index -> zeichnet über allem.
 	overlay = Node2D.new()
@@ -227,9 +258,13 @@ func _input(event: InputEvent) -> void:
 			if placed == passenger:
 				_send_passenger_home()     # Figur nie löschen -> zurück nach links
 			else:
+				var kind := String(placed.get_meta("kind", ""))
 				vehicle.remove_child(placed)   # sofort raus (queue_free wäre verzögert)
 				placed.queue_free()
+				if PARTS.has(kind):
+					_show_budget_delta(PARTS[kind]["price"] as int)  # grünes +Preis
 			GameState.save_from(vehicle)   # Bauplan ohne das Teil neu schreiben
+			_recompute_budget()            # Geld korrekt zurückbuchen
 
 
 # Greift, was unter dem Mauszeiger liegt: ein Palette-Teil (neu anbauen) ODER
@@ -274,13 +309,14 @@ func _drop() -> void:
 	dragging = null
 	can_attach = false
 	overlay.queue_redraw()
+	# Nur ein NEUES Teil (frisch aus der Palette) wird gekauft; Verschieben/Figur
+	# kostet nichts.
+	var is_new_buy := not drag_is_move and not drag_is_passenger
 	if _can_place(part):
 		part.reparent(vehicle)  # ans Gefährt anbauen (Position bleibt)
 		part.freeze = true      # bleibt liegen bis "Spielen"
-		if not drag_is_passenger and PARTS.has(drag_kind):
-			GameState.budget -= PARTS[drag_kind]["price"] as int
-			_update_budget_label()
-			_update_palette()
+		if is_new_buy and PARTS.has(drag_kind):
+			_show_budget_delta(-(PARTS[drag_kind]["price"] as int))  # rote -Preis
 	elif drag_is_move:
 		# Verschobenes Teil ungültig abgelegt -> zurück an die alte Stelle.
 		part.reparent(vehicle)
@@ -293,6 +329,7 @@ func _drop() -> void:
 		part.queue_free()       # neues Teil daneben -> verwerfen
 	drag_is_passenger = false
 	GameState.save_from(vehicle)  # Bauplan aktualisieren (auch nach Verschieben)
+	_recompute_budget()           # Budget immer sauber neu ableiten
 
 
 # Darf das Teil hier angebaut werden? Zwei Bedingungen:
@@ -503,6 +540,5 @@ func _to_reset() -> void:
 		if child is RigidBody2D and child != chassis:
 			child.queue_free()
 	passenger = _spawn_passenger_home()  # frische Figur links bereitstellen
-	GameState.set_budget()
-	_update_budget_label()
-	_update_palette()
+	GameState.set_budget()               # base_budget (aus Highscore) neu setzen
+	_recompute_budget()                  # leerer Wagen -> volles Budget zurück
