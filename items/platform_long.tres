@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemDef" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/item_def.gd" id="1"]
-[ext_resource type="PackedScene" path="res://scenes/platforms/platform.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/platforms/platform_long.tscn" id="2"]
 
 [resource]
 script = ExtResource("1")
@@ -12,8 +12,6 @@ scene = ExtResource("2")
 price = 1400
 unlock_checkpoint = 6
 sort_order = 41
-params = {
-"mass": 1.6
-}
+params = {}
 radius = 0.0
-rect_size = Vector2(170, 24)
+rect_size = Vector2(0, 0)
