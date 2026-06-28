@@ -21,6 +21,7 @@ GameState="*res://scripts/game_state.gd"
 Global="*uid://rx80cl0fje3s"
 ItemCatalog="*res://scripts/item_catalog.gd"
 Dialogic="*uid://ds2q0uclmolvu"
+LoadingScreen="*uid://cdiq2ogxvyfus"
 
 [dialogic]
 
