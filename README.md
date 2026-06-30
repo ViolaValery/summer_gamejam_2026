@@ -6,6 +6,13 @@ This font is licensed under the terms of the [CC BY-ND](htthttps://creativecommo
 ### Adelia https://fontmeme.com/fonts/adelia-font/#fontinfo
 This font is free for [personal](https://fontmeme.com/read/) (non-commercial) use.
 
+## Color palette
+780000
+c1121f
+fdf0d5
+003049
+669bbc
+
 # Plugins:
 ## Dialogic https://github.com/dialogic-godot/dialogic
 1. Zip download
